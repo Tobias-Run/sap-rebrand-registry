@@ -1,13 +1,14 @@
-Der Datensatz dieses Projekts — src/data/products.json samt Quellenverzeichnis —
-steht unter der Creative Commons Namensnennung 4.0 International (CC BY 4.0).
+The dataset of this project - src/data/products.json together with its list of
+sources - is licensed under the Creative Commons Attribution 4.0 International
+licence (CC BY 4.0).
 
-Lizenztext: https://creativecommons.org/licenses/by/4.0/legalcode.de
-Kurzfassung: https://creativecommons.org/licenses/by/4.0/deed.de
+Licence text: https://creativecommons.org/licenses/by/4.0/legalcode
+Summary:      https://creativecommons.org/licenses/by/4.0/
 
-Namensnennung: SAP Rebrand Registry, https://github.com/Tobias-Run/sap-rebrand-registry
+Attribution: SAP Rebrand Registry, https://github.com/Tobias-Run/sap-rebrand-registry
 
-Der Code des Projekts steht getrennt davon unter der MIT-Lizenz, siehe LICENSE.
+The project's code is licensed separately under the MIT licence, see LICENSE.
 
-Die dokumentierten Produktnamen und Marken gehoeren SAP SE. Ihre Nennung erfolgt
-zu Zwecken der Berichterstattung und Dokumentation und begruendet keine Lizenz
-an diesen Marken.
+The product names and trademarks documented here belong to SAP SE. They are
+named for the purposes of reporting and documentation, and naming them grants
+no licence in those marks.

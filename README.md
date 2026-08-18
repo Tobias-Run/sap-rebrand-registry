@@ -1,49 +1,66 @@
 # SAP Rebrand Registry
 
-Ein unabhängiges Rechercheprojekt: wie oft und wann SAP seine Produkte umbenannt hat.
+An independent research project: how often, and when, SAP has renamed its products.
 
-Zwei Seiten, statisch, ohne Server-Logik. Ein **Register** mit allen belegten Namensperioden je Produkt und eine **Analyse**, die daraus Median-Laufzeiten, Familienmuster und einen halbernsten Risk Index berechnet. Alle Zahlen entstehen im Browser aus einer einzigen Datei — nichts wird von Hand fortgeschrieben.
+Two static pages, no server logic. A **register** listing every documented name period per product, and an **analysis** that computes median durations, family patterns and a semi-serious risk index from it. Every number is worked out in the browser from a single file. Nothing is carried forward by hand.
 
-**Status:** in Aufbau. Der Datensatz hat einen belegten Kern — 10 Produkte, 25 Namensperioden, jede mit Erstquelle, keine Warnungen. Die beiden Seiten fehlen noch.
+**Status:** under construction. The dataset has a sourced core — 10 products, 25 name periods, one primary source each, no warnings. The register page is up. The analysis page is not written yet.
 
-## Warum
+```bash
+npm start      # serves the register at http://localhost:3000
+npm run validate
+npm test
+```
 
-Für Microsoft existiert mit der [Microsoft Rebrand Registry](https://www.msrebrandregistry.com) ein Vorbild. Für SAP gibt es nichts Vergleichbares — nachgesehen und dokumentiert in [VERGLEICHBARE-PROJEKTE.md](VERGLEICHBARE-PROJEKTE.md). Am nächsten kommt Wikipedias „List of SAP products", die Umbenennungen im Fließtext erwähnt, ohne Datum und ohne Einzelbeleg.
+## Why
 
-Dieses Projekt ist eine Neuimplementierung, kein Fork. Warum es das sein muss, steht in [LIZENZPRUEFUNG.md](LIZENZPRUEFUNG.md): Das Vorbild trägt keine Lizenz, damit gilt „all rights reserved". Übernommen sind ausschließlich das Konzept und die Kennzahldefinition — beides nicht schutzfähig —, kein Code, kein CSS, kein Text, keine Daten.
+Microsoft has one: the [Microsoft Rebrand Registry](https://www.msrebrandregistry.com). SAP has nothing comparable — looked into and written up in [COMPARABLE-PROJECTS.md](COMPARABLE-PROJECTS.md). The closest thing is Wikipedia's "List of SAP products", which mentions renames in passing, without dates and without individual sources.
 
-## Belegpflicht
+This is a reimplementation, not a fork. [LICENSE-REVIEW.md](LICENSE-REVIEW.md) sets out why it has to be: the model project carries no licence, which means all rights reserved. What is taken from it is the concept and the definition of the metrics, neither of which is protectable. No code, no CSS, no text, no data.
 
-Jede Namensperiode zitiert mindestens eine Quelle. Die Präzision der Quelle bleibt erhalten: Wo nur ein Jahr belegt ist, steht ein Jahr, kein erfundener Tag. Ein Qualifier hält fest, ob ein Datum Ankündigung, Marktstart, Wirksamkeit oder nur der früheste belegbare Zeitpunkt ist.
+## Evidence
 
-Bevorzugte Quellen in dieser Reihenfolge: SAP News Center, SAP Help Portal einschließlich archivierter Stände, offizielle Produktseiten über die Wayback Machine, TechEd- und Sapphire-Keynotes. Analystenberichte und Blogs nur, wenn nichts Besseres existiert, und dann als solche gekennzeichnet.
+Every name period cites at least one source. The precision of the source is preserved: where only a year is documented, a year is what you get, not an invented day. A qualifier records whether a date marks an announcement, a launch, the day something took effect, or merely the earliest point we can prove.
 
-## Drei Arten von Übergang
+The load-bearing source for the current dataset is SAP's own Form 20-F filings with the SEC, unbroken since 1999. They are first-party, dated, and they stay online — `news.sap.com` has deleted its older articles, `sap.com` blocks automated requests, and the Wayback Machine throttles. Their limit is that they appear once a year, so they give upper bounds rather than exact rename dates. [SCHEMA.md](SCHEMA.md) explains how that is handled and what it does to the medians.
 
-Der Kern des Projekts ist eine Unterscheidung, die das Vorbild nicht braucht:
+## Three kinds of transition
 
-- **`rename`** — reine Umbenennung bei fortbestehendem Produkt. Der Normalfall und die einzige Kategorie, die in Median und Index eingeht.
-- **`assimilation`** — Eingliederung nach einem Zukauf, typischerweise das Voranstellen des SAP-Kürzels. Faktisch vorhersehbar, deshalb außerhalb der Statistik. Stattdessen eigene Kennzahl: „Zeit bis zur SAP-Werdung".
-- **`generation`** — Technologie- oder Generationswechsel, kein Rebranding. Standardmäßig ausgeblendet, per Filter zuschaltbar, nie in den Statistiken.
+The heart of the project is a distinction the model project does not need:
 
-Zählte man alle drei zusammen, wirkten zugekaufte Familien künstlich unruhig, und der Index sagte Umbenennungen für Produkte voraus, die ihre Pflichtrunde längst hinter sich haben.
+- **`rename`** — a plain change of name with the product carrying on. The normal case, and the only category that feeds the median and the index.
+- **`assimilation`** — absorption after an acquisition, typically prefixing the SAP name. Predictable, so it sits outside the statistics and gets its own metric instead: time to SAP-ification.
+- **`generation`** — a technology or generation change rather than a rebrand. Hidden by default, available through a filter, never in the statistics.
 
-## Was der Index nicht ist
+Count all three together and bought-in families look artificially restless, while the index starts predicting renames for products that have long since done their compulsory round.
 
-Der Risk Index misst historischen Umbenennungsdruck. Er ist keine Wahrscheinlichkeit und keine Aussage über SAPs Pläne. Diese Einschränkung gehört auf die Analyseseite selbst, nicht ins Kleingedruckte.
+## What the index is not
 
-## Nicht im Umfang
+The risk index measures historical rename pressure. It is not a probability and says nothing about SAP's plans. That caveat belongs on the analysis page itself, not in the small print.
 
-Eingestellte Produkte, Logo-Historie, Umbenennungen von Preismodellen, SAP-interne Projektnamen. Kein Bildmaterial: keine SAP-Logos, keine Markenzeichen als Grafik. Die Seite ist rein textuell.
+## Out of scope
 
-## Angedacht, nicht entschieden
+Discontinued products, logo history, renamed pricing models, SAP-internal project names. No imagery: no SAP logos, no trademarks as graphics. The site is text and one emoji per product.
 
-**Anonyme War Stories.** Zu einer Umbenennung die Erfahrungen derer sammeln, die sie ausbaden mussten — der eigentliche Grund, warum ein solches Register jemanden interessiert. Der Haken ist nicht die Idee, sondern was sie kostet: Das Projekt ist heute zwei statische Seiten über einer einzigen Datei, ohne Server, ohne Zustand. Nutzerbeiträge brauchen Annahme, Speicherung, Moderation und einen Umgang mit Missbrauch und Personenbezug. Das ist eine eigene Entscheidung mit eigenem Aufwand, kein Zusatzfeature — und sie wäre erst sinnvoll, wenn das Register selbst steht.
+## Layout of the repository
 
-## Lizenz
+| Path | What it holds |
+| --- | --- |
+| `src/data/products.json` | the dataset, canonical |
+| `src/validate.js`, `scripts/validate-data.js` | schema and consistency checks |
+| `src/model.js` | every derived figure, shared by both pages |
+| `src/dates.js` | dates at mixed precision, without inventing days |
+| `src/register.js`, `index.html`, `src/styles.css` | the register page |
+| `tests/` | unit tests, run by `npm test` and in CI |
 
-Code unter der [MIT-Lizenz](LICENSE). Datensatz unter [CC BY 4.0](LICENSE-DATA). Getrennt, damit die Recherchearbeit weiterverwendbar bleibt, auch wenn jemand den Code nicht braucht.
+## Considered, not decided
 
-## Rechtliches
+**Anonymous war stories.** Collecting, per rename, the experience of the people who had to absorb it — the actual reason a register like this interests anyone. The catch is not the idea but what it costs. Today the project is two static pages over a single file, with no server and no state. Contributions from users need intake, storage, moderation and an answer to abuse and personal data. That is a decision of its own with a budget of its own, not a feature to bolt on, and it only makes sense once the register itself stands.
 
-Unabhängiges Rechercheprojekt ohne Verbindung zu SAP. Produktnamen und Marken gehören SAP SE. Kein Anspruch auf Vollständigkeit.
+## Licence
+
+Code under the [MIT licence](LICENSE). Dataset under [CC BY 4.0](LICENSE-DATA). Kept apart so the research stays reusable even for someone who has no use for the code.
+
+## Legal
+
+An independent research project with no connection to SAP. Product names and trademarks belong to SAP SE. No claim to completeness.

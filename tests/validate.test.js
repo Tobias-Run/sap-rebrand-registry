@@ -2,25 +2,25 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { validate } from '../src/validate.js';
 
-// Kunstprodukte statt echter SAP-Namen: Testdaten sollen nie mit dem
-// belegten Datensatz verwechselt werden koennen.
+// Invented products rather than real SAP names: test fixtures must never be
+// mistaken for the sourced dataset.
 function dataset(overrides = {}) {
   return {
     asOf: '2026-08-18',
     sources: [
-      { id: 'src-launch', title: 'Ankuendigung', publisher: 'Beispielverlag', url: 'https://example.org/a', type: 'first-party' },
-      { id: 'src-rename', title: 'Umbenennung', publisher: 'Beispielverlag', url: 'https://example.org/b', type: 'first-party' }
+      { id: 'src-launch', title: 'Announcement', publisher: 'Example Press', url: 'https://example.org/a', type: 'first-party' },
+      { id: 'src-rename', title: 'Rename', publisher: 'Example Press', url: 'https://example.org/b', type: 'first-party' }
     ],
     products: [
       {
-        id: 'produkt-alpha',
+        id: 'product-alpha',
         emoji: '🧪',
-        currentName: 'Alpha Zwei',
+        currentName: 'Alpha Two',
         family: 'platform-dev',
         origin: 'organic',
         periods: [
-          { name: 'Alpha Eins', start: '2015-03', end: '2020-01-01', qualifier: 'launch', sources: ['src-launch'] },
-          { name: 'Alpha Zwei', start: '2020-01-01', qualifier: 'effective', transition: 'rename', sources: ['src-rename'] }
+          { name: 'Alpha One', start: '2015-03', end: '2020-01-01', qualifier: 'launch', sources: ['src-launch'] },
+          { name: 'Alpha Two', start: '2020-01-01', qualifier: 'effective', transition: 'rename', sources: ['src-rename'] }
         ]
       }
     ],
@@ -36,208 +36,208 @@ function errorsOf(data) {
   return validate(data).errors.join('\n');
 }
 
-test('ein sauberer Datensatz erzeugt weder Fehler noch Warnungen', () => {
+test('a clean dataset produces neither errors nor warnings', () => {
   const report = validate(dataset());
   assert.deepEqual(report.errors, []);
   assert.deepEqual(report.warnings, []);
   assert.equal(report.ok, true);
 });
 
-test('der leere Ausgangsdatensatz ist gueltig', () => {
+test('the empty starting dataset is valid', () => {
   const report = validate({ asOf: '2026-08-18', sources: [], products: [] });
   assert.deepEqual(report.errors, []);
 });
 
-test('asOf muss tagesgenau sein', () => {
-  assert.match(errorsOf(dataset({ asOf: '2026-08' })), /asOf.*tagesgenau/);
-  assert.match(errorsOf(dataset({ asOf: undefined })), /asOf.*fehlt/);
+test('asOf has to be day-precise', () => {
+  assert.match(errorsOf(dataset({ asOf: '2026-08' })), /asOf.*day-precise/);
+  assert.match(errorsOf(dataset({ asOf: undefined })), /asOf.*missing/);
 });
 
-test('genau eine laufende Periode je Produkt', () => {
-  const zwei = dataset();
-  delete firstProduct(zwei).periods[0].end;
-  assert.match(errorsOf(zwei), /2 laufende Perioden/);
+test('exactly one running period per product', () => {
+  const two = dataset();
+  delete firstProduct(two).periods[0].end;
+  assert.match(errorsOf(two), /2 running periods/);
 
-  const keine = dataset();
-  firstProduct(keine).periods[1].end = '2024-01-01';
-  assert.match(errorsOf(keine), /keine laufende Periode/);
+  const none = dataset();
+  firstProduct(none).periods[1].end = '2024-01-01';
+  assert.match(errorsOf(none), /no running period/);
 });
 
-test('die laufende Periode muss die letzte sein', () => {
+test('the running period has to be the last one', () => {
   const data = dataset();
   const product = firstProduct(data);
   product.periods = [product.periods[1], { ...product.periods[0], transition: 'rename' }];
-  product.currentName = 'Alpha Eins';
-  assert.match(errorsOf(data), /laufende Periode muss die letzte sein/);
+  product.currentName = 'Alpha One';
+  assert.match(errorsOf(data), /running period must be the last one/);
 });
 
-test('Perioden muessen lueckenlos aneinander anschliessen', () => {
-  const luecke = dataset();
-  firstProduct(luecke).periods[0].end = '2019-06-01';
-  assert.match(errorsOf(luecke), /Beginn der Folgeperiode/);
+test('periods have to meet without gaps', () => {
+  const gap = dataset();
+  firstProduct(gap).periods[0].end = '2019-06-01';
+  assert.match(errorsOf(gap), /start of the following period/);
 
-  const ueberlappung = dataset();
-  firstProduct(ueberlappung).periods[1].start = '2019-01-01';
-  assert.match(errorsOf(ueberlappung), /Beginn der Folgeperiode/);
+  const overlap = dataset();
+  firstProduct(overlap).periods[1].start = '2019-01-01';
+  assert.match(errorsOf(overlap), /start of the following period/);
 });
 
-test('ein Ende muss nach seinem Beginn liegen', () => {
+test('an end has to fall after its start', () => {
   const data = dataset();
   firstProduct(data).periods[0].start = '2021-01-01';
   firstProduct(data).periods[0].end = '2020-01-01';
-  assert.match(errorsOf(data), /liegt nicht nach Beginn/);
+  assert.match(errorsOf(data), /does not fall after start/);
 });
 
-test('nichts darf nach asOf liegen', () => {
+test('nothing may fall after asOf', () => {
   const data = dataset();
   firstProduct(data).periods[1].start = '2027-01-01';
   firstProduct(data).periods[0].end = '2027-01-01';
-  assert.match(errorsOf(data), /liegt nach asOf/);
+  assert.match(errorsOf(data), /falls after asOf/);
 });
 
-test('die erste Periode hat keinen Uebergang, jede weitere braucht einen', () => {
-  const erste = dataset();
-  firstProduct(erste).periods[0].transition = 'rename';
-  assert.match(errorsOf(erste), /erste Periode hat keinen Uebergang/);
+test('the first period has no transition, every later one needs a transition', () => {
+  const first = dataset();
+  firstProduct(first).periods[0].transition = 'rename';
+  assert.match(errorsOf(first), /first period has no transition/);
 
-  const zweite = dataset();
-  delete firstProduct(zweite).periods[1].transition;
-  assert.match(errorsOf(zweite), /transition.*unbekannt/);
+  const second = dataset();
+  delete firstProduct(second).periods[1].transition;
+  assert.match(errorsOf(second), /transition.*unknown/);
 
-  const unbekannt = dataset();
-  firstProduct(unbekannt).periods[1].transition = 'umbenennung';
-  assert.match(errorsOf(unbekannt), /transition.*unbekannt/);
+  const nonsense = dataset();
+  firstProduct(nonsense).periods[1].transition = 'renaming';
+  assert.match(errorsOf(nonsense), /transition.*unknown/);
 });
 
-test('jede Periode braucht mindestens eine aufloesbare Quelle', () => {
-  const ohne = dataset();
-  firstProduct(ohne).periods[1].sources = [];
-  assert.match(errorsOf(ohne), /mindestens eine Quelle/);
+test('every period needs at least one source that resolves', () => {
+  const without = dataset();
+  firstProduct(without).periods[1].sources = [];
+  assert.match(errorsOf(without), /at least one source/);
 
-  const unbekannt = dataset();
-  firstProduct(unbekannt).periods[1].sources = ['src-gibt-es-nicht'];
-  assert.match(errorsOf(unbekannt), /nicht auflösbar/);
+  const unknown = dataset();
+  firstProduct(unknown).periods[1].sources = ['src-does-not-exist'];
+  assert.match(errorsOf(unknown), /does not resolve/);
 });
 
-test('nur nachrangige Quellen ergeben eine Warnung, keinen Fehler', () => {
+test('lower-ranked sources alone give a warning, not an error', () => {
   const data = dataset();
   data.sources[1].type = 'blog';
   const report = validate(data);
   assert.deepEqual(report.errors, []);
-  assert.match(report.warnings.join('\n'), /nur nachrangige Quellen/);
+  assert.match(report.warnings.join('\n'), /only lower-ranked sources/);
 });
 
-test('unbenutzte Quellen ergeben eine Warnung', () => {
+test('unused sources give a warning', () => {
   const data = dataset();
-  data.sources.push({ id: 'src-lose', title: 'Ungenutzt', publisher: 'X', url: 'https://example.org/c', type: 'archive' });
+  data.sources.push({ id: 'src-loose', title: 'Unused', publisher: 'X', url: 'https://example.org/c', type: 'archive' });
   const report = validate(data);
   assert.deepEqual(report.errors, []);
-  assert.match(report.warnings.join('\n'), /von keiner Periode referenziert/);
+  assert.match(report.warnings.join('\n'), /referenced by no period/);
 });
 
-test('acquiredFrom und acquisitionDate haengen an origin', () => {
-  const organisch = dataset();
-  firstProduct(organisch).acquiredFrom = 'Irgendwer AG';
-  assert.match(errorsOf(organisch), /acquiredFrom.*nur bei origin/);
+test('acquiredFrom and acquisitionDate depend on origin', () => {
+  const organic = dataset();
+  firstProduct(organic).acquiredFrom = 'Somebody Inc.';
+  assert.match(errorsOf(organic), /acquiredFrom.*only allowed with origin/);
 
-  const zugekauft = dataset();
-  firstProduct(zugekauft).origin = 'acquired';
-  const fehler = errorsOf(zugekauft);
-  assert.match(fehler, /acquiredFrom.*fehlt/);
-  assert.match(fehler, /acquisitionDate.*fehlt/);
+  const acquired = dataset();
+  firstProduct(acquired).origin = 'acquired';
+  const errors = errorsOf(acquired);
+  assert.match(errors, /acquiredFrom.*missing or empty/);
+  assert.match(errors, /acquisitionDate.*missing/);
 });
 
-test('eine Eingliederung setzt einen Zukauf voraus', () => {
+test('an assimilation requires an acquisition', () => {
   const data = dataset();
   firstProduct(data).periods[1].transition = 'assimilation';
-  assert.match(errorsOf(data), /'assimilation' setzt origin: 'acquired' voraus/);
+  assert.match(errorsOf(data), /'assimilation' requires origin: 'acquired'/);
 });
 
-test('die Eingliederung kann nicht vor dem Zukauf liegen', () => {
+test('the assimilation cannot precede the acquisition', () => {
   const data = dataset();
   const product = firstProduct(data);
   product.origin = 'acquired';
   product.acquiredFrom = 'Alpha Systems Inc.';
   product.acquisitionDate = '2022-05-01';
   product.periods[1].transition = 'assimilation';
-  assert.match(errorsOf(data), /acquisitionDate.*liegt nach der Eingliederung/);
+  assert.match(errorsOf(data), /acquisitionDate.*falls after the assimilation/);
 });
 
-test('currentName muss der laufenden Periode entsprechen', () => {
+test('currentName has to match the running period', () => {
   const data = dataset();
-  firstProduct(data).currentName = 'Alpha Drei';
-  assert.match(errorsOf(data), /weicht vom Namen der laufenden Periode ab/);
+  firstProduct(data).currentName = 'Alpha Three';
+  assert.match(errorsOf(data), /differs from the name of the running period/);
 });
 
-test('Produkt-IDs sind eindeutige Slugs', () => {
-  const doppelt = dataset();
-  doppelt.products.push({ ...firstProduct(doppelt) });
-  assert.match(errorsOf(doppelt), /doppelte Produkt-ID/);
+test('product ids are unique slugs', () => {
+  const duplicate = dataset();
+  duplicate.products.push({ ...firstProduct(duplicate) });
+  assert.match(errorsOf(duplicate), /duplicate product id/);
 
-  const kruemel = dataset();
-  firstProduct(kruemel).id = 'Produkt Alpha';
-  assert.match(errorsOf(kruemel), /kein gueltiger Slug/);
+  const messy = dataset();
+  firstProduct(messy).id = 'Product Alpha';
+  assert.match(errorsOf(messy), /not a valid slug/);
 });
 
-test('Familie, Herkunft und Qualifier sind geschlossene Wertelisten', () => {
+test('family, origin and qualifier are closed value lists', () => {
   const data = dataset();
-  firstProduct(data).family = 'sonstiges';
-  firstProduct(data).origin = 'geerbt';
-  firstProduct(data).periods[0].qualifier = 'vermutlich';
-  const fehler = errorsOf(data);
-  assert.match(fehler, /family.*unbekannt/);
-  assert.match(fehler, /origin.*unbekannt/);
-  assert.match(fehler, /qualifier.*unbekannt/);
+  firstProduct(data).family = 'other';
+  firstProduct(data).origin = 'inherited';
+  firstProduct(data).periods[0].qualifier = 'probably';
+  const errors = errorsOf(data);
+  assert.match(errors, /family.*unknown/);
+  assert.match(errors, /origin.*unknown/);
+  assert.match(errors, /qualifier.*unknown/);
 });
 
-test('Quellen brauchen ID, Titel, Herausgeber, URL und Typ', () => {
+test('sources need an id, title, publisher, url and type', () => {
   const data = dataset();
-  data.sources[0] = { id: 'src-launch', title: '', publisher: 'X', url: 'example.org', type: 'zeitung' };
-  const fehler = errorsOf(data);
-  assert.match(fehler, /title.*fehlt oder ist leer/);
-  assert.match(fehler, /url.*http/);
-  assert.match(fehler, /type.*unbekannt/);
+  data.sources[0] = { id: 'src-launch', title: '', publisher: 'X', url: 'example.org', type: 'newspaper' };
+  const errors = errorsOf(data);
+  assert.match(errors, /title.*missing or empty/);
+  assert.match(errors, /url.*http/);
+  assert.match(errors, /type.*unknown/);
 });
 
-test('doppelte Quellen-IDs fallen auf', () => {
+test('duplicate source ids are caught', () => {
   const data = dataset();
   data.sources.push({ ...data.sources[0] });
-  assert.match(errorsOf(data), /doppelte Quellen-ID/);
+  assert.match(errorsOf(data), /duplicate source id/);
 });
 
-test('grober Unfug bringt den Validator nicht zum Absturz', () => {
-  for (const junk of [null, [], 'text', 42]) {
-    const report = validate(junk);
-    assert.ok(report.errors.length > 0, `${JSON.stringify(junk)} haette Fehler ergeben muessen`);
-  }
-  assert.ok(validate({ asOf: '2026-08-18', sources: 'nein', products: 'auch nicht' }).errors.length >= 2);
-  assert.ok(validate({ asOf: '2026-08-18', sources: [], products: [{}] }).errors.length > 0);
-});
-
-test('ein fehlendes Emoji warnt, blockiert aber nicht', () => {
+test('a missing emoji warns but does not block', () => {
   const data = dataset();
   delete firstProduct(data).emoji;
   const report = validate(data);
   assert.deepEqual(report.errors, []);
-  assert.match(report.warnings.join('\n'), /emoji.*kein Emoji/);
+  assert.match(report.warnings.join('\n'), /emoji.*no emoji/);
 });
 
-test('ein Emoji darf keine Buchstaben, Ziffern oder Woerter sein', () => {
-  for (const wert of ['SAP', 'x', '1', '']) {
+test('an emoji may not be letters, digits or words', () => {
+  for (const value of ['SAP', 'x', '1', '']) {
     const data = dataset();
-    firstProduct(data).emoji = wert;
-    assert.match(errorsOf(data), /emoji/, `${JSON.stringify(wert)} haette abgewiesen werden muessen`);
+    firstProduct(data).emoji = value;
+    assert.match(errorsOf(data), /emoji/, `${JSON.stringify(value)} should have been rejected`);
   }
-  const zuLang = dataset();
-  firstProduct(zuLang).emoji = '🧪🧪🧪';
-  assert.match(errorsOf(zuLang), /emoji.*zu lang/);
+  const tooLong = dataset();
+  firstProduct(tooLong).emoji = '🧪🧪🧪';
+  assert.match(errorsOf(tooLong), /emoji.*too long/);
 });
 
-test('zusammengesetzte Emoji bleiben erlaubt', () => {
-  // Variationsselektor und ZWJ-Folge: mehrere Codepunkte, ein Zeichen.
-  for (const wert of ['🗄️', '🧑‍🏭', '✈️']) {
+test('composed emoji stay allowed', () => {
+  // Variation selector and ZWJ sequence: several code points, one character.
+  for (const value of ['🗄️', '🧑‍🏭', '✈️']) {
     const data = dataset();
-    firstProduct(data).emoji = wert;
-    assert.deepEqual(validate(data).errors, [], `${wert} haette durchgehen muessen`);
+    firstProduct(data).emoji = value;
+    assert.deepEqual(validate(data).errors, [], `${value} should have passed`);
   }
+});
+
+test('garbage input does not crash the validator', () => {
+  for (const junk of [null, [], 'text', 42]) {
+    const report = validate(junk);
+    assert.ok(report.errors.length > 0, `${JSON.stringify(junk)} should have produced errors`);
+  }
+  assert.ok(validate({ asOf: '2026-08-18', sources: 'no', products: 'also not' }).errors.length >= 2);
+  assert.ok(validate({ asOf: '2026-08-18', sources: [], products: [{}] }).errors.length > 0);
 });

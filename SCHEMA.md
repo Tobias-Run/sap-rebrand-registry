@@ -1,10 +1,10 @@
-# Datenschema
+# Data schema
 
-Kanonisch ist `src/data/products.json`. Alles Weitere — Laufzeiten, Median, Familienmuster, Index — wird daraus im Browser berechnet. Es gibt keine zweite Datenhaltung und keine von Hand gepflegten Kennzahlen.
+`src/data/products.json` is canonical. Everything else — durations, medians, family patterns, the index — is computed from it in the browser. There is no second copy of the data and no metric maintained by hand.
 
-Geprüft wird mit `npm run validate`. Das Skript läuft in CI und bricht bei jedem Fehler ab. Warnungen erscheinen, blockieren aber nicht.
+Checks run with `npm run validate`. The script runs in CI and fails on any error. Warnings are printed but do not block.
 
-## Aufbau
+## Shape
 
 ```json
 {
@@ -14,103 +14,103 @@ Geprüft wird mit `npm run validate`. Das Skript läuft in CI und bricht bei jed
 }
 ```
 
-`asOf` ist tagesgenau und Pflicht. Laufende Namensperioden werden gegen dieses Datum gerechnet, nicht gegen die Uhr des Besuchers — sonst wäre keine Zahl auf der Seite reproduzierbar.
+`asOf` is day-precise and required. Running name periods are measured against that date rather than the visitor's clock — otherwise no figure on the site would be reproducible.
 
-## Produkt
+## Product
 
-| Feld | Typ | Pflicht | Anmerkung |
+| Field | Type | Required | Note |
 | --- | --- | --- | --- |
-| `id` | Slug | ja | Kleinbuchstaben, Ziffern, Bindestriche. Ändert sich nie, auch nach einer Umbenennung nicht |
-| `currentName` | String | ja | muss dem Namen der laufenden Periode entsprechen |
-| `emoji` | String | nein | ein oder zwei Emoji als Zeilenmarke. Fehlt es, gibt es eine Warnung |
-| `family` | Enum | ja | eine der sieben Familien, siehe `src/constants.js` |
-| `origin` | `organic` \| `acquired` | ja | |
-| `acquiredFrom` | String | nur bei `acquired` | bei `organic` ein Fehler, nicht bloß überflüssig |
-| `acquisitionDate` | Datum | nur bei `acquired` | darf nicht nach der ersten `assimilation`-Periode liegen |
-| `periods` | Array | ja | chronologisch, mindestens ein Eintrag |
+| `id` | slug | yes | lowercase letters, digits, hyphens. Never changes, not even after a rename |
+| `currentName` | string | yes | has to match the name of the running period |
+| `emoji` | string | no | one or two emoji as a row marker. If absent, a warning |
+| `family` | enum | yes | one of the seven families, see `src/constants.js` |
+| `origin` | `organic` \| `acquired` | yes | |
+| `acquiredFrom` | string | only with `acquired` | an error with `organic`, not merely redundant |
+| `acquisitionDate` | date | only with `acquired` | must not fall after the first `assimilation` period |
+| `periods` | array | yes | chronological, at least one entry |
 
-## Periode
+## Period
 
-| Feld | Typ | Pflicht | Anmerkung |
+| Field | Type | Required | Note |
 | --- | --- | --- | --- |
-| `name` | String | ja | |
-| `start` | Datum | ja | inklusiv |
-| `end` | Datum | alle außer einer | exklusiv. Genau eine Periode je Produkt hat kein `end` |
-| `qualifier` | `launch` \| `announcement` \| `effective` \| `by` | ja | `by` = frühestes belegbares Datum, der wahre Beginn kann davor liegen |
-| `transition` | `rename` \| `assimilation` \| `generation` | alle außer der ersten | Art des Übergangs **in diese** Periode hinein |
-| `sources` | Array von Quellen-IDs | ja | mindestens eine, jede muss auflösbar sein |
+| `name` | string | yes | |
+| `start` | date | yes | inclusive |
+| `end` | date | all but one | exclusive. Exactly one period per product has no `end` |
+| `qualifier` | `launch` \| `announcement` \| `effective` \| `by` | yes | `by` = earliest provable date; the real start may lie before it |
+| `transition` | `rename` \| `assimilation` \| `generation` | all but the first | the kind of transition **into** this period |
+| `sources` | array of source ids | yes | at least one, each has to resolve |
 
-## Quelle
+## Source
 
-| Feld | Pflicht | Anmerkung |
+| Field | Required | Note |
 | --- | --- | --- |
-| `id` | ja | eindeutig |
-| `title`, `publisher` | ja | |
-| `url` | ja | muss mit `http://` oder `https://` beginnen |
-| `type` | ja | `first-party`, `archive`, `analyst`, `blog` |
-| `published`, `retrieved` | nein | Datum, falls bekannt |
+| `id` | yes | unique |
+| `title`, `publisher` | yes | |
+| `url` | yes | has to start with `http://` or `https://` |
+| `type` | yes | `first-party`, `archive`, `analyst`, `blog` |
+| `published`, `retrieved` | no | date, where known |
 
-`analyst` und `blog` gelten als nachrangig. Stützt sich eine Periode ausschließlich darauf, erscheint eine Warnung — die Seite kennzeichnet solche Belege später auch sichtbar.
+`analyst` and `blog` rank below the rest. A period resting on those alone produces a warning, and the site marks such evidence visibly as well.
 
-## Emoji statt Logo
+## An emoji instead of a logo
 
-Die Seite zeigt keine SAP-Logos und keine Marken als Grafik — das bleibt so. Ein Emoji je Produkt ist etwas anderes: eine Zeilenmarke, die eine lange Namenskette optisch trägt und ein Produkt in einer langen Tabelle wiederfindbar macht. Es steht für das, was das Produkt tut, nie für die Marke.
+The site shows no SAP logos and no trademarks as graphics. That stays. An emoji per product is a different thing: a row marker that carries a long chain of names and makes a product findable in a long table. It stands for what the product does, never for the brand.
 
-Gezählt werden sichtbare Zeichen, nicht Codepunkte: `🗄️` und `🧑‍🏭` sind je ein Zeichen, auch wenn Variationsselektor und ZWJ-Folge mehrere Codepunkte belegen. Zwei Zeichen sind die Grenze.
+What counts is visible characters, not code points: `🗄️` and `🧑‍🏭` are one character each, even though a variation selector and a ZWJ sequence take several code points. Two characters is the limit.
 
-## Datumsangaben
+## Dates
 
-Erlaubt sind `YYYY`, `YYYY-MM` und `YYYY-MM-DD`. Die Präzision der Quelle bleibt erhalten: Wo nur ein Jahr belegt ist, steht ein Jahr. **Es wird nie ein Tag erfunden**, um die Tabelle gleichmäßig aussehen zu lassen.
+Permitted forms are `YYYY`, `YYYY-MM` and `YYYY-MM-DD`. The precision of the source is preserved: where only a year is documented, a year is what is stored. **A day is never invented** to make the table look even.
 
-Für Vergleiche und Rechnungen wird auf den ersten Tag der jeweiligen Präzision normalisiert — `2015` und `2015-01-01` bezeichnen denselben Zeitpunkt. Für die Anzeige gilt das nicht: Dort bleibt sichtbar, wie genau eine Angabe wirklich ist.
+For comparison and arithmetic, a date is normalised to the first day of its precision — `2015` and `2015-01-01` mean the same instant. For display it is not: there, how precise an entry really is stays visible.
 
-Der Validator prüft auch den Kalender: `2015-02-29` wird abgewiesen, `2016-02-29` nicht.
+The validator checks the calendar too: `2015-02-29` is rejected, `2016-02-29` is not.
 
-## Wie datiert wird
+## How dates are anchored
 
-Der Validator prüft die Form, nicht die Wahrheit. Für die Wahrheit gilt eine Regel, die beim Erheben durchgehalten werden muss:
+The validator checks form, not truth. Truth rests on one rule, which has to hold while the data is gathered:
 
-**Verankert wird an dem, was der belegende Satz selbst behauptet.** Nennt die Quelle ein Datum („Released in 2019", „we have begun to sunset the SAP Cloud Platform brand in January 2021"), gilt dieses Datum in seiner Präzision, mit `launch`, `announcement` oder `effective`. Nennt sie keines und belegt nur, dass ein Name zu ihrem Erscheinungszeitpunkt in Gebrauch war, gilt das Erscheinungsdatum der Quelle mit `qualifier: "by"`.
+**Anchor to what the sourcing sentence itself claims.** Where the source names a date ("Released in 2019", "we have begun to sunset the SAP Cloud Platform brand in January 2021"), that date applies at its own precision, with `launch`, `announcement` or `effective`. Where it names none and only proves that a name was in use when it was published, the publication date applies with `qualifier: "by"`.
 
-Daraus folgt eine bekannte Verzerrung: `by`-Daten liegen systematisch **später** als der wahre Beginn. Eine Umbenennung im April erscheint als „by" des Jahres, in dem sie erstmals belegt ist. Für Medianwerte heißt das, dass Namensperioden eher zu kurz als zu lang gemessen werden. Das ist der Preis dafür, kein Datum zu erfinden — und der Grund, warum `by` überhaupt existiert.
+One known distortion follows from this: `by` dates sit systematically **later** than the real start. A rename in April shows up as "by" the year it was first documented. For medians that means name periods are measured too short rather than too long. That is the price of not inventing a date, and the reason `by` exists at all.
 
-## Regeln, die der Validator durchsetzt
+## Rules the validator enforces
 
-1. `asOf` ist vorhanden und tagesgenau.
-2. Jedes Produkt hat **genau eine** laufende Periode, und das ist die **letzte**.
-3. Die Perioden sind lückenlos und überschneidungsfrei: Das `end` einer Periode ist zeichengleich das `start` der nächsten.
-4. Kein Datum liegt nach `asOf`.
-5. Ein `end` liegt nach seinem `start`.
-6. Die **erste** Periode hat **kein** `transition` — sie ist der Ausgangszustand, es gibt keinen Übergang in sie hinein. Jede weitere Periode hat eines.
-7. `assimilation` setzt `origin: "acquired"` voraus.
-8. `acquisitionDate` liegt nicht nach der ersten `assimilation`-Periode.
-9. `acquiredFrom` und `acquisitionDate` gibt es nur bei `origin: "acquired"`, dort aber verpflichtend.
-10. Jede Periode zitiert mindestens eine auflösbare Quelle.
-11. Produkt- und Quellen-IDs sind eindeutig, Produkt-IDs sind Slugs.
-12. `currentName` entspricht dem Namen der laufenden Periode.
-13. Alle Enum-Felder halten sich an ihre Werteliste.
-14. `emoji` enthaelt, falls gesetzt, keine Buchstaben oder Ziffern und hoechstens zwei sichtbare Zeichen.
+1. `asOf` is present and day-precise.
+2. Each product has **exactly one** running period, and it is the **last** one.
+3. Periods leave no gaps and do not overlap: one period's `end` is character-for-character the next one's `start`.
+4. No date falls after `asOf`.
+5. An `end` falls after its `start`.
+6. The **first** period has **no** `transition` — it is the starting state, and there is no transition into it. Every later period has one.
+7. `assimilation` requires `origin: "acquired"`.
+8. `acquisitionDate` does not fall after the first `assimilation` period.
+9. `acquiredFrom` and `acquisitionDate` exist only with `origin: "acquired"`, and there they are required.
+10. Every period cites at least one source that resolves.
+11. Product and source ids are unique; product ids are slugs.
+12. `currentName` matches the name of the running period.
+13. Every enum field keeps to its value list.
+14. `emoji`, where set, contains no letters or digits and at most two visible characters.
 
-Warnungen, die nicht blockieren: eine Periode ohne Erstquelle, eine Quelle, die niemand referenziert, ein Produkt ohne Emoji.
+Warnings that do not block: a period without a primary source, a source no period references, a product without an emoji.
 
-## Warum `transition` der Kern ist
+## Why `transition` is the heart of it
 
-- **`rename`** — reine Umbenennung bei fortbestehendem Produkt. Der Normalfall und die **einzige** Kategorie, die in Median, Familienfrequenz und Index eingeht.
-- **`assimilation`** — Eingliederung nach einem Zukauf, typischerweise das Voranstellen des SAP-Kürzels. Faktisch vorhersehbar. Zählte man sie mit, wirkten zugekaufte Familien künstlich unruhig, und der Index sagte Umbenennungen für Produkte voraus, die ihre Pflichtrunde längst hinter sich haben. Stattdessen eigene Kennzahl: „Zeit bis zur SAP-Werdung", die Spanne zwischen `acquisitionDate` und der ersten `assimilation`-Periode.
-- **`generation`** — Technologie- oder Generationswechsel, kein Rebranding. Standardmäßig ausgeblendet, per Filter zuschaltbar, nie in den Statistiken.
+- **`rename`** — a plain change of name with the product carrying on. The normal case, and the **only** category that feeds the median, family frequency and index.
+- **`assimilation`** — absorption after an acquisition, typically prefixing the SAP name. Predictable in practice. Counting it would make bought-in families look artificially restless, and the index would predict renames for products that have long since done their compulsory round. It gets its own metric instead: time to SAP-ification, the gap between `acquisitionDate` and the first `assimilation` period.
+- **`generation`** — a technology or generation change rather than a rebrand. Hidden by default, available through a filter, never in the statistics.
 
-Beim Vorbild sind Plattformtransformationen schlicht ausgeschlossen. Bei SAP sind sie zu häufig, um sie zu ignorieren, und zu andersartig, um sie mitzuzählen.
+The model project simply excludes platform transformations. At SAP they are too frequent to ignore and too different in kind to count.
 
-## Offene Entscheidungen
+## Open decisions
 
-Drei Punkte sind bewusst nicht entschieden und dürfen es auch nicht einseitig werden:
+Three points are deliberately unsettled, and none of them should be settled unilaterally:
 
-**Rückbenennungen.** Zählt die Rückkehr zu einem früheren Namen als neue Periode oder als Korrektur der vorherigen? SAP hat das mehrfach getan, besonders im Analytics-Bereich. Die Wahl verschiebt die Medianwerte spürbar. Beide Varianten werden am fertigen Datensatz durchgerechnet und zur Entscheidung vorgelegt (Schritt 6).
+**Renames back to an earlier name.** Does returning to a former name count as a new period or as a correction of the previous one? SAP has done it several times, particularly in analytics. The choice moves the medians noticeably. Both variants get computed against the finished dataset and put up for decision (step 6).
 
-**Umbenennungswellen.** Das Schema hat kein Feld dafür, dass mehrere Produkte gemeinsam umbenannt wurden — etwa im Januar 2021, als die Marke „SAP Cloud Platform" abgeschafft wurde. Ein optionales `wave`-Feld auf Periodenebene würde auf der Analyseseite einen Abschnitt tragen, den das Vorbild nicht haben kann: SAP benennt nicht einzeln um, sondern in Schüben. Kostet ein Feld und eine Validierungsregel.
+**Rename waves.** The schema has no field for several products being renamed together — January 2021, say, when the "SAP Cloud Platform" brand was dropped. An optional `wave` field at period level would carry a section on the analysis page that the model project cannot have: SAP does not rename products one at a time, it renames them in batches. Costs one field and one validation rule.
 
-Der erste Datensatz belegt das Muster bereits: `sap-btp` und `sap-integration-suite` haben beide eine Periode mit `start: "2021-01"`, aus derselben Quelle. Bei zehn Produkten sind das zwei — die Welle ist im Datensatz sichtbar, aber noch nicht groß genug, um die Feldfrage zu entscheiden.
+The first dataset already shows the pattern: `sap-btp` and `sap-integration-suite` both have a period starting `2021-01`, from the same source. Across ten products that is two — the wave is visible in the data, but not yet large enough to decide the question.
 
-**Parallel weiterlaufende Vorgänger.** Der Datensatz stößt an eine Grenze des Modells: Eine Namenskette unterstellt, dass der alte Name endet, wenn der neue beginnt. Bei SAP stimmt das oft nicht. SAP ERP wird bis heute gepflegt, obwohl SAP S/4HANA seit 2015 danebensteht; dasselbe gilt für SAP BW neben SAP BW/4HANA. Beide sind deshalb **nicht** als `generation`-Periode ihres Vorgängers erfasst — das würde behaupten, der Vorgänger sei beendet.
+**Predecessors that keep running.** The dataset runs into a limit of the model: a chain of names implies that the old name ends when the new one begins. At SAP that is often untrue. SAP ERP is still maintained even though SAP S/4HANA has stood beside it since 2015; the same goes for SAP BW next to SAP BW/4HANA. Neither is recorded as a `generation` period of its predecessor, because that would assert the predecessor had ended.
 
-Damit fehlt dem Register aber genau der Übergang, für den `generation` gedacht war. Zur Wahl stehen: den Nachfolger als eigenes Produkt führen (ehrlich, aber die Verbindung geht verloren), das Modell um überlappende Perioden erweitern (teuer, betrifft jede Validierungsregel), oder `generation` auf die Fälle beschränken, in denen der Vorgänger wirklich verschwindet (so ist es jetzt, siehe `sap-erp`: SAP R/3 → mySAP ERP). Gehört mit Schritt 6 entschieden.
+That leaves the register without the very transition `generation` was meant for. The options: treat the successor as its own product (honest, but the connection is lost), extend the model to allow overlapping periods (expensive, and it touches every validation rule), or restrict `generation` to cases where the predecessor really does disappear (which is how it stands now — see `sap-erp`, SAP R/3 → mySAP ERP). To be decided with step 6.
