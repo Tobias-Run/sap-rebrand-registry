@@ -1,0 +1,4 @@
+node_modules/
+.deploy-package/
+.DS_Store
+*.log
