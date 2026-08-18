@@ -65,7 +65,9 @@ Discontinued products, logo history, renamed pricing models, SAP-internal projec
 
 ## Considered, not decided
 
-**Anonymous war stories.** Collecting, per rename, the experience of the people who had to absorb it — the actual reason a register like this interests anyone. The catch is not the idea but what it costs. Today the project is two static pages over a single file, with no server and no state. Contributions from users need intake, storage, moderation and an answer to abuse and personal data. That is a decision of its own with a budget of its own, not a feature to bolt on, and it only makes sense once the register itself stands.
+**Anonymous war stories.** Let people say what a rename actually cost them: the migration nobody budgeted for, the sales deck redone twice, the internal wiki that still uses the old name six years later. That is probably the part anyone would read first.
+
+It needs a server, though, and right now there is none. Two static pages read one JSON file, and that is the whole architecture. Accepting text from strangers means storing it, moderating it, and dealing with spam, libel, and people who name their employer without thinking it through. Worth doing later. Not worth doing before the register is finished.
 
 ## Licence
 
