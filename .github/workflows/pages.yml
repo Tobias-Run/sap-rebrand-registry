@@ -1,0 +1,65 @@
+# Publishes the register to GitHub Pages. The deploy waits for the dataset to
+# validate and the tests to pass, so a broken products.json fails the run
+# instead of going live - the site should never show a number the validator
+# would reject.
+
+name: Deploy to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time, and never cancel one that is already running.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate dataset
+        run: npm run validate
+      - name: Unit tests
+        run: npm test
+
+  build:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Only what the site needs. Tests, scripts and the research notes stay in
+      # the repository and off the web server. src/ ships whole: the page loads
+      # its modules and its dataset from there, and the dataset is meant to be
+      # fetchable on its own.
+      - name: Collect the site
+        run: |
+          mkdir -p _site
+          cp index.html LICENSE LICENSE-DATA _site/
+          cp -r src _site/
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

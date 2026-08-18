@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Datensatz validieren
+      - name: Validate dataset
         run: npm run validate
-      - name: Tests
+      - name: Unit tests
         run: npm test

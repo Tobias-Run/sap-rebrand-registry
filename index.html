@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAP Rebrand Registry — the register</title>
+<meta name="description" content="Every documented name period of an SAP product, with a source for each one.">
+<link rel="stylesheet" href="src/styles.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <h1>SAP Rebrand Registry</h1>
+    <p class="standfirst">
+      Every name an SAP product has carried, when it carried it, and who says so.
+      One source per period, at the precision the source actually gives.
+    </p>
+    <nav>
+      <a href="index.html" aria-current="page">Register</a>
+      <span class="pending" title="Not built yet">Analysis</span>
+      <a href="https://github.com/Tobias-Run/sap-rebrand-registry">Source &amp; data</a>
+    </nav>
+    <ul class="tally" id="tally"></ul>
+  </header>
+
+  <section class="controls" aria-label="Filters">
+    <div class="row">
+      <label class="field" for="q">Search</label>
+      <input type="search" id="q" placeholder="Any name, current or retired — try “hybris”" autocomplete="off">
+      <label class="field" for="sort">Sort</label>
+      <select id="sort"></select>
+    </div>
+    <div class="row">
+      <span class="field">Family</span>
+      <div class="chips" id="families" role="group" aria-label="Filter by family"></div>
+    </div>
+    <div class="row">
+      <span class="field">Has a</span>
+      <div class="chips" id="transitions" role="group" aria-label="Filter by kind of transition"></div>
+    </div>
+  </section>
+
+  <p class="result-count" id="count" role="status"></p>
+
+  <main id="list"></main>
+
+  <footer class="notes">
+    <h2>How to read a date</h2>
+    <p>
+      Dates keep the precision of their source. Where only a year is documented, a year is
+      what you see. No day is invented to make the table look tidy.
+    </p>
+    <dl>
+      <dt>launched / announced / effective</dt>
+      <dd>The source names this date for this event.</dd>
+      <dt>in use by</dt>
+      <dd>
+        The earliest date we can prove the name was in use. The real start may lie earlier,
+        and usually does. Most of these come from SAP's annual reports, which appear once a
+        year — a rename in April shows up in the following February at the earliest.
+      </dd>
+    </dl>
+
+    <h2>The three kinds of transition</h2>
+    <dl>
+      <dt><span class="badge rename">Rename</span></dt>
+      <dd>The product carries on, the name changes. The only kind that feeds the statistics.</dd>
+      <dt><span class="badge assimilation">Assimilation</span></dt>
+      <dd>
+        An acquired product takes the SAP prefix. Predictable enough that counting it would
+        make bought-in families look restless. Measured separately, as time to SAP-ification.
+      </dd>
+      <dt><span class="badge generation">Generation</span></dt>
+      <dd>A technology or generation change rather than a rebrand. Never counted.</dd>
+    </dl>
+
+    <h2>What this is not</h2>
+    <p>
+      An independent research project with no connection to SAP. Product names and trademarks
+      belong to SAP SE. No claim to completeness: a product is listed once its chain of names
+      can be sourced, and several known chains are still missing their early years.
+    </p>
+    <p id="asof"></p>
+  </footer>
+
+</div>
+<script type="module" src="src/register.js"></script>
+</body>
+</html>
