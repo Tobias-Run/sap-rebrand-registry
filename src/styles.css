@@ -25,8 +25,13 @@
   --radius: 3px;
 }
 
+/* Three theme states, not two: an explicit choice stamps data-theme on the root,
+   while the default "system" setting stamps nothing and leaves only the media
+   query. Tokens are redefined for both so either signal wins in either
+   direction; no component colour is ever declared inside these blocks. */
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --ink: #e6e3dd;
     --ink-soft: #a4a9b1;
     --ink-faint: #737b85;
@@ -44,6 +49,25 @@
     --weak: #d9bd6d;
     --weak-bg: #2e2718;
   }
+}
+
+:root[data-theme="dark"] {
+  --ink: #e6e3dd;
+  --ink-soft: #a4a9b1;
+  --ink-faint: #737b85;
+  --paper: #14161a;
+  --card: #1b1e23;
+  --rule: #2c3037;
+  --rule-strong: #3d434c;
+
+  --rename: #e2a184;
+  --rename-bg: #33231c;
+  --assimilation: #9fbae4;
+  --assimilation-bg: #1c2531;
+  --generation: #a8c795;
+  --generation-bg: #1f2a1b;
+  --weak: #d9bd6d;
+  --weak-bg: #2e2718;
 }
 
 * { box-sizing: border-box; }
