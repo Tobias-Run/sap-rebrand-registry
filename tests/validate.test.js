@@ -14,6 +14,7 @@ function dataset(overrides = {}) {
     products: [
       {
         id: 'produkt-alpha',
+        emoji: '🧪',
         currentName: 'Alpha Zwei',
         family: 'platform-dev',
         origin: 'organic',
@@ -211,4 +212,32 @@ test('grober Unfug bringt den Validator nicht zum Absturz', () => {
   }
   assert.ok(validate({ asOf: '2026-08-18', sources: 'nein', products: 'auch nicht' }).errors.length >= 2);
   assert.ok(validate({ asOf: '2026-08-18', sources: [], products: [{}] }).errors.length > 0);
+});
+
+test('ein fehlendes Emoji warnt, blockiert aber nicht', () => {
+  const data = dataset();
+  delete firstProduct(data).emoji;
+  const report = validate(data);
+  assert.deepEqual(report.errors, []);
+  assert.match(report.warnings.join('\n'), /emoji.*kein Emoji/);
+});
+
+test('ein Emoji darf keine Buchstaben, Ziffern oder Woerter sein', () => {
+  for (const wert of ['SAP', 'x', '1', '']) {
+    const data = dataset();
+    firstProduct(data).emoji = wert;
+    assert.match(errorsOf(data), /emoji/, `${JSON.stringify(wert)} haette abgewiesen werden muessen`);
+  }
+  const zuLang = dataset();
+  firstProduct(zuLang).emoji = '🧪🧪🧪';
+  assert.match(errorsOf(zuLang), /emoji.*zu lang/);
+});
+
+test('zusammengesetzte Emoji bleiben erlaubt', () => {
+  // Variationsselektor und ZWJ-Folge: mehrere Codepunkte, ein Zeichen.
+  for (const wert of ['🗄️', '🧑‍🏭', '✈️']) {
+    const data = dataset();
+    firstProduct(data).emoji = wert;
+    assert.deepEqual(validate(data).errors, [], `${wert} haette durchgehen muessen`);
+  }
 });

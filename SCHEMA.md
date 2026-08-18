@@ -22,6 +22,7 @@ Geprüft wird mit `npm run validate`. Das Skript läuft in CI und bricht bei jed
 | --- | --- | --- | --- |
 | `id` | Slug | ja | Kleinbuchstaben, Ziffern, Bindestriche. Ändert sich nie, auch nach einer Umbenennung nicht |
 | `currentName` | String | ja | muss dem Namen der laufenden Periode entsprechen |
+| `emoji` | String | nein | ein oder zwei Emoji als Zeilenmarke. Fehlt es, gibt es eine Warnung |
 | `family` | Enum | ja | eine der sieben Familien, siehe `src/constants.js` |
 | `origin` | `organic` \| `acquired` | ja | |
 | `acquiredFrom` | String | nur bei `acquired` | bei `organic` ein Fehler, nicht bloß überflüssig |
@@ -51,6 +52,12 @@ Geprüft wird mit `npm run validate`. Das Skript läuft in CI und bricht bei jed
 
 `analyst` und `blog` gelten als nachrangig. Stützt sich eine Periode ausschließlich darauf, erscheint eine Warnung — die Seite kennzeichnet solche Belege später auch sichtbar.
 
+## Emoji statt Logo
+
+Die Seite zeigt keine SAP-Logos und keine Marken als Grafik — das bleibt so. Ein Emoji je Produkt ist etwas anderes: eine Zeilenmarke, die eine lange Namenskette optisch trägt und ein Produkt in einer langen Tabelle wiederfindbar macht. Es steht für das, was das Produkt tut, nie für die Marke.
+
+Gezählt werden sichtbare Zeichen, nicht Codepunkte: `🗄️` und `🧑‍🏭` sind je ein Zeichen, auch wenn Variationsselektor und ZWJ-Folge mehrere Codepunkte belegen. Zwei Zeichen sind die Grenze.
+
 ## Datumsangaben
 
 Erlaubt sind `YYYY`, `YYYY-MM` und `YYYY-MM-DD`. Die Präzision der Quelle bleibt erhalten: Wo nur ein Jahr belegt ist, steht ein Jahr. **Es wird nie ein Tag erfunden**, um die Tabelle gleichmäßig aussehen zu lassen.
@@ -58,6 +65,14 @@ Erlaubt sind `YYYY`, `YYYY-MM` und `YYYY-MM-DD`. Die Präzision der Quelle bleib
 Für Vergleiche und Rechnungen wird auf den ersten Tag der jeweiligen Präzision normalisiert — `2015` und `2015-01-01` bezeichnen denselben Zeitpunkt. Für die Anzeige gilt das nicht: Dort bleibt sichtbar, wie genau eine Angabe wirklich ist.
 
 Der Validator prüft auch den Kalender: `2015-02-29` wird abgewiesen, `2016-02-29` nicht.
+
+## Wie datiert wird
+
+Der Validator prüft die Form, nicht die Wahrheit. Für die Wahrheit gilt eine Regel, die beim Erheben durchgehalten werden muss:
+
+**Verankert wird an dem, was der belegende Satz selbst behauptet.** Nennt die Quelle ein Datum („Released in 2019", „we have begun to sunset the SAP Cloud Platform brand in January 2021"), gilt dieses Datum in seiner Präzision, mit `launch`, `announcement` oder `effective`. Nennt sie keines und belegt nur, dass ein Name zu ihrem Erscheinungszeitpunkt in Gebrauch war, gilt das Erscheinungsdatum der Quelle mit `qualifier: "by"`.
+
+Daraus folgt eine bekannte Verzerrung: `by`-Daten liegen systematisch **später** als der wahre Beginn. Eine Umbenennung im April erscheint als „by" des Jahres, in dem sie erstmals belegt ist. Für Medianwerte heißt das, dass Namensperioden eher zu kurz als zu lang gemessen werden. Das ist der Preis dafür, kein Datum zu erfinden — und der Grund, warum `by` überhaupt existiert.
 
 ## Regeln, die der Validator durchsetzt
 
@@ -74,8 +89,9 @@ Der Validator prüft auch den Kalender: `2015-02-29` wird abgewiesen, `2016-02-2
 11. Produkt- und Quellen-IDs sind eindeutig, Produkt-IDs sind Slugs.
 12. `currentName` entspricht dem Namen der laufenden Periode.
 13. Alle Enum-Felder halten sich an ihre Werteliste.
+14. `emoji` enthaelt, falls gesetzt, keine Buchstaben oder Ziffern und hoechstens zwei sichtbare Zeichen.
 
-Warnungen, die nicht blockieren: eine Periode ohne Erstquelle, eine Quelle, die niemand referenziert.
+Warnungen, die nicht blockieren: eine Periode ohne Erstquelle, eine Quelle, die niemand referenziert, ein Produkt ohne Emoji.
 
 ## Warum `transition` der Kern ist
 
@@ -87,8 +103,14 @@ Beim Vorbild sind Plattformtransformationen schlicht ausgeschlossen. Bei SAP sin
 
 ## Offene Entscheidungen
 
-Zwei Punkte sind bewusst nicht entschieden und dürfen es auch nicht einseitig werden:
+Drei Punkte sind bewusst nicht entschieden und dürfen es auch nicht einseitig werden:
 
 **Rückbenennungen.** Zählt die Rückkehr zu einem früheren Namen als neue Periode oder als Korrektur der vorherigen? SAP hat das mehrfach getan, besonders im Analytics-Bereich. Die Wahl verschiebt die Medianwerte spürbar. Beide Varianten werden am fertigen Datensatz durchgerechnet und zur Entscheidung vorgelegt (Schritt 6).
 
-**Umbenennungswellen.** Das Schema hat kein Feld dafür, dass mehrere Produkte am selben Tag gemeinsam umbenannt wurden — etwa am 18.01.2021, als die Marke „SAP Cloud Platform" abgeschafft wurde. Ein optionales `wave`-Feld auf Periodenebene würde auf der Analyseseite einen Abschnitt tragen, den das Vorbild nicht haben kann: SAP benennt nicht einzeln um, sondern in Schüben. Kostet ein Feld und eine Validierungsregel. Solange kein Datensatz existiert, ist ein Nachrüsten folgenlos.
+**Umbenennungswellen.** Das Schema hat kein Feld dafür, dass mehrere Produkte gemeinsam umbenannt wurden — etwa im Januar 2021, als die Marke „SAP Cloud Platform" abgeschafft wurde. Ein optionales `wave`-Feld auf Periodenebene würde auf der Analyseseite einen Abschnitt tragen, den das Vorbild nicht haben kann: SAP benennt nicht einzeln um, sondern in Schüben. Kostet ein Feld und eine Validierungsregel.
+
+Der erste Datensatz belegt das Muster bereits: `sap-btp` und `sap-integration-suite` haben beide eine Periode mit `start: "2021-01"`, aus derselben Quelle. Bei zehn Produkten sind das zwei — die Welle ist im Datensatz sichtbar, aber noch nicht groß genug, um die Feldfrage zu entscheiden.
+
+**Parallel weiterlaufende Vorgänger.** Der Datensatz stößt an eine Grenze des Modells: Eine Namenskette unterstellt, dass der alte Name endet, wenn der neue beginnt. Bei SAP stimmt das oft nicht. SAP ERP wird bis heute gepflegt, obwohl SAP S/4HANA seit 2015 danebensteht; dasselbe gilt für SAP BW neben SAP BW/4HANA. Beide sind deshalb **nicht** als `generation`-Periode ihres Vorgängers erfasst — das würde behaupten, der Vorgänger sei beendet.
+
+Damit fehlt dem Register aber genau der Übergang, für den `generation` gedacht war. Zur Wahl stehen: den Nachfolger als eigenes Produkt führen (ehrlich, aber die Verbindung geht verloren), das Modell um überlappende Perioden erweitern (teuer, betrifft jede Validierungsregel), oder `generation` auf die Fälle beschränken, in denen der Vorgänger wirklich verschwindet (so ist es jetzt, siehe `sap-erp`: SAP R/3 → mySAP ERP). Gehört mit Schritt 6 entschieden.

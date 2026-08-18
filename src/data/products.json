@@ -1,5 +1,413 @@
 {
   "asOf": "2026-08-18",
-  "sources": [],
-  "products": []
+  "sources": [
+    {
+      "id": "sap-20f-2001",
+      "title": "SAP AG, Form 20-F für das Geschäftsjahr 2001",
+      "publisher": "SAP SE via SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000089322002000372/w58561e20-f.txt",
+      "type": "first-party",
+      "published": "2002-03-28",
+      "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-20f-2004",
+      "title": "SAP AG, Form 20-F für das Geschäftsjahr 2004",
+      "publisher": "SAP SE via SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000115697305000351/f00929e20vf.htm",
+      "type": "first-party",
+      "published": "2005-03-22",
+      "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-20f-2006",
+      "title": "SAP AG, Form 20-F für das Geschäftsjahr 2006",
+      "publisher": "SAP SE via SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000132693207000138/f01557e20vf.htm",
+      "type": "first-party",
+      "published": "2007-04-03",
+      "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-20f-2012",
+      "title": "SAP AG, Form 20-F für das Geschäftsjahr 2012",
+      "publisher": "SAP SE via SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000119312513120941/d481961d20f.htm",
+      "type": "first-party",
+      "published": "2013-03-22",
+      "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-20f-2013",
+      "title": "SAP AG, Form 20-F für das Geschäftsjahr 2013",
+      "publisher": "SAP SE via SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000119312514109290/d679397d20f.htm",
+      "type": "first-party",
+      "published": "2014-03-21",
+      "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-20f-2014",
+      "title": "SAP SE, Form 20-F für das Geschäftsjahr 2014",
+      "publisher": "SAP SE via SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000119312515099258/d875102d20f.htm",
+      "type": "first-party",
+      "published": "2015-03-20",
+      "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-20f-2015",
+      "title": "SAP SE, Form 20-F für das Geschäftsjahr 2015",
+      "publisher": "SAP SE via SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000119312516520379/d138619d20f.htm",
+      "type": "first-party",
+      "published": "2016-03-29",
+      "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-20f-2016",
+      "title": "SAP SE, Form 20-F für das Geschäftsjahr 2016",
+      "publisher": "SAP SE via SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000119312517060157/d344005d20f.htm",
+      "type": "first-party",
+      "published": "2017-02-28",
+      "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-20f-2017",
+      "title": "SAP SE, Form 20-F für das Geschäftsjahr 2017",
+      "publisher": "SAP SE via SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465918013050/a17-27645_420f.htm",
+      "type": "first-party",
+      "published": "2018-02-28",
+      "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-20f-2018",
+      "title": "SAP SE, Form 20-F für das Geschäftsjahr 2018",
+      "publisher": "SAP SE via SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465919011304/a18-38214_120f.htm",
+      "type": "first-party",
+      "published": "2019-02-28",
+      "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-20f-2019",
+      "title": "SAP SE, Form 20-F für das Geschäftsjahr 2019",
+      "publisher": "SAP SE via SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465920025681/sap-20191231x20f6ea59a.htm",
+      "type": "first-party",
+      "published": "2020-02-27",
+      "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-20f-2020",
+      "title": "SAP SE, Form 20-F für das Geschäftsjahr 2020",
+      "publisher": "SAP SE via SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465921031847/sap-20201231x20f.htm",
+      "type": "first-party",
+      "published": "2021-03-04",
+      "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-20f-2021",
+      "title": "SAP SE, Form 20-F für das Geschäftsjahr 2021",
+      "publisher": "SAP SE via SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465922029675/sap-20211231x20f.htm",
+      "type": "first-party",
+      "published": "2022-03-03",
+      "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-news-datasphere-2023",
+      "title": "SAP Introduces SAP Datasphere to Simplify Customers' Data Landscape",
+      "publisher": "SAP News Center",
+      "url": "https://news.sap.com/2023/03/sap-datasphere-simplify-data-landscape-partnerships-collibra-confluent-databricks-datarobot/",
+      "type": "first-party",
+      "published": "2023-03-08",
+      "retrieved": "2026-08-18"
+    }
+  ],
+  "products": [
+    {
+      "id": "sap-erp",
+      "emoji": "🧾",
+      "currentName": "SAP ERP",
+      "family": "erp-suite",
+      "origin": "organic",
+      "periods": [
+        {
+          "name": "SAP R/3",
+          "start": "2002",
+          "end": "2005",
+          "qualifier": "by",
+          "sources": ["sap-20f-2001"]
+        },
+        {
+          "name": "mySAP ERP",
+          "start": "2005",
+          "end": "2007",
+          "qualifier": "by",
+          "transition": "generation",
+          "sources": ["sap-20f-2004"]
+        },
+        {
+          "name": "SAP ERP",
+          "start": "2007",
+          "qualifier": "by",
+          "transition": "rename",
+          "sources": ["sap-20f-2006"]
+        }
+      ]
+    },
+    {
+      "id": "sap-btp",
+      "emoji": "🧱",
+      "currentName": "SAP Business Technology Platform",
+      "family": "platform-dev",
+      "origin": "organic",
+      "periods": [
+        {
+          "name": "SAP HANA Cloud Platform",
+          "start": "2014",
+          "end": "2017",
+          "qualifier": "by",
+          "sources": ["sap-20f-2013"]
+        },
+        {
+          "name": "SAP Cloud Platform",
+          "start": "2017",
+          "end": "2021-01",
+          "qualifier": "by",
+          "transition": "rename",
+          "sources": ["sap-20f-2016"]
+        },
+        {
+          "name": "SAP Business Technology Platform",
+          "start": "2021-01",
+          "qualifier": "effective",
+          "transition": "rename",
+          "sources": ["sap-20f-2020"]
+        }
+      ]
+    },
+    {
+      "id": "sap-integration-suite",
+      "emoji": "🔌",
+      "currentName": "SAP Integration Suite",
+      "family": "platform-dev",
+      "origin": "organic",
+      "periods": [
+        {
+          "name": "SAP Cloud Platform Integration",
+          "start": "2017",
+          "end": "2021-01",
+          "qualifier": "by",
+          "sources": ["sap-20f-2016"]
+        },
+        {
+          "name": "SAP Integration Suite",
+          "start": "2021-01",
+          "qualifier": "effective",
+          "transition": "rename",
+          "sources": ["sap-20f-2020"]
+        }
+      ]
+    },
+    {
+      "id": "sap-analytics-cloud",
+      "emoji": "📊",
+      "currentName": "SAP Analytics Cloud",
+      "family": "data-analytics",
+      "origin": "organic",
+      "periods": [
+        {
+          "name": "SAP Cloud for Analytics",
+          "start": "2015",
+          "end": "2017",
+          "qualifier": "launch",
+          "sources": ["sap-20f-2015"]
+        },
+        {
+          "name": "SAP BusinessObjects Cloud",
+          "start": "2017",
+          "end": "2018",
+          "qualifier": "by",
+          "transition": "rename",
+          "sources": ["sap-20f-2016"]
+        },
+        {
+          "name": "SAP Analytics Cloud",
+          "start": "2018",
+          "qualifier": "by",
+          "transition": "rename",
+          "sources": ["sap-20f-2017"]
+        }
+      ]
+    },
+    {
+      "id": "sap-datasphere",
+      "emoji": "🗄️",
+      "currentName": "SAP Datasphere",
+      "family": "data-analytics",
+      "origin": "organic",
+      "periods": [
+        {
+          "name": "SAP Data Warehouse Cloud",
+          "start": "2019",
+          "end": "2023-03-08",
+          "qualifier": "launch",
+          "sources": ["sap-20f-2019"]
+        },
+        {
+          "name": "SAP Datasphere",
+          "start": "2023-03-08",
+          "qualifier": "effective",
+          "transition": "rename",
+          "sources": ["sap-news-datasphere-2023"]
+        }
+      ]
+    },
+    {
+      "id": "sap-successfactors",
+      "emoji": "👥",
+      "currentName": "SAP SuccessFactors HXM Suite",
+      "family": "hcm",
+      "origin": "acquired",
+      "acquiredFrom": "SuccessFactors, Inc.",
+      "acquisitionDate": "2012-02-21",
+      "periods": [
+        {
+          "name": "SuccessFactors",
+          "start": "2012",
+          "end": "2016",
+          "qualifier": "by",
+          "sources": ["sap-20f-2012"]
+        },
+        {
+          "name": "SAP SuccessFactors HCM Suite",
+          "start": "2016",
+          "end": "2022",
+          "qualifier": "by",
+          "transition": "assimilation",
+          "sources": ["sap-20f-2015"]
+        },
+        {
+          "name": "SAP SuccessFactors HXM Suite",
+          "start": "2022",
+          "qualifier": "by",
+          "transition": "rename",
+          "sources": ["sap-20f-2021"]
+        }
+      ]
+    },
+    {
+      "id": "sap-concur",
+      "emoji": "✈️",
+      "currentName": "SAP Concur",
+      "family": "spend-travel",
+      "origin": "acquired",
+      "acquiredFrom": "Concur Technologies, Inc.",
+      "acquisitionDate": "2014-12-04",
+      "periods": [
+        {
+          "name": "Concur",
+          "start": "2015",
+          "end": "2018",
+          "qualifier": "by",
+          "sources": ["sap-20f-2014"]
+        },
+        {
+          "name": "SAP Concur",
+          "start": "2018",
+          "qualifier": "by",
+          "transition": "assimilation",
+          "sources": ["sap-20f-2017"]
+        }
+      ]
+    },
+    {
+      "id": "sap-fieldglass",
+      "emoji": "🧑‍🏭",
+      "currentName": "SAP Fieldglass",
+      "family": "spend-travel",
+      "origin": "acquired",
+      "acquiredFrom": "Fieldglass, Inc.",
+      "acquisitionDate": "2014-05",
+      "periods": [
+        {
+          "name": "Fieldglass",
+          "start": "2015",
+          "end": "2016",
+          "qualifier": "by",
+          "sources": ["sap-20f-2014"]
+        },
+        {
+          "name": "SAP Fieldglass",
+          "start": "2016",
+          "qualifier": "by",
+          "transition": "assimilation",
+          "sources": ["sap-20f-2015"]
+        }
+      ]
+    },
+    {
+      "id": "sap-customer-data-cloud",
+      "emoji": "🔐",
+      "currentName": "SAP Customer Data Cloud",
+      "family": "cx",
+      "origin": "acquired",
+      "acquiredFrom": "Gigya, Inc.",
+      "acquisitionDate": "2017-11-01",
+      "periods": [
+        {
+          "name": "Gigya",
+          "start": "2018",
+          "end": "2022",
+          "qualifier": "by",
+          "sources": ["sap-20f-2017"]
+        },
+        {
+          "name": "SAP Customer Data Cloud",
+          "start": "2022",
+          "qualifier": "by",
+          "transition": "assimilation",
+          "sources": ["sap-20f-2021"]
+        }
+      ]
+    },
+    {
+      "id": "sap-commerce-cloud",
+      "emoji": "🛒",
+      "currentName": "SAP Commerce Cloud",
+      "family": "cx",
+      "origin": "acquired",
+      "acquiredFrom": "hybris AG",
+      "acquisitionDate": "2013-08-01",
+      "periods": [
+        {
+          "name": "hybris",
+          "start": "2014",
+          "end": "2017",
+          "qualifier": "by",
+          "sources": ["sap-20f-2013"]
+        },
+        {
+          "name": "SAP Hybris Commerce",
+          "start": "2017",
+          "end": "2019",
+          "qualifier": "by",
+          "transition": "assimilation",
+          "sources": ["sap-20f-2016"]
+        },
+        {
+          "name": "SAP Commerce Cloud",
+          "start": "2019",
+          "qualifier": "by",
+          "transition": "rename",
+          "sources": ["sap-20f-2018"]
+        }
+      ]
+    }
+  ]
 }

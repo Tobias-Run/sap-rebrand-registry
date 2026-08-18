@@ -7,9 +7,11 @@
 
 ## Erhebungsmethode und ihre Grenzen
 
-Recherchiert wurde ausschließlich per Websuche. Der Egress-Proxy dieser Umgebung sperrt `sap.com`, `help.sap.com`, `news.sap.com`, `web.archive.org` und `btp.udina.de`; die genannten Seiten konnten also bis auf eine Ausnahme nicht selbst geöffnet werden. Der Suchindex ist US-zentriert — ein rein deutschsprachiges oder frisch gestartetes Projekt kann durchgerutscht sein. Negativbefund also mit Vorbehalt.
+Recherchiert wurde ausschließlich per Websuche. Der Egress-Proxy dieser Umgebung sperrte zum Zeitpunkt der Erhebung `sap.com`, `help.sap.com`, `news.sap.com`, `web.archive.org` und `btp.udina.de`; die genannten Seiten konnten also bis auf eine Ausnahme nicht selbst geöffnet werden. Der Suchindex ist US-zentriert — ein rein deutschsprachiges oder frisch gestartetes Projekt kann durchgerutscht sein. Negativbefund also mit Vorbehalt.
 
 Ausnahme: Der UDINA Rebranding Guide lag als Textexport vor und wurde vollständig ausgewertet (siehe unten).
+
+**Nachtrag 18.08.2026 (Schritt 5).** Die Netzlage hat sich geändert: `news.sap.com` und `sec.gov` sind erreichbar, `www.sap.com` und `help.sap.com` antworten auf automatisierte Abrufe mit 403, `web.archive.org` drosselt bis zur Unbenutzbarkeit. Der Negativbefund oben wurde **nicht** erneut geprüft und bleibt vom Stand 18.08.2026 — die neue Erreichbarkeit ist ein Grund, ihn bei Gelegenheit nachzuziehen, kein Beleg dafür, dass er noch stimmt.
 
 ## Was es gibt
 
@@ -28,10 +30,24 @@ Ausnahme: Der UDINA Rebranding Guide lag als Textexport vor und wurde vollständ
 ### 3. Erstanbieter-Hinweise, punktuell
 
 SAP dokumentiert Umbenennungen nur lokal dort, wo Doku oder Schulungsmaterial betroffen sind:
-- [„Rebrandings", SAP Help Portal (NW 7.31)](https://help.sap.com/doc/saphelp_nw73ehp1/7.31.19/en-US/3a/71895360b93d58e10000000a174cb4/content.htm)
 - [„Explaining how the Recent Rebranding Displays in This Material", learning.sap.com](https://learning.sap.com/learning-journeys/developing-business-processes-with-sap-process-orchestration/explaining-how-the-recent-rebranding-displays-in-this-material_b38d8d87-cb88-4f89-abe8-c724049e8364)
 
 Für uns Primärquellen, keine konkurrierende Aufbereitung.
+
+**Korrektur 18.08.2026.** Hier stand bisher auch die Seite „Rebrandings" im SAP Help Portal (NW 7.31). Sie wurde in Schritt 5 erstmals selbst geöffnet und handelt nicht von Produktumbenennungen, sondern vom Umdeklarieren von Material in der Öl- und Gasbranche: „It is posible to rebrand product upon its return to the delivering plant." Ein Treffer auf das Wort, nicht auf die Sache. Entfernt.
+
+### 3a. SAPs eigene Berichte an die US-Börsenaufsicht
+
+In Schritt 5 als tragende Quellengattung dazugekommen und in der ursprünglichen Recherche übersehen. SAP reicht seit 1999 jährlich ein [Form 20-F](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001000184&type=20-F) bei der SEC ein. Diese Berichte beschreiben das Produktportfolio in Fließtext, nennen Produktnamen, gelegentlich ausdrücklich die alten dazu („SAP Cloud Platform (formerly called SAP HANA Cloud Platform)"), und nennen Zukäufe mit taggenauem Vollzugsdatum.
+
+Warum das für dieses Projekt besser ist als eine Marketingseite:
+
+- **erstquellig** — von SAP verfasst und unterschrieben, nicht über Dritte referiert
+- **datiert** — jede Aussage trägt das Einreichungsdatum, was `qualifier: "by"` erst belastbar macht
+- **dauerhaft** — sec.gov entfernt nichts. `news.sap.com` hat Artikel vor etwa 2021 gelöscht, `sap.com` sperrt automatisierte Abrufe, `web.archive.org` drosselt. Eine EDGAR-URL wird in fünf Jahren noch auflösen
+- **haftungsbewehrt** — was hier steht, steht unter Kapitalmarktrecht
+
+Grenze: Die Berichte erscheinen jährlich. Eine Umbenennung im April ist frühestens im Bericht des Folgejahres belegt, und dann ohne Monat. Sie liefern also verlässliche Obergrenzen, keine genauen Umbenennungsdaten — siehe „Wie datiert wird" in [SCHEMA.md](SCHEMA.md).
 
 ### 4. Episodische Kommentare
 
@@ -89,6 +105,16 @@ Die Unterscheidung liegt nicht im Thema, sondern in drei Dingen, die keine der g
 2. die Typisierung `rename` / `assimilation` / `generation`
 3. berechnete statt behauptete Kennzahlen
 
-## Offener Punkt
+## Offene Punkte
 
 Der UDINA-Guide legt ein Muster offen, das das Datenmodell aus §3 nicht abbildet: SAP benennt nicht einzeln um, sondern in Schüben. Ein optionales `wave`-Feld auf Periodenebene (freier Slug, z. B. `btp-2021`) würde auf der Analyseseite einen Abschnitt tragen, den das Vorbild nicht haben kann. Entscheidung steht aus.
+
+**Der 18. Januar 2021 ist weiterhin unbelegt.** Das Tagesdatum stammt allein aus dem UDINA-Guide. Erstquellig belegen ließ sich in Schritt 5 nur der Monat: „we have begun to sunset the SAP Cloud Platform brand in January 2021" (Form 20-F für 2020). Im Datensatz steht deshalb `2021-01`, nicht `2021-01-18`. Wer den Tag belegen will, braucht SAPs eigene Umbenennungsliste vom Januar 2021 — die liegt auf `sap.com`, und das antwortet auf automatisierte Abrufe mit 403.
+
+**SAP BTP → „SAP Business AI Platform" ist keine belegte Umbenennung.** Zu prüfen war ein Hinweis, die Plattform sei 2026 umbenannt worden. Was sich erstquellig findet, trägt das nicht:
+
+- SAPs Sapphire-Meldung vom 12.05.2026 sagt, SAP Business AI Platform „unifies SAP Business Technology Platform, SAP Business Data Cloud and SAP Business AI into a single, governed environment" — eine Zusammenführung dreier Angebote, keine Umbenennung eines Produkts.
+- Im Form 20-F vom 26.02.2026 kommt „Business AI Platform" **kein einziges Mal** vor, „SAP Business Technology Platform" dagegen sechsmal.
+- Erstquellig belegt ist bislang nur die Umbenennung des **Partner-Kompetenzprogramms** (BTP-Kompetenz → BAIP-Kompetenz, zum 30.06.2026). Ein Programmname ist kein Produktname — dieselbe Verwechslung wie bei der IS-Oil-Seite oben, nur teurer.
+
+`currentName` von `sap-btp` bleibt deshalb „SAP Business Technology Platform". Erneut prüfen, sobald der Geschäftsbericht für 2026 erscheint (Februar 2027) — der entscheidet die Frage.

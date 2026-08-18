@@ -37,6 +37,40 @@ function checkText(report, path, value) {
   return true;
 }
 
+// Ein Emoji steht auf der Registerseite anstelle eines Logos: Wir zeigen
+// keine SAP-Marken als Grafik, brauchen aber eine Zeilenmarke, die eine lange
+// Namenskette optisch traegt. Optional, damit ein Eintrag nicht an der
+// Bebilderung scheitert - fehlt es, gibt es eine Warnung.
+function checkEmoji(report, path, value) {
+  if (value === undefined) {
+    report.warn(path, 'kein Emoji gesetzt');
+    return;
+  }
+  if (typeof value !== 'string' || value.trim() === '') {
+    report.error(path, 'fehlt oder ist leer');
+    return;
+  }
+  if (/[A-Za-z0-9]/.test(value)) {
+    report.error(path, `darf keine Buchstaben oder Ziffern enthalten: ${JSON.stringify(value)}`);
+    return;
+  }
+  // Gezaehlt wird, was man sieht, nicht was gespeichert ist: Ein Variations-
+  // selektor oder eine ZWJ-Folge wie 🧑‍🏭 ist ein Zeichen, auch wenn mehrere
+  // Codepunkte darin stecken. Zwei Zeichen sind die Grenze - eine Zeilenmarke,
+  // keine Bildergeschichte.
+  const graphemes = countGraphemes(value);
+  if (graphemes > 2) {
+    report.error(path, `zu lang: ${graphemes} Zeichen, erlaubt sind hoechstens 2`);
+  }
+}
+
+function countGraphemes(value) {
+  if (typeof Intl?.Segmenter === 'function') {
+    return [...new Intl.Segmenter('de', { granularity: 'grapheme' }).segment(value)].length;
+  }
+  return [...value].length;
+}
+
 function validateSources(report, sources) {
   const byId = new Map();
   if (!Array.isArray(sources)) {
@@ -177,6 +211,7 @@ function validateProducts(report, products, sourcesById, asOf) {
       ids.add(product.id);
     }
     checkText(report, `${path}.currentName`, product?.currentName);
+    checkEmoji(report, `${path}.emoji`, product?.emoji);
 
     if (!FAMILIES.includes(product?.family)) {
       report.error(`${path}.family`, `unbekannt: ${JSON.stringify(product?.family)}. Erlaubt: ${FAMILIES.join(', ')}`);
