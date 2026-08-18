@@ -12,6 +12,16 @@ npm run validate
 npm test
 ```
 
+## Published site
+
+The site is static and needs no build step, so GitHub Pages serves the repository as it stands. Once Pages is switched on under Settings → Pages with **GitHub Actions** as the source, `.github/workflows/pages.yml` publishes to:
+
+<https://tobias-run.github.io/sap-rebrand-registry/>
+
+The deploy waits for `npm run validate` and `npm test`. A dataset the validator rejects fails the run rather than reaching the site, which is the same rule the rest of the project follows: no number goes public that has not been checked.
+
+Only `index.html`, `src/` and the two licence files are uploaded. `src/data/products.json` is served alongside the page deliberately — the dataset is CC BY 4.0 and meant to be fetchable on its own.
+
 ## Why
 
 Microsoft has one: the [Microsoft Rebrand Registry](https://www.msrebrandregistry.com). SAP has nothing comparable — looked into and written up in [COMPARABLE-PROJECTS.md](COMPARABLE-PROJECTS.md). The closest thing is Wikipedia's "List of SAP products", which mentions renames in passing, without dates and without individual sources.
