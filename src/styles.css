@@ -12,17 +12,27 @@
   --rule: #e2e0da;
   --rule-strong: #c8c5bd;
 
-  --rename: #9a3d16;
-  --rename-bg: #f7ebe4;
-  --assimilation: #35558a;
-  --assimilation-bg: #e7edf7;
-  --generation: #4a6b3a;
-  --generation-bg: #eaf1e5;
+  --rename: #eb6834;
+  --rename-bg: #f9e6dd;
+  --assimilation: #2a78d6;
+  --assimilation-bg: #dee8f3;
+  --generation: #1baf7a;
+  --generation-bg: #dcf0e6;
   --weak: #8a6d1f;
   --weak-bg: #f8f1dd;
 
   --measure: 68rem;
   --radius: 3px;
+
+  --era-a-bg: #f3efe4;
+  --tl-label-width: 13.5rem;
+
+  /* Fixed, NOT theme-swapped: text drawn on a saturated segment fill.
+     The categorical fills sit in a moderate-lightness band in both themes
+     (see dataviz skill), so dark text reads better than light text on them
+     regardless of the surrounding page theme - confirmed by contrast math,
+     not assumed. */
+  --fill-ink: #14181d;
 }
 
 /* Three theme states, not two: an explicit choice stamps data-theme on the root,
@@ -40,14 +50,16 @@
     --rule: #2c3037;
     --rule-strong: #3d434c;
 
-    --rename: #e2a184;
-    --rename-bg: #33231c;
-    --assimilation: #9fbae4;
-    --assimilation-bg: #1c2531;
-    --generation: #a8c795;
-    --generation-bg: #1f2a1b;
+    --rename: #d95926;
+    --rename-bg: #3f251d;
+    --assimilation: #3987e5;
+    --assimilation-bg: #1c2f47;
+    --generation: #199e70;
+    --generation-bg: #15342d;
     --weak: #d9bd6d;
     --weak-bg: #2e2718;
+
+    --era-a-bg: #23241f;
   }
 }
 
@@ -60,14 +72,16 @@
   --rule: #2c3037;
   --rule-strong: #3d434c;
 
-  --rename: #e2a184;
-  --rename-bg: #33231c;
-  --assimilation: #9fbae4;
-  --assimilation-bg: #1c2531;
-  --generation: #a8c795;
-  --generation-bg: #1f2a1b;
+  --rename: #d95926;
+  --rename-bg: #3f251d;
+  --assimilation: #3987e5;
+  --assimilation-bg: #1c2f47;
+  --generation: #199e70;
+  --generation-bg: #15342d;
   --weak: #d9bd6d;
   --weak-bg: #2e2718;
+
+  --era-a-bg: #23241f;
 }
 
 * { box-sizing: border-box; }
@@ -351,4 +365,271 @@ footer.notes dd { margin: 0.1rem 0 0; }
   body { padding: 0 0.9rem 4rem; }
   .controls { position: static; }
   .tally { gap: 0 1.4rem; }
+}
+
+/* ================================================================
+   Timeline page. Same tokens as the register (colors, type, spacing);
+   this section only adds what a time-scaled chart needs: a two-column
+   grid (row label | scrollable track) shared by the ruler, the era
+   bands, the axis lines and every product row, so all four align on
+   the same x origin without JS having to keep them in sync by hand.
+   ================================================================ */
+
+.wrap--wide { max-width: 84rem; }
+
+.tl-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.tl-toggle input { accent-color: var(--ink); }
+
+/* ---------- legend ---------- */
+
+.tl-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin: 0.9rem 0 1.1rem;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.tl-legend-item { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+.tl-swatch {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 3px;
+  background: var(--rule-strong);
+  flex: none;
+}
+
+.tl-swatch--start { background: var(--ink-faint); }
+.tl-swatch--rename { background: var(--rename); }
+.tl-swatch--assimilation { background: var(--assimilation); }
+.tl-swatch--generation { background: var(--generation); }
+.tl-swatch--era { background: var(--era-a-bg); border: 1px solid var(--rule); }
+
+/* ---------- scroll frame ---------- */
+
+.tl-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.tl-ruler, .tl-chart {
+  display: grid;
+  grid-template-columns: var(--tl-label-width, 13.5rem) var(--tl-track-width, 100%);
+  width: max-content;
+  min-width: 100%;
+}
+
+.tl-ruler {
+  position: relative;
+  height: 1.9rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+.tl-ruler-spacer {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  padding: 0 0.9rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  background: var(--card);
+  border-right: 1px solid var(--rule);
+}
+
+.tl-ruler-track { position: relative; }
+
+.tl-year-label {
+  position: absolute;
+  top: 50%;
+  transform: translate(0.4rem, -50%);
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.tl-year-label--today {
+  color: var(--rename);
+  font-weight: 700;
+  transform: translate(0.4rem, -50%);
+}
+
+/* ---------- chart body ---------- */
+
+.tl-chart { position: relative; }
+
+.tl-row-label {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.9rem;
+  height: var(--tl-row-height, 40px);
+  background: var(--card);
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.88rem;
+  overflow: hidden;
+}
+
+.tl-row-label > .tl-row-mark { flex: none; }
+
+.tl-row-label > span:last-child {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tl-row-label--anchor {
+  font-weight: 700;
+  background: var(--generation-bg);
+  border-bottom: 2px solid var(--ink);
+}
+
+.tl-row-mark { font-family: ui-sans-serif, system-ui, sans-serif; }
+
+.tl-track {
+  position: relative;
+  height: var(--tl-row-height, 40px);
+  border-bottom: 1px solid var(--rule);
+  z-index: 1;
+}
+
+.tl-track--anchor { border-bottom: 2px solid var(--ink); }
+
+/* ---------- era bands + gridlines (background layers) ---------- */
+
+.tl-eras, .tl-axis {
+  position: absolute;
+  top: 0;
+  left: var(--tl-label-width, 13.5rem);
+  width: var(--tl-track-width, 100%);
+  height: 100%;
+  pointer-events: none;
+}
+
+.tl-eras { z-index: 0; }
+.tl-axis { z-index: 0; }
+
+.tl-era { position: absolute; top: 0; height: 100%; }
+.tl-era--a { background: var(--era-a-bg); }
+.tl-era--b { background: transparent; }
+
+.tl-year {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-left: 1px solid var(--rule);
+}
+
+.tl-year--today { border-left: 1px dashed var(--rename); }
+
+/* ---------- period segments ---------- */
+
+.tl-seg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: var(--tl-bar-height, 22px);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px var(--card);
+  font: inherit;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.75rem;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.tl-seg:hover, .tl-seg:focus-visible {
+  filter: brightness(1.08);
+  box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--ink);
+  outline: none;
+}
+
+.tl-seg[aria-pressed="true"] {
+  box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--ink);
+}
+
+.tl-seg--start { background: var(--ink-faint); color: var(--fill-ink); }
+.tl-seg--rename { background: var(--rename); color: var(--fill-ink); }
+.tl-seg--assimilation { background: var(--assimilation); color: var(--fill-ink); }
+.tl-seg--generation { background: var(--generation); color: var(--fill-ink); }
+.tl-seg--muted { background: var(--rule-strong); color: var(--ink-soft); }
+
+.tl-seg-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- hover tooltip (transient) ---------- */
+
+.tl-tooltip {
+  position: absolute;
+  z-index: 20;
+  max-width: 20rem;
+  padding: 0.45rem 0.6rem;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.tl-tooltip-name { font-weight: 600; }
+.tl-tooltip-meta { color: color-mix(in srgb, var(--paper) 75%, transparent); margin-top: 0.1rem; }
+
+/* ---------- pinned detail panel ---------- */
+
+.tl-detail {
+  margin-top: 1.1rem;
+  padding: 1rem 1.2rem 1.2rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.tl-detail h2 { margin: 0; font-size: 1.15rem; }
+
+.tl-detail-sub {
+  margin: 0.35rem 0 0.7rem;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.83rem;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 40rem) {
+  .tl-scroll { --tl-label-width: 9rem; }
+  .tl-row-label { font-size: 0.8rem; padding: 0 0.6rem; }
 }

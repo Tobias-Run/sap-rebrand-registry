@@ -4,7 +4,7 @@ An independent research project: how often, and when, SAP has renamed its produc
 
 Two static pages, no server logic. A **register** listing every documented name period per product, and an **analysis** that computes median durations, family patterns and a semi-serious risk index from it. Every number is worked out in the browser from a single file. Nothing is carried forward by hand.
 
-**Status:** under construction. The dataset has a sourced core — 10 products, 25 name periods, one primary source each, no warnings. The register page is up. The analysis page is not written yet.
+**Status:** under construction. The dataset has a sourced core — 10 products, 27 name periods, one primary source each, no warnings. The register and timeline pages are up. The analysis page is not written yet.
 
 ```bash
 npm start      # serves the register at http://localhost:3000
@@ -60,7 +60,10 @@ Discontinued products, logo history, renamed pricing models, SAP-internal projec
 | `src/validate.js`, `scripts/validate-data.js` | schema and consistency checks |
 | `src/model.js` | every derived figure, shared by both pages |
 | `src/dates.js` | dates at mixed precision, without inventing days |
-| `src/register.js`, `index.html`, `src/styles.css` | the register page |
+| `src/register.js`, `index.html` | the register page |
+| `src/timeline.js`, `timeline.html` | the timeline page - the same periods drawn to scale against SAP's ERP line |
+| `src/styles.css` | shared styles for both pages, one token set |
+| `scripts/research/` | tooling for the SEC filing corpus a source citation gets pulled from (see COMPARABLE-PROJECTS.md) |
 | `tests/` | unit tests, run by `npm test` and in CI |
 
 ## Considered, not decided

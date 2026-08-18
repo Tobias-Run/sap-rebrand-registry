@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAP Rebrand Registry — the timeline</title>
+<meta name="description" content="Every SAP product's chain of names plotted against time, with SAP's core ERP line as the reference.">
+<link rel="stylesheet" href="src/styles.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<div class="wrap wrap--wide">
+
+  <header class="masthead">
+    <h1>SAP Rebrand Registry</h1>
+    <p class="standfirst">
+      The same name periods as the register, laid out against time. SAP's core ERP line runs
+      along the top as the reference — everything else happened somewhere inside, or outside, its eras.
+    </p>
+    <nav>
+      <a href="index.html">Register</a>
+      <a href="timeline.html" aria-current="page">Timeline</a>
+      <span class="pending" title="Not built yet">Analysis</span>
+      <a href="https://github.com/Tobias-Run/sap-rebrand-registry">Source &amp; data</a>
+    </nav>
+  </header>
+
+  <section class="controls" aria-label="Timeline controls">
+    <div class="row">
+      <span class="field">Family</span>
+      <div class="chips" id="tl-families" role="group" aria-label="Filter by family"></div>
+    </div>
+    <div class="row">
+      <label class="tl-toggle">
+        <input type="checkbox" id="tl-show-generation">
+        Highlight generation changes
+      </label>
+      <span class="field">Zoom</span>
+      <div class="chips" id="tl-zoom" role="group" aria-label="Zoom level"></div>
+      <button type="button" class="chip" id="tl-jump-today">Jump to today</button>
+    </div>
+  </section>
+
+  <p class="result-count" id="tl-count" role="status"></p>
+
+  <div class="tl-legend" id="tl-legend" aria-hidden="true"></div>
+
+  <div class="tl-scroll" id="tl-scroll">
+    <div class="tl-ruler" id="tl-ruler"></div>
+    <div class="tl-chart" id="tl-chart"></div>
+  </div>
+
+  <div class="tl-detail" id="tl-detail" hidden></div>
+
+  <footer class="notes">
+    <h2>How to read this</h2>
+    <p>
+      Each row is one product's full chain of names, drawn to scale against the same time axis.
+      A segment's color names the transition that started it — a plain rename, an assimilation
+      after an acquisition, or a technology generation change — the same three kinds as on the
+      register. The first period of a chain has no transition and carries no color; it is where
+      the row's story starts, not a change.
+    </p>
+    <p>
+      The SAP ERP row at the top is pinned there on purpose. Its three eras — SAP R/3, mySAP ERP,
+      SAP ERP — are the longest-running, most recognizable frame SAP's own history offers, so the
+      chart uses them as a background ruler: every other row's bars sit against faint bands marking
+      which ERP era was current underneath them.
+    </p>
+    <p>
+      Generation changes are muted by default, matching the register's rule that they sit outside
+      the statistics — turn on "Highlight generation changes" to see them in their own color instead.
+      Every value shown here on hover or focus is also on <a href="index.html">the register</a> as
+      plain text, with its source.
+    </p>
+    <p id="tl-asof"></p>
+  </footer>
+
+</div>
+<script type="module" src="src/timeline.js"></script>
+</body>
+</html>
