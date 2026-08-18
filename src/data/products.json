@@ -168,10 +168,18 @@
       "origin": "organic",
       "periods": [
         {
+          "name": "SAP HANA Cloud",
+          "start": "2013",
+          "end": "2014",
+          "qualifier": "by",
+          "sources": ["sap-20f-2012"]
+        },
+        {
           "name": "SAP HANA Cloud Platform",
           "start": "2014",
           "end": "2017",
           "qualifier": "by",
+          "transition": "rename",
           "sources": ["sap-20f-2013"]
         },
         {
@@ -280,9 +288,17 @@
         {
           "name": "SuccessFactors",
           "start": "2012",
-          "end": "2016",
+          "end": "2014",
           "qualifier": "by",
           "sources": ["sap-20f-2012"]
+        },
+        {
+          "name": "SuccessFactors, an SAP company",
+          "start": "2014",
+          "end": "2016",
+          "qualifier": "by",
+          "transition": "assimilation",
+          "sources": ["sap-20f-2013"]
         },
         {
           "name": "SAP SuccessFactors HCM Suite",
