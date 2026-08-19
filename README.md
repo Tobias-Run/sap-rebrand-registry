@@ -4,7 +4,7 @@ An independent research project: how often, and when, SAP has renamed its produc
 
 Two static pages, no server logic. A **register** listing every documented name period per product, and an **analysis** that computes median durations, family patterns and a semi-serious risk index from it. Every number is worked out in the browser from a single file. Nothing is carried forward by hand.
 
-**Status:** under construction. The dataset has a sourced core — 10 products, 27 name periods, one primary source each, no warnings. The register and timeline pages are up. The analysis page is not written yet.
+**Status:** under construction. The dataset has a sourced core — 10 products, 27 name periods, no warnings, a third of them with a second source. The register and timeline pages are up. The analysis page is not written yet.
 
 ```bash
 npm start      # serves the register at http://localhost:3000
@@ -32,7 +32,7 @@ This is a reimplementation, not a fork. [LICENSE-REVIEW.md](LICENSE-REVIEW.md) s
 
 Every name period cites at least one source. The precision of the source is preserved: where only a year is documented, a year is what you get, not an invented day. A qualifier records whether a date marks an announcement, a launch, the day something took effect, or merely the earliest point we can prove.
 
-The load-bearing source for the current dataset is SAP's own Form 20-F filings with the SEC, unbroken since 1999. They are first-party, dated, and they stay online — `news.sap.com` has deleted its older articles, `sap.com` blocks automated requests, and the Wayback Machine throttles. Their limit is that they appear once a year, so they give upper bounds rather than exact rename dates. [SCHEMA.md](SCHEMA.md) explains how that is handled and what it does to the medians.
+The load-bearing source for the current dataset is SAP's own filings with the SEC, unbroken since 1999. They are first-party, dated, and they stay online — `news.sap.com` has deleted its older articles, `sap.com` blocks automated requests, and the Wayback Machine throttles. The annual Form 20-F alone gives upper bounds rather than exact dates, since it only appears once a year; SAP's Form 6-K filings - interim reports and press releases, filed through the year rather than once in February - often pin the same rename down to a specific quarter instead, and occasionally catch a boundary the 20-F alone would have missed by years (`scripts/research/` holds the tooling this took). [SCHEMA.md](SCHEMA.md) explains how the dating is anchored and what it does to the medians.
 
 ## Three kinds of transition
 
