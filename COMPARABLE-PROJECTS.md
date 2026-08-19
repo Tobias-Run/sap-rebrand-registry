@@ -13,6 +13,8 @@ The exception: the UDINA Rebranding Guide was available as a text export and was
 
 **Addendum, 18 August 2026 (step 5).** The network situation has changed: `news.sap.com` and `sec.gov` are reachable, `www.sap.com` and `help.sap.com` answer automated requests with 403, and `web.archive.org` throttles to the point of being unusable. The negative finding above was **not** re-checked and still dates from 18 August 2026. The new reachability is a reason to redo it at some point, not evidence that it still holds.
 
+**Second addendum, same day.** Two of those blocks turned out to be walls with another door: historical `sap.com` pages are readable through Common Crawl, which is neither blocked nor throttled here. See "A survey of further sources" at the end of this file — that section records what nine candidate sources were each worth, including the ones that failed.
+
 ## What does exist
 
 ### 1. Inventories without a timeline
@@ -136,3 +138,87 @@ Both corrections came from the same pattern: a periodical filing only proves a n
 `scripts/research/fetch-sec-filings.mjs` downloads and caches SAP's SEC filings as plain text (20-F annual reports and 6-K current reports, the ad hoc filings that land throughout the year rather than once each February). The cache lives outside the repository, under `.cache/`, and is rebuilt by running the script again — nothing about it needs to be committed for the research to be reproducible, only the two scripts that produce and search it.
 
 `scripts/research/search-corpus.mjs "<term>"` then lists every cached filing mentioning that term, oldest first, with enough surrounding text to judge by eye. It exists because 6-K filings widen the dating precision the 20-F alone cannot give: they are filed as events happen rather than once a year, so a name documented only "by" a February annual-report date might be pinned down to the month, or the day, in a 6-K from months earlier. Their exhibits are not uniformly reliable, though - some are OCR-scanned investor decks with garbled text ("SuceesFactors", "Arbia"), and every hit still needs a human to read the context before it becomes a citation. The tool finds candidates; it does not decide anything on its own.
+
+## A survey of further sources, and what each one turned out to be worth
+
+Everything above rests on one door: SAP's filings with the SEC. That is a
+single point of failure - if a convention of those filings has been misread,
+the whole dataset tilts the same way, and no amount of internal consistency
+would show it. So the next question was not "what else could we cite?" but
+"what could contradict us?"
+
+Nine candidates were tested. Each was probed for reachability first, then, if
+reachable, checked against a case whose answer is already known - a source
+that cannot reproduce something we have already established is not a source,
+it is noise.
+
+### Common Crawl - the significant find
+
+**Works, validated, now tooled.** `sap.com` answers automated requests with
+403 and the Wayback Machine throttles this environment to a standstill, so
+SAP's own marketing pages looked permanently out of reach. Common Crawl holds
+the same pages, crawled and dated, behind a different door: a CDX index
+listing which captures exist, and a data server that serves the captured bytes
+by byte range out of the WARC file they live in. Both halves work from here.
+
+The validation: six `sap.com` pages captured in December 2017 were fetched and
+read. All six say "SAP Cloud Platform". None says "SAP HANA Cloud Platform".
+That is independent, dated confirmation, from SAP's own website, of a boundary
+we had placed using only the 20-F - and it comes from outside the SEC entirely.
+
+`scripts/research/common-crawl.mjs` does the listing and searching. Three
+things about it are worth knowing before relying on it:
+
+- **The index server rate-limits hard**; a handful of queries and it returns
+  503 for a while. The data server does not. So the script caches every index
+  response under `.cache/commoncrawl/` and is built to query the index rarely
+  and fetch page bodies freely.
+- **Coverage of `sap.com` varies wildly by crawl.** The December 2017 crawl has
+  hundreds of pages; the February and April 2017 crawls have none at all. A
+  missing capture proves nothing about the name in that month.
+- **Most hits are the site's navigation menu, not prose.** SAP lists its
+  product names in the global nav on every page, which is why a term appears on
+  pages about Sybase agreements. As `by` evidence that is entirely legitimate -
+  it is SAP stating on a date what the product is called - but it is a menu
+  entry, not a sentence, and a citation should not imply otherwise.
+
+### SEC full-text search - a second angle on a source we already use
+
+**Works** (`efts.sec.gov`, with a real User-Agent, covering 2001 onward). It
+searches every filer rather than only SAP, which is what makes it worth having
+separately: it finds SAP product names in *other companies'* filings.
+"SAP Hybris Commerce" turns up in a CallidusCloud filing from January 2018, for
+instance. Third-party, but dated, permanent, and filed under the same
+securities law as SAP's own. Useful mainly as corroboration - an outside firm
+using a name is decent evidence the name was in the market.
+
+### Wikidata - a lead generator, on the same footing as Wikipedia
+
+**Works**, and lists 30 SAP products under "developer: SAP" (Q552581). But
+inception dates are mostly missing, and the ones present are plainly rounded
+(`2015-01-01` for SAP S/4HANA). Not citable, by the same rule that keeps
+Wikipedia out of `sources`. Its value is breadth: it names products this
+register does not have yet - SAP R/2, SAP Business One, SAP Business ByDesign,
+SAP Fiori, SAP S/4HANA, SAP StreamWork - which is exactly the input the next
+phase needs.
+
+### Tested and rejected
+
+- **npm registry** (`@sap/*`). Reachable, and publish timestamps are exact to
+  the second. But the package descriptions never mention the platform names we
+  track: searching every version of `@sap/cds`, `@sap/xsenv` and
+  `@sap/approuter` for "Cloud Platform", "BTP" or "Business Technology"
+  returned nothing at all. Precise dates attached to the wrong text.
+- **Trademark registers** (USPTO, EUIPO). Both now require API keys for
+  programmatic access, so unreachable here. Worth recording that they would be
+  the *wrong* source even if open: a trademark filing dates when SAP decided it
+  might want a name, which can be years before a product carries it. Using a
+  filing date as a period start would systematically date renames too early -
+  the mirror image of the `by` bias, and harder to spot.
+- **GitHub API.** Not a network problem: this session's access is scoped to
+  this repository, so SAP's org cannot be browsed. Left open for a session
+  configured differently.
+- **community.sap.com.** 403 to both `curl` and the fetch tool. SAP-authored
+  posts there would rank as `blog` anyway, below the rest.
+- **archive.today** and the **USPTO bulk data API**: no response from this
+  environment at all.

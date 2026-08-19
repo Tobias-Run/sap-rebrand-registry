@@ -32,7 +32,9 @@ This is a reimplementation, not a fork. [LICENSE-REVIEW.md](LICENSE-REVIEW.md) s
 
 Every name period cites at least one source. The precision of the source is preserved: where only a year is documented, a year is what you get, not an invented day. A qualifier records whether a date marks an announcement, a launch, the day something took effect, or merely the earliest point we can prove.
 
-The load-bearing source for the current dataset is SAP's own filings with the SEC, unbroken since 1999. They are first-party, dated, and they stay online — `news.sap.com` has deleted its older articles, `sap.com` blocks automated requests, and the Wayback Machine throttles. The annual Form 20-F alone gives upper bounds rather than exact dates, since it only appears once a year; SAP's Form 6-K filings - interim reports and press releases, filed through the year rather than once in February - often pin the same rename down to a specific quarter instead, and occasionally catch a boundary the 20-F alone would have missed by years (`scripts/research/` holds the tooling this took). [SCHEMA.md](SCHEMA.md) explains how the dating is anchored and what it does to the medians.
+The load-bearing source for the current dataset is SAP's own filings with the SEC, unbroken since 1999. They are first-party, dated, and they stay online — `news.sap.com` has deleted its older articles, `sap.com` blocks automated requests, and the Wayback Machine throttles. The annual Form 20-F alone gives upper bounds rather than exact dates, since it only appears once a year; SAP's Form 6-K filings - interim reports and press releases, filed through the year rather than once in February - often pin the same rename down to a specific quarter instead, and occasionally catch a boundary the 20-F alone would have missed by years. [SCHEMA.md](SCHEMA.md) explains how the dating is anchored and what it does to the medians.
+
+Resting everything on one filer is its own risk, so a second, independent class of evidence is now reachable too: historical `sap.com` pages, read out of Common Crawl rather than from `sap.com` itself or the Wayback Machine. `scripts/research/` holds the tooling for both corpora, and [COMPARABLE-PROJECTS.md](COMPARABLE-PROJECTS.md) records which other candidate sources were tested and what each turned out to be worth — including the ones that failed.
 
 ## Three kinds of transition
 
@@ -63,7 +65,7 @@ Discontinued products, logo history, renamed pricing models, SAP-internal projec
 | `src/register.js`, `index.html` | the register page |
 | `src/timeline.js`, `timeline.html` | the timeline page - the same periods drawn to scale against SAP's ERP line |
 | `src/styles.css` | shared styles for both pages, one token set |
-| `scripts/research/` | tooling for the SEC filing corpus a source citation gets pulled from (see COMPARABLE-PROJECTS.md) |
+| `scripts/research/` | tooling for the source corpora a citation gets pulled from — SEC filings and Common Crawl (see COMPARABLE-PROJECTS.md) |
 | `tests/` | unit tests, run by `npm test` and in CI |
 
 ## Considered, not decided
