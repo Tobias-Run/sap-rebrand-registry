@@ -237,6 +237,103 @@
           "start": "2007",
           "qualifier": "by",
           "transition": "rename",
+          "wave": "mysap-drop-2007",
+          "sources": ["sap-20f-2006"]
+        }
+      ]
+    },
+    {
+      "id": "sap-crm",
+      "emoji": "🤝",
+      "currentName": "SAP CRM",
+      "family": "cx",
+      "origin": "organic",
+      "periods": [
+        {
+          "name": "mySAP CRM",
+          "start": "2002",
+          "end": "2007",
+          "qualifier": "by",
+          "sources": ["sap-20f-2001"]
+        },
+        {
+          "name": "SAP CRM",
+          "start": "2007",
+          "qualifier": "by",
+          "transition": "rename",
+          "wave": "mysap-drop-2007",
+          "sources": ["sap-20f-2006"]
+        }
+      ]
+    },
+    {
+      "id": "sap-scm",
+      "emoji": "🚚",
+      "currentName": "SAP SCM",
+      "family": "erp-suite",
+      "origin": "organic",
+      "periods": [
+        {
+          "name": "mySAP SCM",
+          "start": "2002",
+          "end": "2007",
+          "qualifier": "by",
+          "sources": ["sap-20f-2001"]
+        },
+        {
+          "name": "SAP SCM",
+          "start": "2007",
+          "qualifier": "by",
+          "transition": "rename",
+          "wave": "mysap-drop-2007",
+          "sources": ["sap-20f-2006"]
+        }
+      ]
+    },
+    {
+      "id": "sap-srm",
+      "emoji": "📦",
+      "currentName": "SAP SRM",
+      "family": "spend-travel",
+      "origin": "organic",
+      "periods": [
+        {
+          "name": "mySAP SRM",
+          "start": "2002",
+          "end": "2007",
+          "qualifier": "by",
+          "sources": ["sap-20f-2001"]
+        },
+        {
+          "name": "SAP SRM",
+          "start": "2007",
+          "qualifier": "by",
+          "transition": "rename",
+          "wave": "mysap-drop-2007",
+          "sources": ["sap-20f-2006"]
+        }
+      ]
+    },
+    {
+      "id": "sap-plm",
+      "emoji": "📐",
+      "currentName": "SAP PLM",
+      "family": "erp-suite",
+      "origin": "organic",
+      "periods": [
+        {
+          "name": "mySAP PLM",
+          "start": "2002",
+          "end": "2007",
+          "qualifier": "by",
+          "sources": ["sap-20f-2001"]
+        },
+        {
+          "name": "SAP PLM",
+          "start": "2007",
+          "qualifier": "by",
+          "transition": "rename",
+          "wave": "mysap-drop-2007",
           "sources": ["sap-20f-2006"]
         }
       ]

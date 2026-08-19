@@ -238,3 +238,46 @@ phase needs.
   posts there would rank as `blog` anyway, below the rest.
 - **archive.today** and the **USPTO bulk data API**: no response from this
   environment at all.
+
+## Finding products instead of remembering them
+
+The first ten products were picked from memory and then sourced. That order has a
+built-in bias: it can only ever surface what somebody already thought of, which
+in practice means whatever was famous. `scripts/research/find-name-candidates.mjs`
+inverts it. The script pulls every "SAP <Something>" phrase out of the cached
+corpus, records which filings each one appears in, and reports the span. A name
+that runs for a few years and then stops is a rename candidate; a name that
+starts where another stopped is the other half of the same event.
+
+Most of what it returns is noise, and the noise has a shape: a pile of financial
+filings is full of legal entities (`SAP Hellas S`, `SAP Beteiligungsverwaltungs
+GmbH`), board bodies, country subsidiaries and report furniture. The script
+filters those by pattern rather than by hand-maintained blocklist, which leaves
+a few hundred candidates a person can actually read.
+
+**What it found: the `mySAP` prefix drop.** Four names ended within weeks of each
+other in spring 2006 — mySAP CRM, mySAP SCM, mySAP SRM, mySAP PLM — and four
+SAP-prefixed names appeared together in the next annual report. Two consecutive
+filings state it almost as a diff:
+
+> mySAP Business Suite consists of the following SAP applications: mySAP CRM,
+> mySAP ERP, mySAP PLM, mySAP SCM and mySAP SRM.
+> — Form 20-F for 2005, filed 22 March 2006
+
+> SAP ERP (…), SAP Customer Relationship Management (SAP CRM), SAP Product
+> Lifecycle Management (SAP PLM), SAP Supply Chain Management (SAP SCM), and
+> SAP Supplier Relationship Management (SAP SRM).
+> — Form 20-F for 2006, filed 3 April 2007
+
+Same five products, same order, prefix gone. mySAP ERP was already in the
+register; the other four were not, and none of them would have been found by
+listing products from memory in 2026 — they are exactly the kind of entry that
+falls out of the collective memory while remaining a real, maintained product.
+All five now carry `wave: "mysap-drop-2007"`.
+
+**What it found and we did not take.** "SAP Business Suite" looks like a revert:
+present 2007–2016, absent for eight years, back in the reports for 2024 and
+2025. Reading both contexts settles it as a name reuse rather than a return —
+see "Renaming back to an earlier name" in [SCHEMA.md](SCHEMA.md) for the two
+quotes side by side. The discovery tool is good at finding these; it cannot tell
+them apart, and it is not supposed to.

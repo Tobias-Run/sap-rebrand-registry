@@ -4,7 +4,7 @@ An independent research project: how often, and when, SAP has renamed its produc
 
 Two static pages, no server logic. A **register** listing every documented name period per product, and an **analysis** that computes median durations, family patterns and a semi-serious risk index from it. Every number is worked out in the browser from a single file. Nothing is carried forward by hand.
 
-**Status:** under construction. The dataset has a sourced core — 10 products, 27 name periods, no warnings, a third of them with a second source. The register and timeline pages are up. The analysis page is not written yet.
+**Status:** under construction. The dataset has a sourced core — 14 products, 35 name periods reaching back to 2002, no warnings. The register and timeline pages are up. The analysis page is not written yet.
 
 ```bash
 npm start      # serves the register at http://localhost:3000
