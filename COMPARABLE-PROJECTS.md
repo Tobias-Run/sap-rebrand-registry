@@ -71,7 +71,7 @@ The "Get Your Story Straight" network around the Microsoft Rebrand Registry — 
 
 The only find that comes close to a rename table. Read in full.
 
-**What it is:** a snapshot of *one* event — the retirement of the "SAP Cloud Platform" brand on **18 January 2021**. Around 200 old→new rows in six sections: General, Integration and Extension Services, Third-Party Services, Environments and Runtimes, Editions, Add-Ons and Tools. Maintained by UNIORG Cloud Services as a reference for consulting work. It answers "what is this thing called today?", not "how often has it been renamed?".
+**What it is:** a snapshot of *one* event — the retirement of the "SAP Cloud Platform" brand, which the guide dates to **18 January 2021**. That day is the guide's claim, not an established fact; SAP's own pages from that week show a gradual de-branding rather than a switch (see below). Around 200 old→new rows in six sections: General, Integration and Extension Services, Third-Party Services, Environments and Runtimes, Editions, Add-Ons and Tools. Maintained by UNIORG Cloud Services as a reference for consulting work. It answers "what is this thing called today?", not "how often has it been renamed?".
 
 **How it differs from us:**
 
@@ -85,7 +85,7 @@ The only find that comes close to a rename table. Read in full.
 
 The decisive difference: in the UDINA guide those ~200 rows are 200 entries. For us the same event is **one** transition per affected product (`transition: rename`, `qualifier: effective`, `start: 2021-01`). If we counted catalogue rows instead of product identities, Platform & Dev would end up with a median that buries every other family.
 
-**Legal handling:** somebody else's work, © UNIORG Cloud Services, with no open licence. Used strictly as a search aid under section 7 of the brief; the table itself is not taken over. The facts in it evidently come from SAP's own rename list of January 2021 and are to be verified against that primary source once `sap.com` is reachable.
+**Legal handling:** somebody else's work, © UNIORG Cloud Services, with no open licence. Used strictly as a search aid under section 7 of the brief; the table itself is not taken over. The facts in it evidently come from SAP's own rename list of January 2021 and were to be verified against that primary source once `sap.com` was reachable — which Common Crawl has since made possible, with a result that does not support the guide's headline date (see "18 January 2021 is not a clean cutover" below).
 
 **Concrete leads taken from it:**
 
@@ -111,7 +111,23 @@ The distinction is not the subject matter but three things none of the sources f
 
 The UDINA guide exposes a pattern the data model in section 3 did not originally capture: SAP does not rename products one at a time, it renames them in waves. Decided in step 6 - see "Three questions the schema had left open, now decided" in [SCHEMA.md](SCHEMA.md). `sap-btp` and `sap-integration-suite` already carry `wave: "btp-2021"`, sourced to the same filing this guide's own 18 January 2021 cut-off points at.
 
-**18 January 2021 is still unsourced.** The day comes from the UDINA guide alone. The most that could be sourced first-hand in step 5 was the month: "we have begun to sunset the SAP Cloud Platform brand in January 2021" (Form 20-F for 2020). The dataset therefore says `2021-01`, not `2021-01-18`. Pinning down the day needs SAP's own rename list from January 2021, which lives on `sap.com`, which answers automated requests with 403.
+**18 January 2021 is not a clean cutover — and now there is evidence, not just an absence of it.** The day comes from the UDINA guide alone. The most that could be sourced first-hand was the month: "we have begun to sunset the SAP Cloud Platform brand in January 2021" (Form 20-F for 2020), so the dataset says `2021-01`.
+
+Common Crawl let us look at what `sap.com` itself was doing that week, and the picture contradicts a single-day switch:
+
+| capture (UTC) | page | `<title>` | "SAP Cloud Platform" | "SAP Business Technology Platform" |
+| --- | --- | --- | --- | --- |
+| 15 Jan 2021, 18:17 | `/products/business-technology-platform.html` | SAP Business Technology Platform | 0 | 10 |
+| 18 Jan 2021, 18:17 | `/products/cloud-platform.html` | SAP Cloud Platform \| PaaS & App Development \| SAP | 31 | 1 |
+| 27 Feb 2021, 13:48 | `/products/cloud-platform.html` | Cloud Platform \| PaaS and App Development \| SAP | 16 | 6 |
+
+Three things follow. The BTP product page was already live on **15 January**, three days before the supposed cut-off. The Cloud Platform page was still fully branded **on 18 January itself**, hours into the day the guide names — its headline still read "Drive agility and change with SAP Cloud Platform". And the retirement is visible as a gradual de-branding rather than an event: by late February the same page had lost the "SAP" prefix from its own `<title>`, and mentions of the old name had halved while the new one climbed.
+
+The single BTP mention on the 18 January page is the transition caught mid-step: "SAP Business Technology Platform" sits above "SAP Cloud Platform" as the parent label, exactly the brand-over-product relationship the Form 20-F describes.
+
+So `2021-01` is not a fallback for a day we could not find. It is the more accurate claim, and SAP's own "begun to sunset" matches it better than any single date would.
+
+**Why this is documented here and not cited in `products.json`.** A Common Crawl capture has no URL a reader can open. The index and data servers answer machine requests — a byte range inside a WARC file — and there is no viewer page to link to. Every source in the dataset was checked to resolve in a browser; adding one that cannot would trade a real property of the dataset for one more citation. Common Crawl earns its place as a way to *check* claims and *find* boundaries, not as a way to cite them.
 
 **SAP BTP → "SAP Business AI Platform" is not a documented rename.** The claim to check was that the platform was renamed in 2026. What can be sourced first-hand does not support it:
 
