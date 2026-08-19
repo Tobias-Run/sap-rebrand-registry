@@ -91,3 +91,33 @@ test('the empty dataset survives derivation', () => {
   assert.deepEqual(registry.products, []);
   assert.equal(registry.periodCount, 0);
 });
+
+test('succeeds resolves to the predecessor product, in both directions', () => {
+  const withGamma = data();
+  withGamma.products.push({
+    id: 'product-gamma',
+    emoji: '🧭',
+    currentName: 'Gamma',
+    family: 'platform-dev',
+    origin: 'organic',
+    succeeds: 'product-alpha',
+    periods: [{ name: 'Gamma', start: '2021-01', qualifier: 'launch', sources: ['src-a'] }]
+  });
+  const { products } = buildRegistry(withGamma);
+  const gamma = products.find(p => p.id === 'product-gamma');
+  const alpha = products.find(p => p.id === 'product-alpha');
+  assert.equal(gamma.predecessor, alpha, 'gamma resolves its declared predecessor');
+  assert.deepEqual(alpha.successors, [gamma], 'alpha knows gamma runs alongside it, without saying so itself');
+  assert.equal(alpha.predecessor, null);
+  assert.deepEqual(gamma.successors, []);
+});
+
+test('waves group periods across products by their shared tag', () => {
+  const withWave = data();
+  withWave.products[0].periods[1].wave = 'joint-2020';
+  withWave.products[1].periods[1].wave = 'joint-2020';
+  const { wavesById } = buildRegistry(withWave);
+  assert.equal(wavesById.size, 1);
+  const entries = wavesById.get('joint-2020');
+  assert.deepEqual(entries.map(e => e.product.id).sort(), ['product-alpha', 'product-beta']);
+});

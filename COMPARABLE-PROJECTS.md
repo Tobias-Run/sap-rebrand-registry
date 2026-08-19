@@ -107,7 +107,7 @@ The distinction is not the subject matter but three things none of the sources f
 
 ## Open points
 
-The UDINA guide exposes a pattern the data model in section 3 does not capture: SAP does not rename products one at a time, it renames them in waves. An optional `wave` field at period level (a free-form slug such as `btp-2021`) would carry a section on the analysis page that the model project cannot have. Undecided.
+The UDINA guide exposes a pattern the data model in section 3 did not originally capture: SAP does not rename products one at a time, it renames them in waves. Decided in step 6 - see "Three questions the schema had left open, now decided" in [SCHEMA.md](SCHEMA.md). `sap-btp` and `sap-integration-suite` already carry `wave: "btp-2021"`, sourced to the same filing this guide's own 18 January 2021 cut-off points at.
 
 **18 January 2021 is still unsourced.** The day comes from the UDINA guide alone. The most that could be sourced first-hand in step 5 was the month: "we have begun to sunset the SAP Cloud Platform brand in January 2021" (Form 20-F for 2020). The dataset therefore says `2021-01`, not `2021-01-18`. Pinning down the day needs SAP's own rename list from January 2021, which lives on `sap.com`, which answers automated requests with 403.
 

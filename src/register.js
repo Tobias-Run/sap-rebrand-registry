@@ -117,6 +117,9 @@ function periodWhen(period, asOf) {
     text('span', 'dates', `${from} → ${until}`),
     document.createTextNode(`  ·  ${qualifier}  ·  ${formatDuration(period.months)}`)
   );
+  if (period.wave) {
+    line.append(document.createTextNode(`  ·  part of the ${period.wave} wave`));
+  }
   return line;
 }
 
@@ -131,6 +134,12 @@ function renderPeriod(period, asOf, isLast) {
       document.createTextNode(' '),
       text('span', `badge ${period.transition}`, TRANSITION_LABELS[period.transition])
     );
+  }
+  if (period.revert) {
+    // A revert is still a rename (it still counts), but it went back to a
+    // name this product already carried - worth flagging as such rather than
+    // reading as a name nobody has seen before.
+    heading.append(document.createTextNode(' '), text('span', 'badge neutral', 'revert'));
   }
 
   const sources = text('ul', 'sources');
@@ -156,6 +165,18 @@ function productMeta(product) {
   parts.push(product.renameCount === 1 ? '1 rename' : `${product.renameCount} renames`);
   parts.push(`current name for ${formatDuration(product.currentNameMonths)}`);
 
+  if (product.predecessor) {
+    // Runs alongside its predecessor rather than replacing it - SAP ERP next
+    // to SAP S/4HANA is the case this exists for. See SCHEMA.md, "predecessors
+    // that keep running": recorded as a link between two products, not as one
+    // chain of periods pretending the older name ended.
+    parts.push(`runs alongside ${product.predecessor.currentName}`);
+  }
+  if (product.successors.length > 0) {
+    const names = product.successors.map(successor => successor.currentName).join(', ');
+    parts.push(`later joined by ${names}`);
+  }
+
   parts.forEach((part, index) => {
     if (index > 0) meta.append(text('span', 'sep', '·'));
     meta.append(document.createTextNode(part));
@@ -171,7 +192,7 @@ function renderProduct(product, asOf) {
   header.append(
     text('span', 'mark', product.emoji ?? '•'),
     text('h2', null, product.currentName),
-    text('span', 'badge origin', product.origin)
+    text('span', 'badge neutral', product.origin)
   );
 
   const chain = text('ol', 'chain');

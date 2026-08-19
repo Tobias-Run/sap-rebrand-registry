@@ -316,7 +316,7 @@ input[type="search"]:focus-visible, select:focus-visible { outline: 2px solid va
 .badge.rename { color: var(--rename); background: var(--rename-bg); }
 .badge.assimilation { color: var(--assimilation); background: var(--assimilation-bg); }
 .badge.generation { color: var(--generation); background: var(--generation-bg); }
-.badge.origin { color: var(--ink-soft); background: transparent; border: 1px solid var(--rule-strong); }
+.badge.neutral { color: var(--ink-soft); background: transparent; border: 1px solid var(--rule-strong); }
 .badge.weak { color: var(--weak); background: var(--weak-bg); }
 
 .sources {

@@ -27,6 +27,7 @@ Checks run with `npm run validate`. The script runs in CI and fails on any error
 | `origin` | `organic` \| `acquired` | yes | |
 | `acquiredFrom` | string | only with `acquired` | an error with `organic`, not merely redundant |
 | `acquisitionDate` | date | only with `acquired` | must not fall after the first `assimilation` period |
+| `succeeds` | product id | no | see "Products that run alongside their predecessor" below |
 | `periods` | array | yes | chronological, at least one entry |
 
 ## Period
@@ -38,6 +39,8 @@ Checks run with `npm run validate`. The script runs in CI and fails on any error
 | `end` | date | all but one | exclusive. Exactly one period per product has no `end` |
 | `qualifier` | `launch` \| `announcement` \| `effective` \| `by` | yes | `by` = earliest provable date; the real start may lie before it |
 | `transition` | `rename` \| `assimilation` \| `generation` | all but the first | the kind of transition **into** this period |
+| `revert` | boolean | no | see "Renaming back to an earlier name" below |
+| `wave` | slug | no | see "Rename waves" below |
 | `sources` | array of source ids | yes | at least one, each has to resolve |
 
 ## Source
@@ -90,8 +93,11 @@ One known distortion follows from this: `by` dates sit systematically **later** 
 12. `currentName` matches the name of the running period.
 13. Every enum field keeps to its value list.
 14. `emoji`, where set, contains no letters or digits and at most two visible characters.
+15. `revert: true` is only allowed on `transition: "rename"`, and only where an earlier period of the same product carries the same `name` — the return has to be to somewhere the chain has actually been.
+16. `wave`, where set, is a slug.
+17. `succeeds` has to resolve to another product's `id`, cannot point at the product's own `id`, and cannot form a cycle.
 
-Warnings that do not block: a period without a primary source, a source no period references, a product without an emoji.
+Warnings that do not block: a period without a primary source, a source no period references, a product without an emoji, periods that share a `wave` but not a `start` date.
 
 ## Why `transition` is the heart of it
 
@@ -101,16 +107,16 @@ Warnings that do not block: a period without a primary source, a source no perio
 
 The model project simply excludes platform transformations. At SAP they are too frequent to ignore and too different in kind to count.
 
-## Open decisions
+## Three questions the schema had left open, now decided
 
-Three points are deliberately unsettled, and none of them should be settled unilaterally:
+These were unsettled through step 5 on purpose — deciding them alone, before there was a real case to decide them against, would have meant guessing. Step 5 supplied the cases (SAP BTP's own history, the `2021-01` pair, SAP ERP standing next to a product this register doesn't even contain yet). The decisions below were made against that evidence, in step 6.
 
-**Renames back to an earlier name.** Does returning to a former name count as a new period or as a correction of the previous one? SAP has done it several times, particularly in analytics. The choice moves the medians noticeably. Both variants get computed against the finished dataset and put up for decision (step 6).
+**Renaming back to an earlier name.** A revert counts as a rename like any other — it moved the name, and pretending otherwise would mean the median quietly depends on guessing SAP's intent behind a name change rather than just measuring it. What it gets instead is a marker: `revert: true` on the period, valid only when an earlier period of the same product carried that exact name. Nothing is excluded from the count; the flag exists so a returning name can be told apart from a genuinely new one when reading the chain, not to exempt it from the statistics.
 
-**Rename waves.** The schema has no field for several products being renamed together — January 2021, say, when the "SAP Cloud Platform" brand was dropped. An optional `wave` field at period level would carry a section on the analysis page that the model project cannot have: SAP does not rename products one at a time, it renames them in batches. Costs one field and one validation rule.
+There is no example of this in the current ten products — the case that prompted the question (repeated renaming in analytics) hasn't been researched into the dataset yet. The mechanism is ready for when it is.
 
-The first dataset already shows the pattern: `sap-btp` and `sap-integration-suite` both have a period starting `2021-01`, from the same source. Across ten products that is two — the wave is visible in the data, but not yet large enough to decide the question.
+**Rename waves.** Real, and already present: `sap-btp` and `sap-integration-suite` both carry `wave: "btp-2021"` on the period that starts `2021-01`, sourced to the same Form 20-F. The validator checks that periods sharing a `wave` also share a `start` — a warning, not an error, since a rollout spread over a few days is still one wave. Two tagged periods is not yet enough to justify an analysis-page section built around waves; the field exists so that section can be added later without a schema migration, and so the pattern is visible in the data now rather than only in prose.
 
-**Predecessors that keep running.** The dataset runs into a limit of the model: a chain of names implies that the old name ends when the new one begins. At SAP that is often untrue. SAP ERP is still maintained even though SAP S/4HANA has stood beside it since 2015; the same goes for SAP BW next to SAP BW/4HANA. Neither is recorded as a `generation` period of its predecessor, because that would assert the predecessor had ended.
+**Predecessors that keep running.** SAP ERP still runs alongside SAP S/4HANA, which this register does not (yet) contain — adding it as a `generation` period of SAP ERP was never right, because that would assert SAP ERP had ended. The chosen model: a successor is its **own** product, linked to its predecessor by an optional `succeeds` field carrying the predecessor's `id`. Nothing about period contiguity changes — `succeeds` is resolved into `predecessor` and `successors` on each product at read time (see `model.js`), in both directions, so the dataset only has to say it once.
 
-That leaves the register without the very transition `generation` was meant for. The options: treat the successor as its own product (honest, but the connection is lost), extend the model to allow overlapping periods (expensive, and it touches every validation rule), or restrict `generation` to cases where the predecessor really does disappear (which is how it stands now — see `sap-erp`, SAP R/3 → mySAP ERP). To be decided with step 6.
+The alternative that was rejected — periods allowed to overlap — would have touched rule 2 and rule 3 above, and everything downstream that assumes a product's `currentPeriod` is unambiguous (both pages do). `succeeds` costs one field and one validation pass; overlapping periods would have cost a rewrite. SAP S/4HANA and SAP BW/4HANA are not yet in the dataset — the field is ready for when they are.

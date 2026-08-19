@@ -127,6 +127,31 @@ function validatePeriods(report, product, path, sourcesById, asOf) {
       report.error(`${at}.transition`, "'assimilation' requires origin: 'acquired'");
     }
 
+    // A revert counts as a rename like any other - it still moved the name,
+    // even if the destination is one we have seen before. The flag exists so
+    // it can be told apart from a genuinely new name, not to exempt it from
+    // the statistics.
+    if (period?.revert !== undefined) {
+      if (typeof period.revert !== 'boolean') {
+        report.error(`${at}.revert`, `must be a boolean, is ${JSON.stringify(period.revert)}`);
+      } else if (period.revert) {
+        if (period?.transition !== 'rename') {
+          report.error(`${at}.revert`, "only makes sense on transition: 'rename'");
+        }
+        if (typeof period?.name === 'string'
+          && !periods.slice(0, index).some(earlier => earlier?.name === period.name)) {
+          report.error(`${at}.revert`, `no earlier period of this product is named ${JSON.stringify(period.name)}`);
+        }
+      }
+    }
+
+    // A wave groups periods that changed on the same day for the same
+    // announced reason, across different products - free-form because SAP
+    // does not name these events itself, we do, after the fact.
+    if (period?.wave !== undefined && !SLUG.test(period.wave ?? '')) {
+      report.error(`${at}.wave`, `not a valid slug: ${JSON.stringify(period?.wave)}. Expected lowercase letters, digits and hyphens`);
+    }
+
     if (!Array.isArray(period?.sources) || period.sources.length === 0) {
       report.error(`${at}.sources`, 'every period needs at least one source');
     } else {
@@ -193,12 +218,69 @@ function validatePeriods(report, product, path, sourcesById, asOf) {
   }
 }
 
+function validateWaves(report, products) {
+  const waves = new Map(); // wave id -> [{ start, path }]
+  products.forEach((product, productIndex) => {
+    (product?.periods ?? []).forEach((period, periodIndex) => {
+      if (typeof period?.wave !== 'string') return;
+      const at = `products[${productIndex}].periods[${periodIndex}]`;
+      if (!waves.has(period.wave)) waves.set(period.wave, []);
+      waves.get(period.wave).push({ start: period.start, path: at });
+    });
+  });
+  for (const [wave, entries] of waves) {
+    const starts = new Set(entries.map(entry => entry.start));
+    if (starts.size > 1) {
+      report.warn(`wave.${wave}`,
+        `periods tagged with this wave do not share a start date: ${[...starts].join(', ')}`);
+    }
+  }
+}
+
+// succeeds is informational only: it names a predecessor a product ran
+// alongside rather than replaced, so the connection is visible without
+// pretending the two share one chain of periods (see SCHEMA.md).
+function validateSucceeds(report, products) {
+  const ids = new Set(products.map(product => product?.id).filter(id => typeof id === 'string'));
+  products.forEach((product, index) => {
+    if (product?.succeeds === undefined) return;
+    const path = `products[${index}].succeeds`;
+    if (typeof product.succeeds !== 'string') {
+      report.error(path, `must be a product id, is ${JSON.stringify(product.succeeds)}`);
+      return;
+    }
+    if (product.succeeds === product.id) {
+      report.error(path, 'a product cannot succeed itself');
+      return;
+    }
+    if (!ids.has(product.succeeds)) {
+      report.error(path, `product id does not resolve: ${JSON.stringify(product.succeeds)}`);
+      return;
+    }
+    // A cycle (A succeeds B succeeds A) would make "predecessor" meaningless.
+    // Products are few enough that walking the chain is cheap.
+    const byId = new Map(products.map(entry => [entry?.id, entry]));
+    const seen = new Set([product.id]);
+    let current = byId.get(product.succeeds);
+    while (current?.succeeds !== undefined) {
+      if (seen.has(current.succeeds)) {
+        report.error(path, `succeeds forms a cycle: ${[...seen, current.succeeds].join(' -> ')}`);
+        return;
+      }
+      seen.add(current.id);
+      current = byId.get(current.succeeds);
+    }
+  });
+}
+
 function validateProducts(report, products, sourcesById, asOf) {
   const usedSources = new Set();
   if (!Array.isArray(products)) {
     report.error('products', 'must be an array');
     return usedSources;
   }
+  validateWaves(report, products);
+  validateSucceeds(report, products);
   const ids = new Set();
   products.forEach((product, index) => {
     const path = `products[${index}]`;

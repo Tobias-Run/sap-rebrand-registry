@@ -265,10 +265,13 @@ function renderDetail() {
   panel.replaceChildren();
 
   const heading = text('h2', null, `${product.emoji ?? ''} ${period.name}`.trim());
-  const sub = text('p', 'tl-detail-sub',
-    `${product.currentName} · ${product.familyLabel} · ${formatDate(period.start)} → `
+  let subText = `${product.currentName} · ${product.familyLabel} · ${formatDate(period.start)} → `
     + `${period.end ? formatDate(period.end) : 'now'} · ${QUALIFIER_LABELS[period.qualifier] ?? period.qualifier}`
-    + (period.transition ? ` · ${TRANSITION_LABELS[period.transition]}` : ' · starting name'));
+    + (period.transition ? ` · ${TRANSITION_LABELS[period.transition]}` : ' · starting name');
+  if (period.revert) subText += ' (revert)';
+  if (period.wave) subText += ` · part of the ${period.wave} wave`;
+  if (product.predecessor) subText += ` · runs alongside ${product.predecessor.currentName}`;
+  const sub = text('p', 'tl-detail-sub', subText);
 
   const sources = text('ul', 'sources');
   sources.replaceChildren(...period.sources.map(source => {

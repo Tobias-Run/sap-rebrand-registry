@@ -49,15 +49,48 @@ function monthsToAssimilation(product) {
   return monthsBetween(product.acquisitionDate, assimilation.start);
 }
 
+// succeeds only stores an id - a product running alongside its predecessor
+// rather than replacing it (SAP ERP next to SAP S/4HANA is the case this is
+// for; see the "predecessors that keep running" note in SCHEMA.md). Resolving
+// it here, in both directions, means a page can show "successor to X" or
+// "superseded for new work by Y" without the dataset repeating itself.
+function linkPredecessors(products) {
+  const byId = new Map(products.map(product => [product.id, product]));
+  for (const product of products) {
+    product.predecessor = product.succeeds ? byId.get(product.succeeds) ?? null : null;
+  }
+  for (const product of products) {
+    product.successors = products.filter(candidate => candidate.predecessor === product);
+  }
+}
+
+// Waves group periods that changed on the same day, across different
+// products, for one announced reason - visible in the data as soon as two
+// periods carry the same wave tag, not something the model asserts on its own.
+function groupWaves(products) {
+  const waves = new Map();
+  for (const product of products) {
+    for (const period of product.periods) {
+      if (typeof period.wave !== 'string') continue;
+      if (!waves.has(period.wave)) waves.set(period.wave, []);
+      waves.get(period.wave).push({ product, period });
+    }
+  }
+  return waves;
+}
+
 export function buildRegistry(data) {
   const sourcesById = new Map((data.sources ?? []).map(source => [source.id, source]));
   const products = (data.products ?? [])
     .map(product => decorateProduct(product, sourcesById, data.asOf));
 
+  linkPredecessors(products);
+
   return {
     asOf: data.asOf,
     sourcesById,
     products,
+    wavesById: groupWaves(products),
     periodCount: products.reduce((sum, product) => sum + product.periods.length, 0),
     sourceCount: sourcesById.size
   };

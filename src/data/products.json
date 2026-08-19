@@ -195,6 +195,7 @@
           "start": "2021-01",
           "qualifier": "effective",
           "transition": "rename",
+          "wave": "btp-2021",
           "sources": ["sap-20f-2020"]
         }
       ]
@@ -218,6 +219,7 @@
           "start": "2021-01",
           "qualifier": "effective",
           "transition": "rename",
+          "wave": "btp-2021",
           "sources": ["sap-20f-2020"]
         }
       ]
