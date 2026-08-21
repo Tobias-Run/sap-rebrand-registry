@@ -27,6 +27,13 @@
   --era-a-bg: #f3efe4;
   --tl-label-width: 13.5rem;
 
+  /* The analysis plot's two-column geometry. The gridline layer has to start
+     where the bars start, which is the label column *plus* the column gap -
+     leaving the gap out puts every gridline 12px left of the value it marks. */
+  --an-label-width: 14rem;
+  --an-gap: 0.75rem;
+  --an-value-width: 4.5rem;
+
   /* Fixed, NOT theme-swapped: text drawn on a saturated segment fill.
      The categorical fills sit in a moderate-lightness band in both themes
      (see dataviz skill), so dark text reads better than light text on them
@@ -132,8 +139,6 @@ header.masthead {
 }
 
 .masthead nav [aria-current="page"] { font-weight: 700; text-decoration: none; }
-.masthead nav .pending { color: var(--ink-faint); cursor: default; }
-.masthead nav .pending::after { content: " (soon)"; font-size: 0.9em; }
 
 .tally {
   margin: 1.5rem 0 0;
@@ -592,7 +597,7 @@ footer.notes dd { margin: 0.1rem 0 0; }
 
 /* ---------- hover tooltip (transient) ---------- */
 
-.tl-tooltip {
+.tl-tooltip, .an-tooltip {
   position: absolute;
   z-index: 20;
   max-width: 20rem;
@@ -607,8 +612,8 @@ footer.notes dd { margin: 0.1rem 0 0; }
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
-.tl-tooltip-name { font-weight: 600; }
-.tl-tooltip-meta { color: color-mix(in srgb, var(--paper) 75%, transparent); margin-top: 0.1rem; }
+.tl-tooltip-name, .an-tooltip-name { font-weight: 600; }
+.tl-tooltip-meta, .an-tooltip-meta { color: color-mix(in srgb, var(--paper) 75%, transparent); margin-top: 0.1rem; }
 
 /* ---------- pinned detail panel ---------- */
 
@@ -632,4 +637,302 @@ footer.notes dd { margin: 0.1rem 0 0; }
 @media (max-width: 40rem) {
   .tl-scroll { --tl-label-width: 9rem; }
   .tl-row-label { font-size: 0.8rem; padding: 0 0.6rem; }
+}
+
+/* ================================================================
+   Analysis page. Same tokens again; what this section adds is a
+   two-column row (label | plot track) shared by every bar, the axis
+   and the gridline layer, so all three measure from the same x
+   origin. The categorical fills are the register's three transition
+   colours - already validated for both themes - plus one neutral for
+   a name that has not ended.
+   ================================================================ */
+
+.an-hint { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 0.8rem; color: var(--ink-faint); }
+
+.an-tooltip { display: none; }
+
+/* ---------- hero figures ---------- */
+
+.an-hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1.5rem 2rem;
+  margin: 2.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+.an-hero b {
+  display: block;
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.an-hero-label {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.86rem;
+  color: var(--ink);
+}
+
+.an-hero-note {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+}
+
+/* ---------- sections ---------- */
+
+.an-section {
+  margin-top: 3.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+.an-section h2 { margin: 0; font-size: 1.3rem; letter-spacing: -0.01em; }
+
+.an-lede {
+  margin: 0.5rem 0 1.25rem;
+  max-width: 46rem;
+  color: var(--ink-soft);
+  font-size: 0.97rem;
+}
+
+/* ---------- legend ---------- */
+
+.an-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  margin-bottom: 1rem;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.an-legend[hidden] { display: none; }
+.an-legend-item { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+.an-swatch { width: 0.85rem; height: 0.5rem; border-radius: 3px; flex: none; }
+.an-swatch.an-bar--running { background: var(--ink-faint); }
+
+/* ---------- plot ---------- */
+
+.an-plot { position: relative; }
+
+.an-grid {
+  position: absolute;
+  top: 0;
+  left: calc(var(--an-label-width) + var(--an-gap));
+  right: var(--an-value-width);
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Hairline, solid, one shade off the surface: a gridline is not a threshold
+   and should not read like one. The median rule is the exception - it is a
+   threshold, so it is the only dashed line here. */
+.an-gridline { position: absolute; top: 0; height: 100%; border-left: 1px solid var(--rule); }
+
+.an-reference {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-left: 1px dashed var(--ink-soft);
+}
+
+.an-row, .an-axis {
+  display: grid;
+  grid-template-columns: var(--an-label-width) 1fr;
+  gap: var(--an-gap);
+  align-items: center;
+}
+
+.an-row-label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.an-row-label > span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.an-mark { flex: none; font-family: ui-sans-serif, system-ui, sans-serif; }
+
+/* The 2px vertical padding is the surface gap between neighbouring bars - a
+   gap, not a border drawn around each one. */
+.an-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2px 0;
+  padding-right: var(--an-value-width);
+  min-width: 0;
+}
+
+.an-bar {
+  display: block;
+  height: 12px;
+  min-width: 3px;
+  border-radius: 0 4px 4px 0;
+  flex: none;
+  text-decoration: none;
+}
+
+a.an-bar:hover, a.an-bar:focus-visible {
+  filter: brightness(1.08);
+  box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--ink);
+  outline: none;
+}
+
+.an-bar--rename { background: var(--rename); }
+.an-bar--assimilation { background: var(--assimilation); }
+.an-bar--generation { background: var(--generation); }
+/* A neutral, deliberately not one of the three categorical hues: a name
+   that has not ended yet is the absence of a transition, not a fourth kind
+   of one. --ink-faint rather than --rule-strong so the longest bars in the
+   chart still hold their own against the surface in dark mode. */
+.an-bar--running { background: var(--ink-faint); }
+
+.an-value {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Part of the plot, not below it: the axis band is inside the same container,
+   so the labels can never be cut off by a fixed height. */
+.an-axis {
+  position: relative;
+  margin-top: 0.6rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--rule);
+}
+
+.an-axis-track { position: relative; height: 1.6rem; margin-right: var(--an-value-width); }
+
+.an-tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.an-tick--reference { top: 0.95rem; color: var(--ink-soft); }
+
+/* ---------- tables ---------- */
+
+.an-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.85rem;
+}
+
+.an-table th, .an-table td {
+  text-align: left;
+  padding: 0.4rem 0.75rem 0.4rem 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+
+.an-table thead th {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink-faint);
+  border-bottom-color: var(--rule-strong);
+}
+
+.an-table tbody th { font-weight: 600; color: var(--ink); }
+.an-table tbody td { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+/* ---------- waves ---------- */
+
+.an-waves { list-style: none; margin: 0; padding: 0; }
+
+.an-waves > li {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.an-wave-date {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  font-weight: 600;
+  margin-right: 0.6rem;
+}
+
+.an-wave-names { margin-top: 0.25rem; }
+.an-wave-names a { color: var(--ink-soft); }
+.an-wave-names .sep { color: var(--ink-faint); padding: 0 0.4rem; }
+
+.an-wave-id { display: block; margin-top: 0.25rem; font-size: 0.72rem; color: var(--ink-faint); }
+
+/* ---------- index ---------- */
+
+.an-index-list { list-style: none; margin: 0; padding: 0; }
+
+.an-index-list > li {
+  display: grid;
+  grid-template-columns: var(--an-label-width) 1fr 2.5rem;
+  gap: 0.2rem var(--an-gap);
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.an-index-name {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.88rem;
+}
+
+.an-index-name > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.an-meter { height: 12px; background: var(--rule); border-radius: 4px; overflow: hidden; }
+.an-meter-fill { height: 100%; background: var(--rename); border-radius: 0 4px 4px 0; }
+
+.an-index-score {
+  text-align: right;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.an-index-note {
+  grid-column: 2 / -1;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 46rem) {
+  :root { --an-label-width: 8.5rem; --an-value-width: 3.5rem; }
 }

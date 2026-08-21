@@ -2,9 +2,9 @@
 
 An independent research project: how often, and when, SAP has renamed its products.
 
-Two static pages, no server logic. A **register** listing every documented name period per product, and an **analysis** that computes median durations, family patterns and a semi-serious risk index from it. Every number is worked out in the browser from a single file. Nothing is carried forward by hand.
+Three static pages, no server logic. A **register** listing every documented name period per product, a **timeline** drawing those periods to scale, and an **analysis** that computes median durations, family patterns and a semi-serious rename-pressure index from them. Every number is worked out in the browser from a single file. Nothing is carried forward by hand.
 
-**Status:** under construction. The dataset has a sourced core — 14 products, 35 name periods reaching back to 2002, no warnings. The register and timeline pages are up. The analysis page is not written yet.
+**Status:** the dataset has a sourced core — 14 products, 35 name periods reaching back to 2002, no warnings — and all three pages are up. What is missing is breadth: one of the seven families has no products in it yet, and several known chains of names are still short of their early years.
 
 ```bash
 npm start      # serves the register at http://localhost:3000
@@ -20,7 +20,7 @@ The site is static and needs no build step, so GitHub Pages serves the repositor
 
 The deploy waits for `npm run validate` and `npm test`. A dataset the validator rejects fails the run rather than reaching the site, which is the same rule the rest of the project follows: no number goes public that has not been checked.
 
-Only `index.html`, `src/` and the two licence files are uploaded. `src/data/products.json` is served alongside the page deliberately — the dataset is CC BY 4.0 and meant to be fetchable on its own.
+Only the three pages, `src/` and the two licence files are uploaded. `src/data/products.json` is served alongside the page deliberately — the dataset is CC BY 4.0 and meant to be fetchable on its own.
 
 ## Why
 
@@ -48,7 +48,9 @@ Count all three together and bought-in families look artificially restless, whil
 
 ## What the index is not
 
-The risk index measures historical rename pressure. It is not a probability and says nothing about SAP's plans. That caveat belongs on the analysis page itself, not in the small print.
+The rename-pressure index measures what has already happened: how often a product has been renamed per year of its recorded history, and how far its current name has run against the length that product's names usually reach. It is not a probability, and SAP's plans are not an input, because we do not have them. That caveat is printed on the analysis page itself rather than kept in the small print here.
+
+The same page is explicit about the four things the figures cannot see: names that have not ended yet and so cannot be measured, start dates that are systematically later than the truth, products that are not in the register at all, and families whose median rests on one or two renames.
 
 ## Out of scope
 
@@ -63,6 +65,8 @@ Discontinued products, logo history, renamed pricing models, SAP-internal projec
 | `src/model.js` | every derived figure, shared by both pages |
 | `src/dates.js` | dates at mixed precision, without inventing days |
 | `src/register.js`, `index.html` | the register page |
+| `src/stats.js` | the medians, family figures and the index, computed for the analysis page |
+| `src/analysis.js`, `analysis.html` | the analysis page - what the register adds up to |
 | `src/timeline.js`, `timeline.html` | the timeline page - the same periods drawn to scale against SAP's ERP line |
 | `src/styles.css` | shared styles for both pages, one token set |
 | `scripts/research/` | tooling for the source corpora a citation gets pulled from — SEC filings and Common Crawl (see COMPARABLE-PROJECTS.md) |
@@ -72,7 +76,7 @@ Discontinued products, logo history, renamed pricing models, SAP-internal projec
 
 **Anonymous war stories.** Let people say what a rename actually cost them: the migration nobody budgeted for, the sales deck redone twice, the internal wiki that still uses the old name six years later. That is probably the part anyone would read first.
 
-It needs a server, though, and right now there is none. Two static pages read one JSON file, and that is the whole architecture. Accepting text from strangers means storing it, moderating it, and dealing with spam, libel, and people who name their employer without thinking it through. Worth doing later. Not worth doing before the register is finished.
+It needs a server, though, and right now there is none. Three static pages read one JSON file, and that is the whole architecture. Accepting text from strangers means storing it, moderating it, and dealing with spam, libel, and people who name their employer without thinking it through. Worth doing later. Not worth doing before the register is finished.
 
 ## Licence
 

@@ -46,7 +46,7 @@ jobs:
       - name: Collect the site
         run: |
           mkdir -p _site
-          cp index.html LICENSE LICENSE-DATA _site/
+          cp index.html timeline.html analysis.html LICENSE LICENSE-DATA _site/
           cp -r src _site/
 
       - uses: actions/configure-pages@v5
