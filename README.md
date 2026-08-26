@@ -4,7 +4,7 @@ An independent research project: how often, and when, SAP has renamed its produc
 
 Three static pages, no server logic. A **register** listing every documented name period per product, a **timeline** drawing those periods to scale, and an **analysis** that computes median durations, family patterns and a semi-serious rename-pressure index from them. Every number is worked out in the browser from a single file. Nothing is carried forward by hand.
 
-**Status:** the dataset has a sourced core — 14 products, 35 name periods reaching back to 2002, no warnings — and all three pages are up. What is missing is breadth: one of the seven families has no products in it yet, and several known chains of names are still short of their early years.
+**Status:** the dataset has a sourced core — 15 products, 36 name periods reaching back to 2002, no warnings — and all three pages are up. What is missing is breadth: one of the seven families has no products in it yet, and several known chains of names are still short of their early years.
 
 ```bash
 npm start      # serves the register at http://localhost:3000

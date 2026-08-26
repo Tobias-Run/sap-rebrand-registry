@@ -281,3 +281,31 @@ present 2007–2016, absent for eight years, back in the reports for 2024 and
 see "Renaming back to an earlier name" in [SCHEMA.md](SCHEMA.md) for the two
 quotes side by side. The discovery tool is good at finding these; it cannot tell
 them apart, and it is not supposed to.
+
+## The product that never changed its name
+
+SAP S/4HANA was announced in February 2015 and is still called SAP S/4HANA in
+the annual report for 2025. One name, eleven years, no rename — which makes it
+a strange entry for a rename register and a necessary one: it is the successor
+that never replaced SAP ERP, and the case the `succeeds` field was designed
+around.
+
+Two candidate renames were checked and rejected:
+
+**"SAP Business Suite 4 SAP HANA" is not a former name.** The long form and the
+short one were introduced together, in the same sentence, and are still used
+that way: "Announced in February, SAP Business Suite 4 SAP HANA (SAP S/4HANA)
+is our next-generation business suite" (Interim Report January–March 2015). An
+expansion of an abbreviation is not a name period.
+
+**"Cloud ERP" is a revenue metric, not a product.** The reports for 2024 and
+2025 use "Cloud ERP Suite" often enough to look like a rebrand of the ERP line,
+until the footnote defining it is read: "We use Cloud ERP Suite revenue as a
+metric to measure the growth of our portfolio of strategic cloud solutions […]
+The following offerings contribute to Cloud ERP Suite revenue: SAP S/4HANA
+Cloud, SAP Business Technology Platform, and core solutions for People &
+Culture and payroll, spend management, commerce […]". It names S/4HANA Cloud as
+one of its inputs, which is the opposite of replacing the name. A financial
+aggregate that groups several products is not a name any one of them carries —
+the same distinction that kept "SAP Business Suite" out as a revert.
+

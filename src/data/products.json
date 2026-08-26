@@ -207,6 +207,15 @@
       "type": "first-party",
       "published": "2017-07-26",
       "retrieved": "2026-08-18"
+    },
+    {
+      "id": "sap-6k-2015-04-q1",
+      "title": "SAP SE, Interim Report January-March 2015 (Form 6-K exhibit; states \"Announced in February, SAP Business Suite 4 SAP HANA (SAP S/4HANA) is our next-generation business suite\")",
+      "publisher": "SAP SE (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000119312515143490/d913578dex991.htm",
+      "type": "first-party",
+      "published": "2015-04-23",
+      "retrieved": "2026-08-26"
     }
   ],
   "products": [
@@ -222,7 +231,9 @@
           "start": "2002",
           "end": "2004-04",
           "qualifier": "by",
-          "sources": ["sap-20f-2001"]
+          "sources": [
+            "sap-20f-2001"
+          ]
         },
         {
           "name": "mySAP ERP",
@@ -230,7 +241,10 @@
           "end": "2007",
           "qualifier": "by",
           "transition": "generation",
-          "sources": ["sap-6k-2004-04-q1", "sap-20f-2004"]
+          "sources": [
+            "sap-6k-2004-04-q1",
+            "sap-20f-2004"
+          ]
         },
         {
           "name": "SAP ERP",
@@ -238,7 +252,27 @@
           "qualifier": "by",
           "transition": "rename",
           "wave": "mysap-drop-2007",
-          "sources": ["sap-20f-2006"]
+          "sources": [
+            "sap-20f-2006"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sap-s4hana",
+      "emoji": "⚡",
+      "currentName": "SAP S/4HANA",
+      "family": "erp-suite",
+      "origin": "organic",
+      "succeeds": "sap-erp",
+      "periods": [
+        {
+          "name": "SAP S/4HANA",
+          "start": "2015-02",
+          "qualifier": "announcement",
+          "sources": [
+            "sap-6k-2015-04-q1"
+          ]
         }
       ]
     },
@@ -254,7 +288,9 @@
           "start": "2002",
           "end": "2007",
           "qualifier": "by",
-          "sources": ["sap-20f-2001"]
+          "sources": [
+            "sap-20f-2001"
+          ]
         },
         {
           "name": "SAP CRM",
@@ -262,7 +298,9 @@
           "qualifier": "by",
           "transition": "rename",
           "wave": "mysap-drop-2007",
-          "sources": ["sap-20f-2006"]
+          "sources": [
+            "sap-20f-2006"
+          ]
         }
       ]
     },
@@ -278,7 +316,9 @@
           "start": "2002",
           "end": "2007",
           "qualifier": "by",
-          "sources": ["sap-20f-2001"]
+          "sources": [
+            "sap-20f-2001"
+          ]
         },
         {
           "name": "SAP SCM",
@@ -286,7 +326,9 @@
           "qualifier": "by",
           "transition": "rename",
           "wave": "mysap-drop-2007",
-          "sources": ["sap-20f-2006"]
+          "sources": [
+            "sap-20f-2006"
+          ]
         }
       ]
     },
@@ -302,7 +344,9 @@
           "start": "2002",
           "end": "2007",
           "qualifier": "by",
-          "sources": ["sap-20f-2001"]
+          "sources": [
+            "sap-20f-2001"
+          ]
         },
         {
           "name": "SAP SRM",
@@ -310,7 +354,9 @@
           "qualifier": "by",
           "transition": "rename",
           "wave": "mysap-drop-2007",
-          "sources": ["sap-20f-2006"]
+          "sources": [
+            "sap-20f-2006"
+          ]
         }
       ]
     },
@@ -326,7 +372,9 @@
           "start": "2002",
           "end": "2007",
           "qualifier": "by",
-          "sources": ["sap-20f-2001"]
+          "sources": [
+            "sap-20f-2001"
+          ]
         },
         {
           "name": "SAP PLM",
@@ -334,7 +382,9 @@
           "qualifier": "by",
           "transition": "rename",
           "wave": "mysap-drop-2007",
-          "sources": ["sap-20f-2006"]
+          "sources": [
+            "sap-20f-2006"
+          ]
         }
       ]
     },
@@ -350,7 +400,9 @@
           "start": "2013",
           "end": "2014",
           "qualifier": "by",
-          "sources": ["sap-20f-2012"]
+          "sources": [
+            "sap-20f-2012"
+          ]
         },
         {
           "name": "SAP HANA Cloud Platform",
@@ -358,7 +410,9 @@
           "end": "2017",
           "qualifier": "by",
           "transition": "rename",
-          "sources": ["sap-20f-2013"]
+          "sources": [
+            "sap-20f-2013"
+          ]
         },
         {
           "name": "SAP Cloud Platform",
@@ -366,7 +420,9 @@
           "end": "2021-01",
           "qualifier": "by",
           "transition": "rename",
-          "sources": ["sap-20f-2016"]
+          "sources": [
+            "sap-20f-2016"
+          ]
         },
         {
           "name": "SAP Business Technology Platform",
@@ -374,7 +430,9 @@
           "qualifier": "effective",
           "transition": "rename",
           "wave": "btp-2021",
-          "sources": ["sap-20f-2020"]
+          "sources": [
+            "sap-20f-2020"
+          ]
         }
       ]
     },
@@ -390,7 +448,9 @@
           "start": "2017",
           "end": "2021-01",
           "qualifier": "by",
-          "sources": ["sap-20f-2016"]
+          "sources": [
+            "sap-20f-2016"
+          ]
         },
         {
           "name": "SAP Integration Suite",
@@ -398,7 +458,9 @@
           "qualifier": "effective",
           "transition": "rename",
           "wave": "btp-2021",
-          "sources": ["sap-20f-2020"]
+          "sources": [
+            "sap-20f-2020"
+          ]
         }
       ]
     },
@@ -414,7 +476,9 @@
           "start": "2015",
           "end": "2017",
           "qualifier": "launch",
-          "sources": ["sap-20f-2015"]
+          "sources": [
+            "sap-20f-2015"
+          ]
         },
         {
           "name": "SAP BusinessObjects Cloud",
@@ -422,14 +486,19 @@
           "end": "2017-07",
           "qualifier": "by",
           "transition": "rename",
-          "sources": ["sap-20f-2016"]
+          "sources": [
+            "sap-20f-2016"
+          ]
         },
         {
           "name": "SAP Analytics Cloud",
           "start": "2017-07",
           "qualifier": "by",
           "transition": "rename",
-          "sources": ["sap-6k-2017-07-halfyear", "sap-20f-2017"]
+          "sources": [
+            "sap-6k-2017-07-halfyear",
+            "sap-20f-2017"
+          ]
         }
       ]
     },
@@ -445,14 +514,18 @@
           "start": "2019",
           "end": "2023-03-08",
           "qualifier": "launch",
-          "sources": ["sap-20f-2019"]
+          "sources": [
+            "sap-20f-2019"
+          ]
         },
         {
           "name": "SAP Datasphere",
           "start": "2023-03-08",
           "qualifier": "effective",
           "transition": "rename",
-          "sources": ["sap-news-datasphere-2023"]
+          "sources": [
+            "sap-news-datasphere-2023"
+          ]
         }
       ]
     },
@@ -470,7 +543,9 @@
           "start": "2012",
           "end": "2012-04",
           "qualifier": "by",
-          "sources": ["sap-20f-2012"]
+          "sources": [
+            "sap-20f-2012"
+          ]
         },
         {
           "name": "SuccessFactors, an SAP company",
@@ -478,7 +553,10 @@
           "end": "2015-10",
           "qualifier": "by",
           "transition": "assimilation",
-          "sources": ["sap-6k-2012-04-q1", "sap-20f-2013"]
+          "sources": [
+            "sap-6k-2012-04-q1",
+            "sap-20f-2013"
+          ]
         },
         {
           "name": "SAP SuccessFactors HCM Suite",
@@ -486,14 +564,19 @@
           "end": "2019",
           "qualifier": "by",
           "transition": "assimilation",
-          "sources": ["sap-6k-2015-10-interim", "sap-20f-2015"]
+          "sources": [
+            "sap-6k-2015-10-interim",
+            "sap-20f-2015"
+          ]
         },
         {
           "name": "SAP SuccessFactors HXM Suite",
           "start": "2019",
           "qualifier": "effective",
           "transition": "rename",
-          "sources": ["sap-6k-2020-integrated-report-2019"]
+          "sources": [
+            "sap-6k-2020-integrated-report-2019"
+          ]
         }
       ]
     },
@@ -511,14 +594,19 @@
           "start": "2015",
           "end": "2018-01",
           "qualifier": "by",
-          "sources": ["sap-20f-2014"]
+          "sources": [
+            "sap-20f-2014"
+          ]
         },
         {
           "name": "SAP Concur",
           "start": "2018-01",
           "qualifier": "by",
           "transition": "assimilation",
-          "sources": ["sap-6k-2018-01-prelim", "sap-20f-2017"]
+          "sources": [
+            "sap-6k-2018-01-prelim",
+            "sap-20f-2017"
+          ]
         }
       ]
     },
@@ -536,14 +624,19 @@
           "start": "2015",
           "end": "2015-04",
           "qualifier": "by",
-          "sources": ["sap-20f-2014"]
+          "sources": [
+            "sap-20f-2014"
+          ]
         },
         {
           "name": "SAP Fieldglass",
           "start": "2015-04",
           "qualifier": "by",
           "transition": "assimilation",
-          "sources": ["sap-6k-2015-04-annual-report", "sap-20f-2015"]
+          "sources": [
+            "sap-6k-2015-04-annual-report",
+            "sap-20f-2015"
+          ]
         }
       ]
     },
@@ -561,7 +654,9 @@
           "start": "2018",
           "end": "2018-07",
           "qualifier": "by",
-          "sources": ["sap-20f-2017"]
+          "sources": [
+            "sap-20f-2017"
+          ]
         },
         {
           "name": "SAP Customer Data Cloud",
@@ -569,7 +664,10 @@
           "qualifier": "by",
           "transition": "assimilation",
           "wave": "c4hana-2018",
-          "sources": ["sap-6k-2018-07-halfyear", "sap-20f-2021"]
+          "sources": [
+            "sap-6k-2018-07-halfyear",
+            "sap-20f-2021"
+          ]
         }
       ]
     },
@@ -587,7 +685,10 @@
           "start": "2013-10",
           "end": "2017",
           "qualifier": "by",
-          "sources": ["sap-6k-2013-10-interim", "sap-20f-2013"]
+          "sources": [
+            "sap-6k-2013-10-interim",
+            "sap-20f-2013"
+          ]
         },
         {
           "name": "SAP Hybris Commerce",
@@ -595,7 +696,9 @@
           "end": "2018-07",
           "qualifier": "by",
           "transition": "assimilation",
-          "sources": ["sap-20f-2016"]
+          "sources": [
+            "sap-20f-2016"
+          ]
         },
         {
           "name": "SAP Commerce Cloud",
@@ -603,7 +706,10 @@
           "qualifier": "by",
           "transition": "rename",
           "wave": "c4hana-2018",
-          "sources": ["sap-6k-2018-07-halfyear", "sap-20f-2018"]
+          "sources": [
+            "sap-6k-2018-07-halfyear",
+            "sap-20f-2018"
+          ]
         }
       ]
     }
