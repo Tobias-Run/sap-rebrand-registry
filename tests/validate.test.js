@@ -241,3 +241,118 @@ test('garbage input does not crash the validator', () => {
   assert.ok(validate({ asOf: '2026-08-18', sources: 'no', products: 'also not' }).errors.length >= 2);
   assert.ok(validate({ asOf: '2026-08-18', sources: [], products: [{}] }).errors.length > 0);
 });
+
+test('a revert still counts as a rename, but only where a matching earlier name exists', () => {
+  const data = dataset();
+  const product = firstProduct(data);
+  product.periods[1].end = '2022-01-01';
+  product.periods.push({
+    name: 'Alpha One', start: '2022-01-01', qualifier: 'effective', transition: 'rename', revert: true, sources: ['src-rename']
+  });
+  product.currentName = 'Alpha One';
+  assert.deepEqual(validate(data).errors, [], 'a revert to a name this product used before should validate');
+
+  const noMatch = dataset();
+  const productNoMatch = firstProduct(noMatch);
+  productNoMatch.periods[1].revert = true;
+  assert.match(errorsOf(noMatch), /revert.*no earlier period/,
+    '"Alpha Two" was never used before, so revert cannot point at it');
+});
+
+test('revert only makes sense on a rename', () => {
+  const data = dataset();
+  const product = firstProduct(data);
+  product.origin = 'acquired';
+  product.acquiredFrom = 'Alpha Systems Inc.';
+  product.acquisitionDate = '2019-01-01';
+  product.periods[1].transition = 'assimilation';
+  product.periods[1].revert = true;
+  assert.match(errorsOf(data), /revert.*only makes sense on transition: 'rename'/);
+});
+
+test('revert must be a boolean', () => {
+  const data = dataset();
+  firstProduct(data).periods[1].revert = 'yes';
+  assert.match(errorsOf(data), /revert.*must be a boolean/);
+});
+
+test('a wave tag is a slug', () => {
+  const data = dataset();
+  firstProduct(data).periods[1].wave = 'Not A Slug';
+  assert.match(errorsOf(data), /wave.*not a valid slug/);
+
+  const valid = dataset();
+  firstProduct(valid).periods[1].wave = 'alpha-2020';
+  assert.deepEqual(validate(valid).errors, []);
+});
+
+test('periods sharing a wave should share a start date - warning, not an error', () => {
+  const data = dataset({
+    products: [
+      dataset().products[0],
+      {
+        id: 'product-beta',
+        emoji: '🧭',
+        currentName: 'Beta Two',
+        family: 'cx',
+        origin: 'organic',
+        periods: [
+          { name: 'Beta One', start: '2016', end: '2020-06-01', qualifier: 'launch', sources: ['src-launch'] },
+          { name: 'Beta Two', start: '2020-06-01', qualifier: 'effective', transition: 'rename', wave: 'joint-2020', sources: ['src-rename'] }
+        ]
+      }
+    ]
+  });
+  data.products[0].periods[1].wave = 'joint-2020';
+  const report = validate(data);
+  assert.deepEqual(report.errors, [], 'a mismatched wave date is a warning, not an error');
+  assert.match(report.warnings.join('\n'), /wave\.joint-2020.*do not share a start date/);
+
+  const matching = dataset({
+    products: [
+      dataset().products[0],
+      {
+        id: 'product-beta',
+        emoji: '🧭',
+        currentName: 'Beta Two',
+        family: 'cx',
+        origin: 'organic',
+        periods: [
+          { name: 'Beta One', start: '2016', end: '2020-01-01', qualifier: 'launch', sources: ['src-launch'] },
+          { name: 'Beta Two', start: '2020-01-01', qualifier: 'effective', transition: 'rename', wave: 'joint-2020', sources: ['src-rename'] }
+        ]
+      }
+    ]
+  });
+  matching.products[0].periods[1].wave = 'joint-2020';
+  assert.deepEqual(validate(matching).warnings, [], 'matching start dates raise no warning');
+});
+
+test('succeeds has to resolve, and cannot point at itself', () => {
+  const withSuccessor = dataset({
+    products: [
+      dataset().products[0],
+      { ...dataset().products[0], id: 'product-gamma', currentName: 'Gamma', succeeds: 'product-alpha',
+        periods: [{ name: 'Gamma', start: '2021-01-01', qualifier: 'launch', sources: ['src-launch'] }] }
+    ]
+  });
+  assert.deepEqual(validate(withSuccessor).errors, []);
+
+  const selfRef = dataset();
+  firstProduct(selfRef).succeeds = 'product-alpha';
+  assert.match(errorsOf(selfRef), /succeeds.*cannot succeed itself/);
+
+  const dangling = dataset();
+  firstProduct(dangling).succeeds = 'product-does-not-exist';
+  assert.match(errorsOf(dangling), /succeeds.*does not resolve/);
+});
+
+test('succeeds cannot form a cycle', () => {
+  const data = dataset({
+    products: [
+      { ...dataset().products[0], id: 'product-a', succeeds: 'product-b' },
+      { ...dataset().products[0], id: 'product-b', succeeds: 'product-a' }
+    ]
+  });
+  assert.match(errorsOf(data), /succeeds forms a cycle/);
+});

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAP Rebrand Registry — the analysis</title>
+<meta name="description" content="How long an SAP product name lasts, which families change names most, and how long an acquisition takes to become an SAP product.">
+<link rel="stylesheet" href="src/styles.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <h1>SAP Rebrand Registry</h1>
+    <p class="standfirst">
+      What the register adds up to: how long a name lasts, which families change theirs most often,
+      and how long an acquired company keeps its own name. Every figure is recomputed in the browser
+      from the same file the register reads.
+    </p>
+    <nav>
+      <a href="index.html">Register</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="analysis.html" aria-current="page">Analysis</a>
+      <a href="https://github.com/Tobias-Run/sap-rebrand-registry">Source &amp; data</a>
+    </nav>
+  </header>
+
+  <section class="controls" aria-label="Display options">
+    <div class="row">
+      <label class="tl-toggle">
+        <input type="checkbox" id="an-table">
+        Read the charts as tables
+      </label>
+      <span class="an-hint">Same numbers, no colour needed.</span>
+    </div>
+  </section>
+
+  <main>
+    <ul class="an-hero" id="an-hero"></ul>
+
+    <section class="an-section">
+      <h2>How long a name lasts</h2>
+      <p class="an-lede" id="an-lifetimes-lede"></p>
+      <div class="an-legend" id="an-lifetimes-legend"></div>
+      <div id="an-lifetimes"></div>
+    </section>
+
+    <section class="an-section">
+      <h2>Time to SAP-ification</h2>
+      <p class="an-lede" id="an-assimilation-lede"></p>
+      <div id="an-assimilation"></div>
+    </section>
+
+    <section class="an-section">
+      <h2>Which families change names</h2>
+      <p class="an-lede">
+        Renames only. An acquired product taking the SAP prefix is counted in the section above
+        instead, and a generation change is not counted anywhere.
+      </p>
+      <div id="an-families"></div>
+    </section>
+
+    <section class="an-section">
+      <h2>Renames that came in waves</h2>
+      <p class="an-lede">
+        Some names did not change on their own. Where two or more products moved at the same
+        boundary for one announced reason, the register tags them as a wave.
+      </p>
+      <div id="an-waves"></div>
+    </section>
+
+    <section class="an-section">
+      <h2>Rename pressure</h2>
+      <p class="an-lede" id="an-index-lede"></p>
+      <div id="an-index"></div>
+    </section>
+  </main>
+
+  <footer class="notes">
+    <h2>What the index is not</h2>
+    <p>
+      It is not a probability, and nothing in it comes from SAP. It combines two things the
+      register can see — how often a product has been renamed per year of its recorded history,
+      and how far its current name has run against the length its names usually reach. A product
+      that has never been renamed scores low because nothing has happened to it, not because
+      something has been ruled out.
+    </p>
+
+    <h2>What these figures cannot see</h2>
+    <dl>
+      <dt>Names that have not ended yet</dt>
+      <dd>
+        A running name has no length, only a length so far. It is left out of the median rather
+        than counted as short, which is why the median is a floor: names still in force can only
+        turn out longer than the ones already replaced.
+      </dd>
+      <dt>Dates that are later than the truth</dt>
+      <dd>
+        Most start dates in the register are "in use by" — the earliest point a name can be
+        proven, usually an annual report. A name adopted in April first appears the following
+        February. Every period built that way is measured shorter than it really was, so the
+        medians here run low.
+      </dd>
+      <dt>Products that are not in the register</dt>
+      <dd>
+        A product is listed once its chain of names can be sourced. Discontinued products are out
+        of scope entirely, which removes exactly the cases where a name ended for reasons that
+        had nothing to do with branding.
+      </dd>
+      <dt>Small numbers</dt>
+      <dd>
+        A family with one or two renames behind it gets a median that is really just one number
+        wearing a statistic's clothes. Those rows are marked rather than hidden.
+      </dd>
+    </dl>
+    <p id="an-asof"></p>
+  </footer>
+
+</div>
+<script type="module" src="src/analysis.js"></script>
+</body>
+</html>
