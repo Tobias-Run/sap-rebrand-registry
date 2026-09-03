@@ -309,3 +309,58 @@ one of its inputs, which is the opposite of replacing the name. A financial
 aggregate that groups several products is not a name any one of them carries —
 the same distinction that kept "SAP Business Suite" out as a revert.
 
+## Mining the corpus for breadth, second pass
+
+The first pass through `find-name-candidates.mjs` looked for names that stopped
+appearing and found the `mySAP` prefix drop. A second pass with the filters
+loosened (`--min-filings=2 --ended-before=2024`) returns 930 phrases, which is
+mostly noise — legal entities, press-release furniture, `SAP and <partner>`
+constructions — and three things worth having.
+
+**Industry portfolios are not products.** "SAP for Retail", "SAP for Banking",
+"SAP for Utilities" and roughly twenty siblings all appear from 2005 and all
+stop in the annual report filed 5 March 2020, on the same day. That looks like
+a rename wave until you read one: they are industry portfolios, collections of
+solutions sold together, not products with a version number. They stay out, and
+the still-empty `industry-clouds` family stays empty rather than being filled
+with the first plausible thing.
+
+**A glossary that does the work for us.** The 2008 annual report carries a
+glossary that states renames outright, which no other filing in the corpus
+does:
+
+> "SAP NetWeaver Business Warehouse (SAP NetWeaver BW) […] Previously called
+> SAP NetWeaver Business Intelligence."
+
+> "SAP NetWeaver Application Server (SAP NetWeaver AS) […] Formerly called SAP
+> Web Application Server."
+
+That is a stronger class of evidence than anything else in the dataset. Every
+other boundary here rests on a name being present in one filing and absent from
+the next; these two say what happened.
+
+**SAP BW, added.** Four names for one product, each provable from a first-party
+filing, running from January 2000 to today: SAP Business Information Warehouse →
+SAP NetWeaver Business Intelligence → SAP NetWeaver Business Warehouse → SAP
+Business Warehouse. Three renames, and the second boundary is the one the
+glossary states. It is the longest chain in the register and pushes the earliest
+record back from 2002 to 2000.
+
+The name periods overlap in the raw counts — "SAP NetWeaver Business
+Intelligence" is still being written in 2015, six years after the glossary
+declared it previous. Marketing prose lags. The boundaries use the earliest
+provable appearance of each new name, which is the same rule the rest of the
+dataset follows.
+
+**SAP Web Application Server, a lead and not yet an entry.** The rename to SAP
+NetWeaver Application Server is documented by the same glossary, so the
+transition is not in doubt. What cannot be established from this corpus is the
+*current* name: the filings stop mentioning "SAP NetWeaver Application Server"
+after 2017 and never introduce a successor. Recording a running period would
+assert a present-tense name we cannot source, so it waits for evidence from
+outside SAP's filings.
+
+**SAP BW/4HANA** appears from 2017 and runs alongside SAP BW to this day — the
+same shape as SAP S/4HANA next to SAP ERP, and the second candidate for the
+`succeeds` field.
+

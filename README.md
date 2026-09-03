@@ -19,11 +19,11 @@ Three static pages, no server logic. Every number is worked out in the browser f
 
 | | |
 | --- | --- |
-| Products | 15 |
-| Name periods | 36, reaching back to 2002 |
-| Renames counted | 14 |
-| Sources | 24, every one of them first-party |
-| Median life of a name | 3.6 years |
+| Products | 16 |
+| Name periods | 40, reaching back to 2000 |
+| Renames counted | 17 |
+| Sources | 28, every one of them first-party |
+| Median life of a name | 4.0 years |
 | Median time to SAP-ification | 11 months |
 | Validator warnings | 0 |
 
@@ -73,7 +73,11 @@ The analysis page is also explicit about the four things the figures cannot see:
 
 ## Out of scope
 
-Discontinued products, logo history, renamed pricing models, SAP-internal project names. No imagery either: no SAP logos, no trademarks as graphics. Each product gets one emoji instead, which is the only branding decision this project is qualified to make.
+Discontinued products, logo history, renamed pricing models, SAP-internal project names.
+
+**Names a product carried before SAP bought it.** The register documents renames *by SAP*. An acquired product's chain therefore starts at the acquisition, which is also where SAP's own filings start mentioning it — Concur existed for two decades before its first entry here. Every transition currently recorded happened while SAP already owned the product.
+
+No imagery either: no SAP logos, no trademarks as graphics. Each product gets one emoji instead, which is the only branding decision this project is qualified to make.
 
 ## Layout of the repository
 
