@@ -586,6 +586,24 @@
       ]
     },
     {
+      "id": "sap-bw4hana",
+      "emoji": "🏬",
+      "currentName": "SAP BW/4HANA",
+      "family": "data-analytics",
+      "origin": "organic",
+      "succeeds": "sap-bw",
+      "periods": [
+        {
+          "name": "SAP BW/4HANA",
+          "start": "2016",
+          "qualifier": "launch",
+          "sources": [
+            "sap-20f-2016"
+          ]
+        }
+      ]
+    },
+    {
       "id": "sap-datasphere",
       "emoji": "🗄️",
       "currentName": "SAP Datasphere",
