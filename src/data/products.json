@@ -216,6 +216,42 @@
       "type": "first-party",
       "published": "2015-04-23",
       "retrieved": "2026-08-26"
+    },
+    {
+      "id": "sap-6k-2000-01-q4",
+      "title": "SAP AG, Fourth Quarter and Full Year 1999 Results (Form 6-K; states \"The SAP Business Information Warehouse (SAP BW) is the analytical SAP software solution\")",
+      "publisher": "SAP AG (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/0000950123-00-000511.txt",
+      "type": "first-party",
+      "published": "2000-01-26",
+      "retrieved": "2026-09-03"
+    },
+    {
+      "id": "sap-20f-2005",
+      "title": "SAP AG, Annual Report on Form 20-F for 2005 (names \"SAP NetWeaver Business Intelligence (SAP NetWeaver BI)\" among the SAP NetWeaver components)",
+      "publisher": "SAP AG (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000132693206000103/f01197e20vf.htm",
+      "type": "first-party",
+      "published": "2006-03-22",
+      "retrieved": "2026-09-03"
+    },
+    {
+      "id": "sap-6k-2009-03-annual-report",
+      "title": "SAP AG, 2008 Annual Report (Form 6-K exhibit; glossary states SAP NetWeaver Business Warehouse was \"Previously called SAP NetWeaver Business Intelligence\")",
+      "publisher": "SAP AG (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000132693209000080/f03058exv99w1.htm",
+      "type": "first-party",
+      "published": "2009-03-31",
+      "retrieved": "2026-09-03"
+    },
+    {
+      "id": "sap-6k-2014-04-q1",
+      "title": "SAP AG, Quarterly Statement Q1 2014 (Form 6-K exhibit; states \"the 7.4 version of the SAP Business Warehouse (SAP BW) application powered by SAP HANA\")",
+      "publisher": "SAP AG (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000119312514153736/d714571dex991.htm",
+      "type": "first-party",
+      "published": "2014-04-23",
+      "retrieved": "2026-09-03"
     }
   ],
   "products": [
@@ -498,6 +534,53 @@
           "sources": [
             "sap-6k-2017-07-halfyear",
             "sap-20f-2017"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sap-bw",
+      "emoji": "📚",
+      "currentName": "SAP Business Warehouse",
+      "family": "data-analytics",
+      "origin": "organic",
+      "periods": [
+        {
+          "name": "SAP Business Information Warehouse",
+          "start": "2000-01",
+          "end": "2006-03",
+          "qualifier": "by",
+          "sources": [
+            "sap-6k-2000-01-q4"
+          ]
+        },
+        {
+          "name": "SAP NetWeaver Business Intelligence",
+          "start": "2006-03",
+          "end": "2009-03",
+          "qualifier": "by",
+          "transition": "rename",
+          "sources": [
+            "sap-20f-2005"
+          ]
+        },
+        {
+          "name": "SAP NetWeaver Business Warehouse",
+          "start": "2009-03",
+          "end": "2014-04",
+          "qualifier": "by",
+          "transition": "rename",
+          "sources": [
+            "sap-6k-2009-03-annual-report"
+          ]
+        },
+        {
+          "name": "SAP Business Warehouse",
+          "start": "2014-04",
+          "qualifier": "by",
+          "transition": "rename",
+          "sources": [
+            "sap-6k-2014-04-q1"
           ]
         }
       ]
