@@ -237,7 +237,7 @@
     },
     {
       "id": "sap-6k-2009-03-annual-report",
-      "title": "SAP AG, 2008 Annual Report (Form 6-K exhibit; glossary states SAP NetWeaver Business Warehouse was \"Previously called SAP NetWeaver Business Intelligence\")",
+      "title": "SAP AG, 2008 Annual Report (Form 6-K exhibit; its glossary states SAP NetWeaver Business Warehouse was \"Previously called SAP NetWeaver Business Intelligence\", and its solution descriptions name SAP BusinessObjects Data Services)",
       "publisher": "SAP AG (via SEC EDGAR)",
       "url": "https://www.sec.gov/Archives/edgar/data/1000184/000132693209000080/f03058exv99w1.htm",
       "type": "first-party",
@@ -251,6 +251,24 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1000184/000119312514153736/d714571dex991.htm",
       "type": "first-party",
       "published": "2014-04-23",
+      "retrieved": "2026-09-03"
+    },
+    {
+      "id": "sap-6k-2013-04-annual-report",
+      "title": "SAP AG, 2012 Annual Report (Form 6-K exhibit; states \"The SAP BusinessObjects brand name was dropped in 2012 from all SAP offerings except for business intelligence\")",
+      "publisher": "SAP AG (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000119312513142944/d509787dex991.htm",
+      "type": "first-party",
+      "published": "2013-04-05",
+      "retrieved": "2026-09-03"
+    },
+    {
+      "id": "sap-6k-2013-10-interim-q3",
+      "title": "SAP AG, Interim Report January-September 2013 (Form 6-K exhibit; states \"SAP next unveiled the latest versions of SAP Data Services and SAP Information Steward\")",
+      "publisher": "SAP AG (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000119312513407301/d615783dex991.htm",
+      "type": "first-party",
+      "published": "2013-10-23",
       "retrieved": "2026-09-03"
     }
   ],
@@ -534,6 +552,35 @@
           "sources": [
             "sap-6k-2017-07-halfyear",
             "sap-20f-2017"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sap-data-services",
+      "emoji": "🧹",
+      "currentName": "SAP Data Services",
+      "family": "data-analytics",
+      "origin": "organic",
+      "periods": [
+        {
+          "name": "SAP BusinessObjects Data Services",
+          "start": "2009-03",
+          "end": "2012",
+          "qualifier": "by",
+          "sources": [
+            "sap-6k-2009-03-annual-report"
+          ]
+        },
+        {
+          "name": "SAP Data Services",
+          "start": "2012",
+          "qualifier": "effective",
+          "transition": "rename",
+          "wave": "businessobjects-drop-2012",
+          "sources": [
+            "sap-6k-2013-04-annual-report",
+            "sap-6k-2013-10-interim-q3"
           ]
         }
       ]

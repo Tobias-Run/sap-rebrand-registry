@@ -115,11 +115,12 @@ These were unsettled through step 5 on purpose — deciding them alone, before t
 
 No period carries `revert: true` yet. One candidate has been examined and rejected, which is worth recording because it shows the flag can be over-applied: "SAP Business Suite" runs through the annual reports from 2007 to 2016, disappears for eight years, and returns in the reports for 2024 and 2025. That looks like a textbook return to a former name until the two contexts are read side by side. The earlier one is the on-premise application bundle — "standardized core business processes", the thing SAP was "injecting in-memory computing into". The 2025 one is an umbrella over the cloud portfolio: "SAP Business Suite offers a comprehensive set of integrated solutions, in which applications, data, and AI work as one", with Cloud ERP as a named subset of it. Same words, different product — the same trap as the two unrelated products both called SAP Build, already noted in [COMPARABLE-PROJECTS.md](COMPARABLE-PROJECTS.md). A revert has to be the same product returning to its own former name, not a name being reused.
 
-**Rename waves.** Real, and larger than it first looked. The validator checks that periods sharing a `wave` also share a `start` — a warning, not an error, since a rollout spread over a few days is still one wave. Three waves are tagged so far:
+**Rename waves.** Real, and larger than it first looked. The validator checks that periods sharing a `wave` also share a `start` — a warning, not an error, since a rollout spread over a few days is still one wave. Four waves are tagged so far:
 
 | wave | products | what happened |
 | --- | --- | --- |
 | `mysap-drop-2007` | 5 | SAP dropped the `mySAP` prefix across the Business Suite: mySAP ERP, CRM, SCM, SRM and PLM all became SAP ERP, SAP CRM, SAP SCM, SAP SRM and SAP PLM |
+| `businessobjects-drop-2012` | 1 | SAP dropped the `SAP BusinessObjects` brand "from all SAP offerings except for business intelligence", in its own words and with its own date. Only one product in it could be sourced product-by-product; see [COMPARABLE-PROJECTS.md](COMPARABLE-PROJECTS.md) |
 | `c4hana-2018` | 2 | the SAP C/4HANA reorganisation renamed SAP Hybris Commerce and Gigya in one move, "with consistent naming" in SAP's own words |
 | `btp-2021` | 2 | the SAP Cloud Platform brand was retired, taking SAP Cloud Platform Integration with it |
 

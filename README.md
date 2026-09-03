@@ -19,10 +19,10 @@ Three static pages, no server logic. Every number is worked out in the browser f
 
 | | |
 | --- | --- |
-| Products | 17 |
-| Name periods | 41, reaching back to 2000 |
-| Renames counted | 17 |
-| Sources | 28, every one of them first-party |
+| Products | 18 |
+| Name periods | 43, reaching back to 2000 |
+| Renames counted | 18 |
+| Sources | 30, every one of them first-party |
 | Median life of a name | 4.0 years |
 | Median time to SAP-ification | 11 months |
 | Validator warnings | 0 |
