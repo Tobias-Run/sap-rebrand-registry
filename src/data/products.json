@@ -174,7 +174,7 @@
     },
     {
       "id": "sap-6k-2015-04-annual-report",
-      "title": "SAP SE, 2014 Annual Report (Form 6-K exhibit, glossary entry \"Fieldglass\")",
+      "title": "SAP SE, 2014 Annual Report (Form 6-K exhibit; its glossary of solution names states \"SAP Business Warehouse (SAP BW) ... Formerly called SAP NetWeaver Business Warehouse\", and carries the entry for Fieldglass)",
       "publisher": "SAP SE (via SEC EDGAR)",
       "url": "https://www.sec.gov/Archives/edgar/data/1000184/000119312515116801/d896611dex991.htm",
       "type": "first-party",
@@ -580,7 +580,8 @@
           "qualifier": "by",
           "transition": "rename",
           "sources": [
-            "sap-6k-2014-04-q1"
+            "sap-6k-2014-04-q1",
+            "sap-6k-2015-04-annual-report"
           ]
         }
       ]
