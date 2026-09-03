@@ -323,7 +323,7 @@ function renderWaves(waves) {
     const item = document.createElement('li');
     item.append(
       text('span', 'an-wave-date', formatDate(wave.start)),
-      text('b', null, `${wave.products} products`)
+      text('b', null, `${wave.products} product${wave.products === 1 ? '' : 's'}`)
     );
     const names = text('div', 'an-wave-names');
     wave.members.forEach((member, index) => {

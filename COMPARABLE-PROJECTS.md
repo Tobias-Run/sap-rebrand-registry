@@ -424,3 +424,55 @@ Each product in it needs its post-2012 name sourced individually before it can
 be entered, which is the actual work: the statement establishes that the
 renames happened, not what any single product became.
 
+## The SAP BusinessObjects wave, and why it is one entry and not twelve
+
+SAP dates the event itself, in the annual reports for 2012 and 2014:
+
+> "The SAP BusinessObjects brand name was dropped in 2012 from all SAP
+> offerings except for business intelligence."
+
+That is better evidence than the register usually gets: a brand change, across a
+portfolio, with a year attached, stated by the company that made it. The corpus
+also shows the shape - a dozen `SAP BusinessObjects X` names appear from 2009
+and stop in the annual report for 2011.
+
+What the corpus does *not* give is the other half. A wave says renames happened;
+it does not say what any individual product became. So each candidate was tested
+by asking whether the plain-named successor exists in the corpus and starts
+after the branded name stops. Fourteen pairs, and the result is mostly negative:
+
+| Branded name | Plain successor in the corpus | Verdict |
+| --- | --- | --- |
+| SAP BusinessObjects Data Services | SAP Data Services, 2013-2016 | clean |
+| SAP BusinessObjects EPM | SAP EPM, one mention in 2012 | too thin |
+| SAP BusinessObjects Profitability and Cost Management | SAP Profitability and Cost Management, 2014 | too thin |
+| SAP BusinessObjects Data Federator | none | no successor |
+| SAP BusinessObjects Edge BI | none | no successor |
+| SAP BusinessObjects Web Intelligence | none | no successor |
+| SAP BusinessObjects Spend Performance Management | none | no successor |
+| SAP BusinessObjects Process Control | none | no successor |
+| SAP BusinessObjects GRC | SAP GRC, but from 2007 | predates the branded name |
+| SAP BusinessObjects Strategy Management | SAP Strategy Management, but from 2008 | predates the branded name |
+| SAP BusinessObjects Access Control | SAP Access Control, from 2014 | four-year gap |
+| SAP BusinessObjects Risk Management | SAP Risk Management, from 2012 | two-year gap |
+| SAP BusinessObjects Planning and Consolidation | SAP Business Planning and Consolidation | concurrent, not sequential |
+
+Two of these are worth dwelling on. `SAP GRC` and `SAP Strategy Management` both
+appear *before* their branded versions, which means the product went plain →
+branded → plain: the 2012 drop returned a name rather than replacing one. Under
+the register's rules that would be a `revert`, and it is the first place the
+flag might genuinely apply - but the evidence has multi-year gaps on both sides,
+so neither is entered.
+
+**One product entered.** SAP Data Services carried the branded name from 2009 to
+2012 and the plain one from 2013 onward, with no overlap, and the contexts
+describe the same data-integration software throughout. Its rename is dated
+`2012` with qualifier `effective`, on the strength of SAP's own statement rather
+than the 2013 filing that shows the result.
+
+A wave with one member looks odd, and it is. The tag records that the event is
+documented and that the register has so far only earned the right to place one
+product inside it. The alternative was to infer eleven more chains from name
+similarity, which is how "SAP Build" and "SAP Business Suite" would have got in
+had nobody read the contexts.
+
