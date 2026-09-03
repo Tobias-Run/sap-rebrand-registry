@@ -364,3 +364,32 @@ outside SAP's filings.
 same shape as SAP S/4HANA next to SAP ERP, and the second candidate for the
 `succeeds` field.
 
+## SAP BW/4HANA, and a limit the schema has
+
+Added as the second user of `succeeds`, and the first case where the
+predecessor has a full chain of its own: SAP BW carries four names since 2000
+and is still current, while SAP BW/4HANA has carried one name since 2016 and
+runs beside it. Neither product's periods had to be bent to accommodate the
+other, which is the whole reason the field exists.
+
+The start date comes from SAP's annual report for 2016: "With SAP BW/4HANA, we
+launched next-generation data warehouse software." The report covers fiscal
+2016 and states the launch happened inside it, so the entry is `2016` with
+qualifier `launch` rather than "in use by" the 2017 publication date.
+
+That exposes a limit worth naming. The same document, `sap-20f-2016`, is
+already cited by four other periods for a weaker claim - that a name was in use
+when the report was published. A source in this dataset is a *document*, not a
+passage, so nothing in `products.json` records which sentence carries which
+claim. For a 300-page filing cited five times for four different reasons, a
+reader following the link has to find the sentence themselves. Passage-level
+citation would fix it; it has not been needed badly enough yet to justify the
+schema change, and this is the first entry where the gap is visible.
+
+**How solid is the running period?** Less than the others, and worth saying so.
+SAP BW/4HANA appears in nineteen filings, but by the report for 2024 it survives
+only in the trademark list, and the report for 2025 does not mention it at all.
+Absence from a filing is not an ending - the register records no
+discontinuations and does not treat silence as evidence - so the period runs.
+It is the weakest "still current" claim in the dataset.
+
