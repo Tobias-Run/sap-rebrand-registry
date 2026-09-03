@@ -325,9 +325,9 @@ solutions sold together, not products with a version number. They stay out, and
 the still-empty `industry-clouds` family stays empty rather than being filled
 with the first plausible thing.
 
-**A glossary that does the work for us.** The 2008 annual report carries a
-glossary that states renames outright, which no other filing in the corpus
-does:
+**A glossary that does the work for us.** SAP's annual reports carry a glossary
+of solution names, and for a few years it stated renames outright - which the
+running prose never does:
 
 > "SAP NetWeaver Business Warehouse (SAP NetWeaver BW) […] Previously called
 > SAP NetWeaver Business Intelligence."
@@ -392,4 +392,35 @@ only in the trademark list, and the report for 2025 does not mention it at all.
 Absence from a filing is not an ending - the register records no
 discontinuations and does not treat silence as evidence - so the period runs.
 It is the weakest "still current" claim in the dataset.
+
+## The glossary is worth reading properly
+
+The first pass over the glossary was run with a regular expression that timed
+out and was moved to the background; by the time it finished, SAP BW had
+already been entered on the strength of what a faster, narrower search had
+found. The full run returned two more lines, and both matter.
+
+**The third BW boundary is stated, not inferred.** The glossary in the annual
+report for 2014: "SAP Business Warehouse (SAP BW) […] Formerly called SAP
+NetWeaver Business Warehouse." The period had been dated from a Q1 2014
+quarterly statement that simply used the new name. The start date does not
+change - the quarterly statement is still the earliest provable use - but the
+period now cites both, so the rename itself rests on SAP saying it happened
+rather than on a name appearing and another disappearing.
+
+**A rename wave, dated by SAP, that the register does not yet contain.** From
+the same glossary:
+
+> "The SAP BusinessObjects brand name was dropped in 2012 from all SAP
+> offerings except for business intelligence."
+
+The corpus shows exactly that shape: SAP BusinessObjects GRC, EPM, Data
+Services, Data Integrator, Edge BI, Web Intelligence and several more all
+appear from 2009 and are all last seen in the annual report for 2011. A brand
+dropped across a portfolio on a stated date is the same event as the `mySAP`
+prefix drop of 2007, and it is the largest documented wave still missing.
+
+Each product in it needs its post-2012 name sourced individually before it can
+be entered, which is the actual work: the statement establishes that the
+renames happened, not what any single product became.
 
