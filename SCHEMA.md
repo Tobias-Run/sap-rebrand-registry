@@ -41,6 +41,7 @@ Checks run with `npm run validate`. The script runs in CI and fails on any error
 | `transition` | `rename` \| `assimilation` \| `generation` | all but the first | the kind of transition **into** this period |
 | `revert` | boolean | no | see "Renaming back to an earlier name" below |
 | `wave` | slug | no | see "Rename waves" below |
+| `lastConfirmed` | date | no | running period only: the newest source known to use this name. See "How current is a current name" below |
 | `sources` | array of source ids | yes | at least one, each has to resolve |
 
 ## Source
@@ -96,8 +97,9 @@ One known distortion follows from this: `by` dates sit systematically **later** 
 15. `revert: true` is only allowed on `transition: "rename"`, and only where an earlier period of the same product carries the same `name` — the return has to be to somewhere the chain has actually been.
 16. `wave`, where set, is a slug.
 17. `succeeds` has to resolve to another product's `id`, cannot point at the product's own `id`, and cannot form a cycle.
+18. `lastConfirmed` belongs only on the running period, and falls between that period's `start` and `asOf`.
 
-Warnings that do not block: a period without a primary source, a source no period references, a product without an emoji, periods that share a `wave` but not a `start` date.
+Warnings that do not block: a period without a primary source, a source no period references, a product without an emoji, periods that share a `wave` but not a `start` date, a running period without `lastConfirmed`.
 
 ## Why `transition` is the heart of it
 
@@ -156,4 +158,36 @@ Adding it back is three lines in `src/constants.js` if a case ever turns up -
 most likely from a source class other than SEC filings, since product
 documentation and price lists name things the annual reports never mention.
 [COMPARABLE-PROJECTS.md](COMPARABLE-PROJECTS.md) has the full search.
+
+## How current is a current name
+
+A period with no `end` is the running one: the name the product carries now.
+Nothing in the schema used to say how well that was evidenced, so every running
+period silently claimed "still true today" no matter how old the newest source
+behind it was.
+
+`lastConfirmed` closes that. It records the newest document known to use the
+name for that product - not an end date, and not a guess about the future. The
+model derives `monthsSinceConfirmed` and a `stale` flag from it against
+`asOf`, using the threshold in `src/constants.js`, currently 36 months.
+
+The distinction it protects is between two different things:
+
+- **A name ended.** Some source shows a different name taking over. That is a
+  new period, with a transition, and the old one gets an `end`.
+- **A name stopped being mentioned.** Nothing shows it ending and nothing shows
+  it continuing. The period still runs, because this register does not read
+  silence as an ending - but the reader gets to see where the evidence stops.
+
+The second case is common and was invisible. Eight of eighteen running names in
+the current dataset have not appeared in a filing for three years or more; SAP
+PLM's newest sighting is from 2016 while the entry reads "current name for 19.6
+years". Both statements are true, and only one of them was on the page.
+
+The field was added after a reader asked a simple question - is it really still
+called SAP ERP? - which turned out to have a good answer for SAP ERP and a much
+weaker one for its four siblings. It was the third time the same gap had come
+up: SAP NetWeaver Application Server was left out of the register entirely for
+want of a sourceable current name, and SAP BW/4HANA was entered with the caveat
+buried in prose.
 

@@ -127,6 +127,27 @@ function validatePeriods(report, product, path, sourcesById, asOf) {
       report.error(`${at}.transition`, "'assimilation' requires origin: 'acquired'");
     }
 
+    // How recently the name was seen in a source. Only meaningful on the
+    // running period: an ended period is bounded by its own end date, while a
+    // running one otherwise implies "still current" with nothing behind it.
+    if (period?.lastConfirmed !== undefined) {
+      checkDate(report, `${at}.lastConfirmed`, period.lastConfirmed);
+      if (period?.end !== undefined) {
+        report.error(`${at}.lastConfirmed`, 'only belongs on the running period, which has no end');
+      }
+      if (isValidDate(period.lastConfirmed)) {
+        if (isValidDate(period?.start) && compareDates(period.lastConfirmed, period.start) < 0) {
+          report.error(`${at}.lastConfirmed`, `falls before the period starts (${period.start})`);
+        }
+        if (isValidDate(asOf) && compareDates(period.lastConfirmed, asOf) > 0) {
+          report.error(`${at}.lastConfirmed`, `falls after asOf (${asOf})`);
+        }
+      }
+    } else if (period?.end === undefined) {
+      report.warn(`${at}.lastConfirmed`,
+        'a running period should record when its name was last seen in a source');
+    }
+
     // A revert counts as a rename like any other - it still moved the name,
     // even if the destination is one we have seen before. The flag exists so
     // it can be told apart from a genuinely new name, not to exempt it from

@@ -6,7 +6,7 @@ import { TRANSITION_LABELS } from './constants.js';
 import { formatDate, formatDuration } from './dates.js';
 import { buildRegistry } from './model.js';
 import {
-  assimilationStats, familyStats, lifetimeStats, riskIndex, waveStats
+  assimilationStats, confirmationStats, familyStats, lifetimeStats, riskIndex, waveStats
 } from './stats.js';
 
 const state = { table: false };
@@ -302,6 +302,27 @@ function renderAssimilation(assimilation) {
   target.replaceChildren(plot, axis(scale, assimilation.median, `median ${formatDuration(assimilation.median)}`));
 }
 
+/* ---------- how current is current ---------- */
+
+function renderConfirmed(stats) {
+  el('an-confirmed-lede').textContent =
+    `Every running name claims to be the one in use today. That claim rests on the newest `
+    + `source showing the name, and half of them are more than ${formatDuration(stats.median)} old. `
+    + `${stats.stale.length} of ${stats.entries.length} have not been seen in a filing for `
+    + `${formatDuration(stats.threshold)} or more. None of that means the name changed — the `
+    + `register records no endings — only that nothing recent confirms it.`;
+
+  el('an-confirmed').replaceChildren(dataTable(
+    ['Product', 'Current name since', 'Last seen in a source', 'Gap'],
+    stats.entries.map(entry => [
+      entry.product.currentName,
+      formatDate(entry.product.currentPeriod.start),
+      formatDate(entry.lastConfirmed),
+      formatDuration(entry.monthsSince) + (entry.monthsSince >= stats.threshold ? '  ·  stale' : '')
+    ])
+  ));
+}
+
 /* ---------- families, waves, index ---------- */
 
 function renderFamilies(families) {
@@ -397,6 +418,7 @@ function render() {
   renderLifetimesLegend();
   renderLifetimes(lifetimes);
   renderAssimilation(assimilation);
+  renderConfirmed(confirmationStats(registry.products));
   renderFamilies(familyStats(registry.products));
   renderWaves(waveStats(registry.wavesById));
   renderIndex(riskIndex(registry.products, registry.asOf));

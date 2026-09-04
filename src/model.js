@@ -1,7 +1,7 @@
 // Everything the pages display is derived here, from products.json and
 // nothing else. No number is maintained by hand, and none is stored twice.
 
-import { COUNTED_TRANSITIONS, FAMILY_LABELS } from './constants.js';
+import { COUNTED_TRANSITIONS, FAMILY_LABELS, STALE_CONFIRMATION_MONTHS } from './constants.js';
 import { compareDates, monthsBetween } from './dates.js';
 
 // A running period is measured against asOf, not against the visitor's clock.
@@ -11,9 +11,19 @@ function periodLength(period, asOf) {
 }
 
 function decoratePeriod(period, sourcesById, asOf) {
+  // A running period claims the name is current. That claim is only as good as
+  // the most recent source showing it, which can be years old - so carry the
+  // gap alongside it rather than letting the entry imply today.
+  const running = period.end === undefined;
+  const monthsSinceConfirmed = running && period.lastConfirmed
+    ? monthsBetween(period.lastConfirmed, asOf)
+    : null;
+
   return {
     ...period,
-    running: period.end === undefined,
+    running,
+    monthsSinceConfirmed,
+    stale: monthsSinceConfirmed !== null && monthsSinceConfirmed >= STALE_CONFIRMATION_MONTHS,
     months: periodLength(period, asOf),
     sources: period.sources
       .map(id => sourcesById.get(id))
@@ -34,6 +44,7 @@ function decorateProduct(product, sourcesById, asOf) {
     familyLabel: FAMILY_LABELS[product.family] ?? product.family,
     currentPeriod: current,
     currentNameMonths: current.months,
+    stale: current.stale === true,
     renameCount: counted.length,
     transitionCount: transitions.length,
     // Time to SAP-ification: the gap between the acquisition and the first

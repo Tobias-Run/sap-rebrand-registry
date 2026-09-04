@@ -67,3 +67,10 @@ export const SOURCE_TYPE_LABELS = {
 // A family with fewer completed renames than this counts as thin evidence.
 // It gets flagged, not merged into another family.
 export const SPARSE_FAMILY_THRESHOLD = 2;
+
+// A running period whose name has not been seen in a source for this long is
+// still recorded as current - the register does not read silence as an ending -
+// but the pages say when it was last confirmed rather than letting the entry
+// imply today.
+export const STALE_CONFIRMATION_MONTHS = 36;
+

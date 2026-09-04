@@ -936,3 +936,9 @@ a.an-bar:hover, a.an-bar:focus-visible {
 @media (max-width: 46rem) {
   :root { --an-label-width: 8.5rem; --an-value-width: 3.5rem; }
 }
+
+/* A running name whose last sighting is old. Marked, not hidden: the register
+   records no endings, so the period still runs - the reader just gets to see
+   how far back the evidence stops. */
+.period-when .stale { color: var(--weak); font-weight: 600; }
+

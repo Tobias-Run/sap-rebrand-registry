@@ -270,6 +270,15 @@
       "type": "first-party",
       "published": "2013-10-23",
       "retrieved": "2026-09-03"
+    },
+    {
+      "id": "sap-6k-2021-03-annual-report",
+      "title": "SAP SE, 2020 Annual Report (Form 6-K exhibit; its glossary defines \"SAP ERP - Application designed to optimize business and IT processes\", names SAP ECC as the \"main software component in the SAP ERP application\", and calls SAP R/3 the \"precursor to SAP ERP\")",
+      "publisher": "SAP SE (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465921034734/tm218829d1_ex99-1.htm",
+      "type": "first-party",
+      "published": "2021-03-11",
+      "retrieved": "2026-09-04"
     }
   ],
   "products": [
@@ -306,8 +315,10 @@
           "qualifier": "by",
           "transition": "rename",
           "wave": "mysap-drop-2007",
+          "lastConfirmed": "2022-04-25",
           "sources": [
-            "sap-20f-2006"
+            "sap-20f-2006",
+            "sap-6k-2021-03-annual-report"
           ]
         }
       ]
@@ -324,6 +335,7 @@
           "name": "SAP S/4HANA",
           "start": "2015-02",
           "qualifier": "announcement",
+          "lastConfirmed": "2026-03-06",
           "sources": [
             "sap-6k-2015-04-q1"
           ]
@@ -352,6 +364,7 @@
           "qualifier": "by",
           "transition": "rename",
           "wave": "mysap-drop-2007",
+          "lastConfirmed": "2018-03-06",
           "sources": [
             "sap-20f-2006"
           ]
@@ -380,6 +393,7 @@
           "qualifier": "by",
           "transition": "rename",
           "wave": "mysap-drop-2007",
+          "lastConfirmed": "2018-03-06",
           "sources": [
             "sap-20f-2006"
           ]
@@ -408,6 +422,7 @@
           "qualifier": "by",
           "transition": "rename",
           "wave": "mysap-drop-2007",
+          "lastConfirmed": "2018-03-06",
           "sources": [
             "sap-20f-2006"
           ]
@@ -436,6 +451,7 @@
           "qualifier": "by",
           "transition": "rename",
           "wave": "mysap-drop-2007",
+          "lastConfirmed": "2016-04-06",
           "sources": [
             "sap-20f-2006"
           ]
@@ -484,6 +500,7 @@
           "qualifier": "effective",
           "transition": "rename",
           "wave": "btp-2021",
+          "lastConfirmed": "2026-07-28",
           "sources": [
             "sap-20f-2020"
           ]
@@ -512,6 +529,7 @@
           "qualifier": "effective",
           "transition": "rename",
           "wave": "btp-2021",
+          "lastConfirmed": "2026-03-06",
           "sources": [
             "sap-20f-2020"
           ]
@@ -549,6 +567,7 @@
           "start": "2017-07",
           "qualifier": "by",
           "transition": "rename",
+          "lastConfirmed": "2026-03-06",
           "sources": [
             "sap-6k-2017-07-halfyear",
             "sap-20f-2017"
@@ -578,6 +597,7 @@
           "qualifier": "effective",
           "transition": "rename",
           "wave": "businessobjects-drop-2012",
+          "lastConfirmed": "2016-04-06",
           "sources": [
             "sap-6k-2013-04-annual-report",
             "sap-6k-2013-10-interim-q3"
@@ -626,6 +646,7 @@
           "start": "2014-04",
           "qualifier": "by",
           "transition": "rename",
+          "lastConfirmed": "2026-07-28",
           "sources": [
             "sap-6k-2014-04-q1",
             "sap-6k-2015-04-annual-report"
@@ -645,6 +666,7 @@
           "name": "SAP BW/4HANA",
           "start": "2016",
           "qualifier": "launch",
+          "lastConfirmed": "2025-02-27",
           "sources": [
             "sap-20f-2016"
           ]
@@ -672,6 +694,7 @@
           "start": "2023-03-08",
           "qualifier": "effective",
           "transition": "rename",
+          "lastConfirmed": "2026-03-06",
           "sources": [
             "sap-news-datasphere-2023"
           ]
@@ -723,6 +746,7 @@
           "start": "2019",
           "qualifier": "effective",
           "transition": "rename",
+          "lastConfirmed": "2024-03-08",
           "sources": [
             "sap-6k-2020-integrated-report-2019"
           ]
@@ -752,6 +776,7 @@
           "start": "2018-01",
           "qualifier": "by",
           "transition": "assimilation",
+          "lastConfirmed": "2026-03-06",
           "sources": [
             "sap-6k-2018-01-prelim",
             "sap-20f-2017"
@@ -782,6 +807,7 @@
           "start": "2015-04",
           "qualifier": "by",
           "transition": "assimilation",
+          "lastConfirmed": "2026-03-06",
           "sources": [
             "sap-6k-2015-04-annual-report",
             "sap-20f-2015"
@@ -813,6 +839,7 @@
           "qualifier": "by",
           "transition": "assimilation",
           "wave": "c4hana-2018",
+          "lastConfirmed": "2022-03-11",
           "sources": [
             "sap-6k-2018-07-halfyear",
             "sap-20f-2021"
@@ -855,6 +882,7 @@
           "qualifier": "by",
           "transition": "rename",
           "wave": "c4hana-2018",
+          "lastConfirmed": "2023-07-25",
           "sources": [
             "sap-6k-2018-07-halfyear",
             "sap-20f-2018"

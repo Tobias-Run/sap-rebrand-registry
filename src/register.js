@@ -120,6 +120,14 @@ function periodWhen(period, asOf) {
   if (period.wave) {
     line.append(document.createTextNode(`  ·  part of the ${period.wave} wave`));
   }
+  if (period.running && period.lastConfirmed) {
+    // Not an end date. It says how recently a source shows this name, which is
+    // the honest limit of a "current" claim.
+    const note = `  ·  last seen in a source ${formatDate(period.lastConfirmed)}`;
+    line.append(period.stale
+      ? text('span', 'stale', note)
+      : document.createTextNode(note));
+  }
   return line;
 }
 

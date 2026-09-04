@@ -7,7 +7,7 @@
 // own metric; a generation change is not a rebrand at all. Mixing the three
 // would make bought-in families look restless and inflate every median.
 
-import { FAMILIES, FAMILY_LABELS, SPARSE_FAMILY_THRESHOLD } from './constants.js';
+import { FAMILIES, FAMILY_LABELS, SPARSE_FAMILY_THRESHOLD, STALE_CONFIRMATION_MONTHS } from './constants.js';
 import { monthsBetween } from './dates.js';
 
 export function median(values) {
@@ -160,4 +160,26 @@ export function riskIndex(products, asOf) {
       };
     })
     .sort((a, b) => b.score - a.score || a.product.currentName.localeCompare(b.product.currentName));
+}
+
+// Every running period asserts that its name is current. That assertion is
+// only as strong as the newest source showing the name, and for some products
+// the evidence stops years back. This counts the gap rather than leaving each
+// entry to imply today.
+export function confirmationStats(products) {
+  const running = products
+    .map(product => ({
+      product,
+      lastConfirmed: product.currentPeriod.lastConfirmed ?? null,
+      monthsSince: product.currentPeriod.monthsSinceConfirmed
+    }))
+    .filter(entry => entry.lastConfirmed !== null)
+    .sort((a, b) => b.monthsSince - a.monthsSince);
+
+  return {
+    entries: running,
+    stale: running.filter(entry => entry.monthsSince >= STALE_CONFIRMATION_MONTHS),
+    median: median(running.map(entry => entry.monthsSince)),
+    threshold: STALE_CONFIRMATION_MONTHS
+  };
 }
