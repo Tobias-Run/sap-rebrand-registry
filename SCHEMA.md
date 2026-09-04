@@ -23,7 +23,7 @@ Checks run with `npm run validate`. The script runs in CI and fails on any error
 | `id` | slug | yes | lowercase letters, digits, hyphens. Never changes, not even after a rename |
 | `currentName` | string | yes | has to match the name of the running period |
 | `emoji` | string | no | one or two emoji as a row marker. If absent, a warning |
-| `family` | enum | yes | one of the seven families, see `src/constants.js` |
+| `family` | enum | yes | one of the six families, see `src/constants.js` |
 | `origin` | `organic` \| `acquired` | yes | |
 | `acquiredFrom` | string | only with `acquired` | an error with `organic`, not merely redundant |
 | `acquisitionDate` | date | only with `acquired` | must not fall after the first `assimilation` period |
@@ -131,3 +131,29 @@ When the field was added, it carried two periods and the honest note was that th
 The alternative that was rejected — periods allowed to overlap — would have touched rule 2 and rule 3 above, and everything downstream that assumes a product's `currentPeriod` is unambiguous (both pages do). `succeeds` costs one field and one validation pass; overlapping periods would have cost a rewrite.
 
 SAP S/4HANA is now in the dataset and carries `succeeds: "sap-erp"` — the first and so far only use of the field. It is a product with one name period and no rename at all, which is worth having for exactly that reason: SAP ERP's entry can say "later joined by SAP S/4HANA" without either product's chain of periods being bent to accommodate the other. SAP BW/4HANA is still missing.
+
+## A family that was retired
+
+The schema started with seven families. `industry-clouds` is gone, and the
+reason is a finding rather than a tidy-up.
+
+Two searches of the corpus went looking for a product to put in it and found
+none. SAP's industry business appears in the filings as portfolios ("SAP for
+Retail" and about twenty siblings, 2005 to 2020), as a strategy ("industry
+cloud", launched in June 2020 as a portfolio), and as packages that are named
+once and never again - SAP Billing for Telecommunications, SAP Reinsurance
+Management, SAP Precision Retailing. None of those is a product with a chain of
+names, which is the only thing this register records.
+
+An empty family is not neutral. The register page showed a filter chip that
+always returned nothing, and the analysis page carried a row reading "not
+covered yet" beside six real ones. Both invited the reading that the research
+was incomplete, when the actual finding is that SAP does not brand its industry
+offerings the way it brands SAP CRM or SAP Datasphere.
+
+The category is not wrong in principle, only unfilled by this evidence base.
+Adding it back is three lines in `src/constants.js` if a case ever turns up -
+most likely from a source class other than SEC filings, since product
+documentation and price lists name things the annual reports never mention.
+[COMPARABLE-PROJECTS.md](COMPARABLE-PROJECTS.md) has the full search.
+

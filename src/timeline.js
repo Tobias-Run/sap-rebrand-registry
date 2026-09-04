@@ -61,8 +61,11 @@ function toggle(list, value) {
 }
 
 function renderControls() {
+  // Every family gets a chip, erp-suite included. It used to be left out
+  // because the anchor row is shown whatever the filter says, so filtering by
+  // the anchor's own family looked like a no-op - true when erp-suite held
+  // only SAP ERP, wrong now that it holds four products.
   el('tl-families').replaceChildren(...FAMILIES
-    .filter(family => family !== 'erp-suite') // the anchor row is always shown; filtering it is a no-op that confuses
     .map(family => chip(FAMILY_LABELS[family], state.families.includes(family), () => {
       state.families = toggle(state.families, family);
       render();

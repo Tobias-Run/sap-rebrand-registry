@@ -478,10 +478,12 @@ had nobody read the contexts.
 
 ## Industry clouds: a family the corpus cannot fill
 
-`industry-clouds` has been one of the seven families since the schema was
-written, and after two searches it still holds no products. The second search
+`industry-clouds` was one of the seven families from the day the schema was
+written, and after two searches it still held no products. The second search
 went looking specifically, and the reason is worth recording, because it is a
-fact about how SAP names things rather than a gap in the research.
+fact about how SAP names things rather than a gap in the research. The family
+has since been retired; the argument is in [SCHEMA.md](SCHEMA.md), "A family
+that was retired".
 
 SAP's industry layer shows up in the filings in three shapes, and none of them
 is a product in this schema's sense.
@@ -512,10 +514,9 @@ one lineage, no sentence connecting any two of them, and three different
 descriptions of what the thing is. Entering that chain would mean inferring it
 from name similarity, which is the trap this register has already avoided twice.
 
-So the family stays empty, and the reason is not that SAP renames nothing in
+So the family was retired, and the reason is not that SAP renames nothing in
 its industry business. It is that SAP's industry business is sold as portfolios
 and packages rather than as separately branded products, and the annual reports
 mention the packages once and move on. A different source class - product
 documentation, price lists, help.sap.com - would probably show more. SEC filings
 will not.
-
