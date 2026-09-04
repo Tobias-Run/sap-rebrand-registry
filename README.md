@@ -22,7 +22,7 @@ Three static pages, no server logic. Every number is worked out in the browser f
 | Products | 18 |
 | Name periods | 43, reaching back to 2000 |
 | Renames counted | 18 |
-| Sources | 30, every one of them first-party |
+| Sources | 31, every one of them first-party |
 | Median life of a name | 4.0 years |
 | Median time to SAP-ification | 11 months |
 | Validator warnings | 0 |
@@ -69,7 +69,9 @@ The rename-pressure index measures what has already happened: how often a produc
 
 It is described on the site as semi-serious. The serious half is the arithmetic. The other half is the assumption that a company's naming habits are a stable physical constant.
 
-The analysis page is also explicit about the four things the figures cannot see: names that have not ended yet and so cannot be measured, start dates that are systematically later than the truth, products that are not in the register at all, and families whose median rests on one or two renames.
+The analysis page is also explicit about the five things the figures cannot see: names that have not ended yet and so cannot be measured, start dates that are systematically later than the truth, whether a name recorded as current still is, products that are not in the register at all, and families whose median rests on one or two renames.
+
+That third one has its own section. Every running name records when it was last seen in a source, and eight of the eighteen have not appeared in a filing for three years or more. Nothing says those names changed — this register does not read silence as an ending — but the page shows where the evidence stops rather than letting each entry imply today.
 
 ## Out of scope
 
@@ -111,7 +113,7 @@ It needs a server, though, and right now there is none. Three static pages read 
 
 ## Contributing
 
-An entry is welcome when it comes with a source that resolves and states what the entry claims. `npm run validate` has to pass; CI runs it anyway. [SCHEMA.md](SCHEMA.md) lists the seventeen rules the validator enforces and, more usefully, the reasoning behind the ones that look arbitrary.
+An entry is welcome when it comes with a source that resolves and states what the entry claims. `npm run validate` has to pass; CI runs it anyway. [SCHEMA.md](SCHEMA.md) lists the eighteen rules the validator enforces and, more usefully, the reasoning behind the ones that look arbitrary.
 
 ## Licence
 

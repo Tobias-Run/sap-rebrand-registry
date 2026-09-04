@@ -20,7 +20,7 @@ function dataset(overrides = {}) {
         origin: 'organic',
         periods: [
           { name: 'Alpha One', start: '2015-03', end: '2020-01-01', qualifier: 'launch', sources: ['src-launch'] },
-          { name: 'Alpha Two', start: '2020-01-01', qualifier: 'effective', transition: 'rename', sources: ['src-rename'] }
+          { name: 'Alpha Two', start: '2020-01-01', qualifier: 'effective', transition: 'rename', lastConfirmed: '2026-01-01', sources: ['src-rename'] }
         ]
       }
     ],
@@ -246,8 +246,9 @@ test('a revert still counts as a rename, but only where a matching earlier name 
   const data = dataset();
   const product = firstProduct(data);
   product.periods[1].end = '2022-01-01';
+  delete product.periods[1].lastConfirmed; // it is no longer the running period
   product.periods.push({
-    name: 'Alpha One', start: '2022-01-01', qualifier: 'effective', transition: 'rename', revert: true, sources: ['src-rename']
+    name: 'Alpha One', start: '2022-01-01', qualifier: 'effective', transition: 'rename', revert: true, lastConfirmed: '2026-01-01', sources: ['src-rename']
   });
   product.currentName = 'Alpha One';
   assert.deepEqual(validate(data).errors, [], 'a revert to a name this product used before should validate');
@@ -298,7 +299,7 @@ test('periods sharing a wave should share a start date - warning, not an error',
         origin: 'organic',
         periods: [
           { name: 'Beta One', start: '2016', end: '2020-06-01', qualifier: 'launch', sources: ['src-launch'] },
-          { name: 'Beta Two', start: '2020-06-01', qualifier: 'effective', transition: 'rename', wave: 'joint-2020', sources: ['src-rename'] }
+          { name: 'Beta Two', start: '2020-06-01', qualifier: 'effective', transition: 'rename', wave: 'joint-2020', lastConfirmed: '2026-01-01', sources: ['src-rename'] }
         ]
       }
     ]
@@ -319,7 +320,7 @@ test('periods sharing a wave should share a start date - warning, not an error',
         origin: 'organic',
         periods: [
           { name: 'Beta One', start: '2016', end: '2020-01-01', qualifier: 'launch', sources: ['src-launch'] },
-          { name: 'Beta Two', start: '2020-01-01', qualifier: 'effective', transition: 'rename', wave: 'joint-2020', sources: ['src-rename'] }
+          { name: 'Beta Two', start: '2020-01-01', qualifier: 'effective', transition: 'rename', wave: 'joint-2020', lastConfirmed: '2026-01-01', sources: ['src-rename'] }
         ]
       }
     ]
@@ -333,7 +334,7 @@ test('succeeds has to resolve, and cannot point at itself', () => {
     products: [
       dataset().products[0],
       { ...dataset().products[0], id: 'product-gamma', currentName: 'Gamma', succeeds: 'product-alpha',
-        periods: [{ name: 'Gamma', start: '2021-01-01', qualifier: 'launch', sources: ['src-launch'] }] }
+        periods: [{ name: 'Gamma', start: '2021-01-01', qualifier: 'launch', lastConfirmed: '2026-01-01', sources: ['src-launch'] }] }
     ]
   });
   assert.deepEqual(validate(withSuccessor).errors, []);
@@ -355,4 +356,32 @@ test('succeeds cannot form a cycle', () => {
     ]
   });
   assert.match(errorsOf(data), /succeeds forms a cycle/);
+});
+
+/* ---------- lastConfirmed ---------- */
+
+test('a running period without lastConfirmed warns but does not fail', () => {
+  const data = dataset();
+  delete firstProduct(data).periods[1].lastConfirmed;
+  const result = validate(data);
+
+  assert.deepEqual(result.errors, []);
+  assert.match(result.warnings.join('\n'), /lastConfirmed: a running period should record/);
+});
+
+test('lastConfirmed does not belong on a period that has ended', () => {
+  const data = dataset();
+  firstProduct(data).periods[0].lastConfirmed = '2019-01-01';
+
+  assert.match(errorsOf(data), /lastConfirmed: only belongs on the running period/);
+});
+
+test('lastConfirmed cannot predate its own period or outrun asOf', () => {
+  const early = dataset();
+  firstProduct(early).periods[1].lastConfirmed = '2019-06-01';
+  assert.match(errorsOf(early), /lastConfirmed: falls before the period starts/);
+
+  const late = dataset();
+  firstProduct(late).periods[1].lastConfirmed = '2027-01-01';
+  assert.match(errorsOf(late), /lastConfirmed: falls after asOf/);
 });
