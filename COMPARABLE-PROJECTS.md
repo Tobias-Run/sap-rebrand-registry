@@ -476,3 +476,47 @@ product inside it. The alternative was to infer eleven more chains from name
 similarity, which is how "SAP Build" and "SAP Business Suite" would have got in
 had nobody read the contexts.
 
+## Industry clouds: a family the corpus cannot fill
+
+`industry-clouds` was one of the seven families from the day the schema was
+written, and after two searches it still held no products. The second search
+went looking specifically, and the reason is worth recording, because it is a
+fact about how SAP names things rather than a gap in the research. The family
+has since been retired; the argument is in [SCHEMA.md](SCHEMA.md), "A family
+that was retired".
+
+SAP's industry layer shows up in the filings in three shapes, and none of them
+is a product in this schema's sense.
+
+**Portfolios.** "SAP for Retail", "SAP for Banking", "SAP for Utilities" and
+about twenty siblings run from 2005 to the annual report filed 5 March 2020.
+Collections of solutions sold together, with no version number of their own.
+
+**A strategy.** "Industry cloud" appears from 2014 and is launched properly in
+June 2020 - "we launched SAP's industry cloud portfolio to provide customers
+with cloud-native, industry applications built by SAP and its partners". A
+portfolio again, and by 2021 a line item in the risk factors rather than a
+named offering.
+
+**Packages that surface once and sink.** SAP Billing for Telecommunications
+(2011-2012), SAP Reinsurance Management (2007-2008), SAP Precision Retailing
+(2013), SAP Assortment Planning for Retail (2015), SAP Sales Analysis for
+Retail (2012). Each is a real product name in a real first-party sentence -
+"In January, we launched the SAP Billing for Telecommunications package" - and
+each then disappears from the filings within a year or two with no successor
+name anywhere in the corpus.
+
+The billing one looked like it might have a chain. "SAP Billing and Revenue
+Innovation Management" appears once, in 2012, described as a *rapid-deployment
+solution* for telecommunications and high-tech service providers. "SAP Hybris
+Billing" appears twice, in 2016, in a customer story. Three plausible names for
+one lineage, no sentence connecting any two of them, and three different
+descriptions of what the thing is. Entering that chain would mean inferring it
+from name similarity, which is the trap this register has already avoided twice.
+
+So the family was retired, and the reason is not that SAP renames nothing in
+its industry business. It is that SAP's industry business is sold as portfolios
+and packages rather than as separately branded products, and the annual reports
+mention the packages once and move on. A different source class - product
+documentation, price lists, help.sap.com - would probably show more. SEC filings
+will not.

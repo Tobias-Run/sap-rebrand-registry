@@ -1,13 +1,19 @@
-// Seven product families. Enough to show a pattern, few enough that no group
+// Six product families. Enough to show a pattern, few enough that no group
 // shrinks to two products.
+//
+// There were seven. 'industry-clouds' was retired after two searches of the
+// corpus turned up nothing that belongs in it - SAP sells its industry
+// business as portfolios and packages rather than as separately branded
+// products, so there is nothing there to rename. A filter that always returns
+// nothing is worse than an absent one. See SCHEMA.md, "A family that was
+// retired"; adding it back costs three lines if a case ever appears.
 export const FAMILIES = [
   'erp-suite',
   'hcm',
   'spend-travel',
   'cx',
   'data-analytics',
-  'platform-dev',
-  'industry-clouds'
+  'platform-dev'
 ];
 
 export const FAMILY_LABELS = {
@@ -16,8 +22,7 @@ export const FAMILY_LABELS = {
   'spend-travel': 'Spend & Travel',
   'cx': 'CX',
   'data-analytics': 'Data & Analytics',
-  'platform-dev': 'Platform & Dev',
-  'industry-clouds': 'Industry Clouds'
+  'platform-dev': 'Platform & Dev'
 };
 
 // How solid is the date? 'by' means: earliest provable mention. The real
