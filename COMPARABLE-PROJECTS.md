@@ -520,3 +520,58 @@ and packages rather than as separately branded products, and the annual reports
 mention the packages once and move on. A different source class - product
 documentation, price lists, help.sap.com - would probably show more. SEC filings
 will not.
+
+## Completing the corpus, and what it was and was not worth
+
+The SEC corpus had been fetched opportunistically and had gaps: 346 of the 396
+6-K and 20-F filings SAP has made since 1998. A full incremental run closed
+them - 50 filings, none failed.
+
+**What it did not do.** Not one `lastConfirmed` moved. The gaps were almost
+entirely pre-2019, so nothing in them could confirm a current name more
+recently than what was already on file. SAP PLM's newest sighting is still
+April 2016 and SAP CRM's is still March 2018. If the question is whether those
+names are still current, this source class has now been exhausted and the
+answer is still no better than "nothing recent says so".
+
+**What it did do.** It reached backwards, which is where the register was
+thinnest. Five chains had first periods dated from filings years later than the
+earliest evidence now available:
+
+| Product | first period was | now | why |
+| --- | --- | --- | --- |
+| SAP BW | 2000-01, "in use by" | **1998-09-01, launch** | a 1998 filing gives the release date |
+| SAP ERP | 2002 | 1999-04 | SAP R/3 named in the 1998 results |
+| SAP CRM | 2002 | 2001-03 | the 20-F for 2000 defines mySAP CRM |
+| SAP SCM | 2002 | 2001-03 | same document |
+| SAP PLM | 2002 | 2001-03 | same document |
+
+The BW one is the best single sentence the corpus has produced: "The SAP
+Business Information Warehouse (SAP BW) was released for general sale on
+September 1." A named date, at day precision, for a launch - which is what the
+`launch` qualifier is for, and there was only one other day-precise entry in
+the register before this.
+
+The register's earliest record moves from January 2000 to 1 September 1998.
+The medians do not move at all: every period that got longer was already above
+the median, so pushing it further up leaves the middle where it was.
+
+The five acquired products also have earlier mentions - SAP was writing about
+Concur, Fieldglass, Gigya, hybris and SuccessFactors before it owned them, at
+acquisition-announcement time. Those were left alone. Names carried before SAP
+bought the product are out of scope, and moving a chain's start back to a
+pre-acquisition mention would contradict that.
+
+### A lead the completed corpus turned up
+
+The 20-F for 2001 says "mySAP Supplier Relationship Management (formerly mySAP
+E-Procurement)" - a first-party rename statement for a predecessor name the
+register does not have. Around it sits a plausible procurement lineage: SAP B2B
+Procurement (1999-2000), Enterprise Buyer (2000-2002), mySAP E-Procurement,
+then mySAP SRM.
+
+It stays a lead. "mySAP E-Procurement" appears in the corpus only in the
+sentence that calls it *former* - there is no filing showing the name while it
+was current, so the period has no start date that is not invented. The rename
+is documented; the period is not.
+
