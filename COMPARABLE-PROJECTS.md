@@ -575,3 +575,65 @@ sentence that calls it *former* - there is no filing showing the name while it
 was current, so the period has no start date that is not invented. The rename
 is documented; the period is not.
 
+## sap.com: three doors, and the one that was open
+
+With the SEC corpus exhausted for the question of whether a name is still
+current, the obvious next source is SAP's own site. Checking `robots.txt`
+first, which is the whole of the courtesy here, turned up something more
+interesting than a yes or no.
+
+```
+User-agent: *
+Disallow: /
+```
+
+Generic crawlers are refused outright. But a named group is allowed, and it
+includes `ClaudeBot`, `Claude-User`, `Claude-SearchBot`, `CCBot` and
+`archive.org_bot`. So there were three doors:
+
+1. **Plain HTTP with a research user agent.** Works - `sap.com/products/erp.html`
+   returns 200. It is also exactly what `Disallow: /` refuses. Not taken.
+2. **The agent path sap.com explicitly permits.** Blocked by the site's WAF with
+   403, on the same URL that curl fetched. What the rules allow and what the
+   infrastructure allows have drifted apart.
+3. **Common Crawl.** `CCBot` is in the allowed group, so the archive is
+   legitimately collected, and reading it never touches sap.com. Taken.
+
+The index server is a bottleneck of its own. A 300-record query succeeded after
+five spaced retries over 24 minutes; a 20,000-record query failed ten times over
+50 minutes; precise single-URL lookups mostly returned 502, 503 and 504. The
+data server, which serves page bodies by byte range, has never once refused.
+Query the index rarely, fetch bodies freely - the note already in
+`common-crawl.mjs`, now with numbers behind it.
+
+### What the August 2026 crawl gave us
+
+`sap.com/products/acquired-brands/` is a set of pages explaining what became of
+companies SAP bought. They carry sentences no SEC filing contains:
+
+> "Learn how the CallidusCloud brand evolved into SAP Sales Cloud"
+> "Learn how the Coresystems brand evolved into SAP Service Cloud"
+> "Learn how the Gigya brand evolved into SAP Customer Data Cloud"
+
+The third confirms a chain the register already had, from a second, independent
+source class. The first two do not survive reading the surrounding text:
+CallidusCloud's solutions are "now part of the SAP SuccessFactors portfolio
+**and** the SAP Sales Cloud solution", and Coresystems' capabilities are "now in
+the SAP Service Cloud portfolio". A product absorbed into two portfolios is a
+split, and this schema records chains, not splits. "Brand evolved into" is
+navigation copy, not a rename statement.
+
+**SAP Ariba, added.** The page dates the acquisition and the SEC corpus dates
+both boundaries precisely: "On October 1, 2012, we successfully completed the
+acquisition of Ariba", and the plain name runs until the SAP prefix appears in
+February 2016 - "the business network group within SAP, consisting of SAP
+Ariba, SAP Fieldglass and Concur". Forty months from purchase to prefix, and
+the entry's `lastConfirmed` is March 2026, so unlike most of the register this
+is a current name with recent evidence behind it.
+
+That sixth acquisition doubles the median time to SAP-ification, from 11 months
+to 24. It is not a discovery about SAP; it is what a six-value median does when
+the values are 2, 8, 11, 37, 40 and 41 months and a new one lands in the gap.
+The figure is fragile and the analysis page's "thin evidence" framing applies to
+it more than the page currently admits.
+
