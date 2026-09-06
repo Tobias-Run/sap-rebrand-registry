@@ -637,3 +637,61 @@ the values are 2, 8, 11, 37, 40 and 41 months and a new one lands in the gap.
 The figure is fragile and the analysis page's "thin evidence" framing applies to
 it more than the page currently admits.
 
+
+### Sweeping the cached crawls instead of asking the index again
+
+The Common Crawl index server kept refusing - four single-URL lookups for
+`www.sap.com/products/{crm,scm,srm,plm}.html` came back as connection resets
+after the earlier 502/503/504 run. The data server has still never refused once,
+so the way forward was to stop asking the index anything and read the crawl
+listings already in `.cache/commoncrawl/`, fetching each page body by byte range.
+
+That turned one-page-at-a-time guessing into a single bounded pass: 141 unique
+`sap.com/products/*.html` pages from the 2021-01, 2021-02 and 2026-08 crawls,
+1.5 seconds apart, grepped for the phrasings that actually assert a rename -
+"formerly", "renamed", "now known as", "evolved into". sap.com itself was never
+touched. Five hits, of which four were the `acquired-brands` passages already
+mined.
+
+The negative results are worth as much as the hits:
+
+| Page | Crawl | Why it is not evidence |
+| --- | --- | --- |
+| `products/crm.html` | 2026-08 | A portfolio landing page ("CRM and customer experience"), not a product, and it names no predecessor |
+| `products/e-procurement.html` | 2021-02 | Carries the old slug but reads SAP Ariba throughout. A URL slug is not a name claim |
+| `products/data-intelligence.html` | 2021-01 | SAP Data Hub to SAP Data Intelligence would be a real SAP rename, but the product page says nothing about it |
+| `products/business-process-intelligence.html` | 2021-02 | Does assert one - "Process Discovery, formerly known as SAP Business Scenario Recommendations" - but there is no sourceable start date for either name, the same reason the mySAP E-Procurement predecessor was left out |
+
+`cloud-platform.html` and `business-technology-platform.html` both appear live in
+the 2021 crawls, on either side of that rename, and `data-warehouse-cloud.html`
+sits just before Datasphere. Both chains were already in the register, so the
+crawls corroborate rather than extend - which is the more useful outcome of the
+two, and the cheaper one to have gone looking for.
+
+The four mySAP names are now a settled negative rather than an open hole. The
+successor pages exist on sap.com and none of them names a predecessor, just as
+no SEC filing does. Nothing in either corpus can date those boundaries.
+
+### SAP Signavio and SAP LeanIX, the two-source split again
+
+`acquired-brands.html` names both, with years but no boundaries. The filings
+supply the dates, the same division of labour that worked for Ariba:
+
+- **Signavio** - the 2021 Form 20-F states the acquisition "closed on March 5,
+  2021" and is also the first filing to write "the SAP Signavio Business Process
+  Management (BPM) Suite". One document, both ends of the boundary: twelve
+  months from close to prefix.
+- **LeanIX** - the Q4/FY2023 quarterly statement says "On November 8, SAP
+  announced, that it had completed the acquisition of LeanIX" and, in the same
+  document, groups "SAP Business Technology Platform, SAP LeanIX and SAP
+  Signavio". Two months from close to prefix, the joint-fastest in the register.
+
+Both start their observed period at the close rather than at the first mention,
+matching all six earlier acquired chains: `acquisitionDate` carries the exact
+day, the period start carries only what a document shows the name in use.
+
+And the median moves again. Eight values - 2, 2, 8, 11, 12, 37, 40, 41 - put the
+median time to SAP-ification at 11.5 months, down from 24. Last time two entries
+doubled it; this time two halved it back. The figure is not measuring SAP, it is
+measuring how few acquisitions the register holds, and it will keep swinging
+until there are enough of them for the middle to sit still.

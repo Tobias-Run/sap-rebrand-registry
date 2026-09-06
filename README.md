@@ -19,12 +19,12 @@ Three static pages, no server logic. Every number is worked out in the browser f
 
 | | |
 | --- | --- |
-| Products | 19 |
-| Name periods | 45, reaching back to 1998 |
+| Products | 21 |
+| Name periods | 49, reaching back to 1998 |
 | Renames counted | 18 |
-| Sources | 36, every one of them first-party |
-| Median life of a name | 4.0 years |
-| Median time to SAP-ification | 2 years |
+| Sources | 37, every one of them first-party |
+| Median life of a name | 3.6 years |
+| Median time to SAP-ification | 1 year |
 | Validator warnings | 0 |
 
 The shortest name a product carried before being renamed lasted six months: SAP BusinessObjects Cloud, which held out just about long enough to reach a slide deck. At the other end, five products have worn the same name since 2007, and all five got there the same way — SAP dropped the `mySAP` prefix from the entire Business Suite in one move.
