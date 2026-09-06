@@ -111,12 +111,12 @@
     },
     {
       "id": "sap-20f-2021",
-      "title": "SAP SE, Form 20-F for fiscal year 2021",
+      "title": "SAP SE, Form 20-F for fiscal year 2021 (states the acquisition of Signavio GmbH \"closed on March 5, 2021\", and is the first filing to name \"the SAP Signavio Business Process Management (BPM) Suite\")",
       "publisher": "SAP SE (via SEC EDGAR)",
       "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465922029675/sap-20211231x20f.htm",
       "type": "first-party",
       "published": "2022-03-03",
-      "retrieved": "2026-08-18"
+      "retrieved": "2026-09-06"
     },
     {
       "id": "sap-news-datasphere-2023",
@@ -306,6 +306,33 @@
       "type": "first-party",
       "published": "2001-03-28",
       "retrieved": "2026-09-05"
+    },
+    {
+      "id": "sap-6k-2012-10-q3",
+      "title": "SAP AG, Interim Report January-September 2012 (Form 6-K exhibit; states \"On October 1, 2012, we successfully completed the acquisition of Ariba\")",
+      "publisher": "SAP AG (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000119312512436556/d430207dex991.htm",
+      "type": "first-party",
+      "published": "2012-10-26",
+      "retrieved": "2026-09-06"
+    },
+    {
+      "id": "sap-6k-2016-02-board",
+      "title": "SAP SE, Executive Board appointments (Form 6-K exhibit; names \"the business network group within SAP, consisting of SAP Ariba, SAP Fieldglass and Concur\")",
+      "publisher": "SAP SE (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000119312516470683/d140834dex991.htm",
+      "type": "first-party",
+      "published": "2016-02-22",
+      "retrieved": "2026-09-06"
+    },
+    {
+      "id": "sap-6k-2024-01-q4",
+      "title": "SAP SE, Quarterly Statement Q4 and FY 2023 (Form 6-K exhibit; states \"On November 8, SAP announced, that it had completed the acquisition of LeanIX\", and names \"SAP Business Technology Platform, SAP LeanIX and SAP Signavio\")",
+      "publisher": "SAP SE (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465924006500/tm244006d1_ex99-1.htm",
+      "type": "first-party",
+      "published": "2024-01-25",
+      "retrieved": "2026-09-06"
     }
   ],
   "products": [
@@ -783,6 +810,36 @@
       ]
     },
     {
+      "id": "sap-ariba",
+      "emoji": "🌐",
+      "currentName": "SAP Ariba",
+      "family": "spend-travel",
+      "origin": "acquired",
+      "acquiredFrom": "Ariba, Inc.",
+      "acquisitionDate": "2012-10-01",
+      "periods": [
+        {
+          "name": "Ariba",
+          "start": "2012-10",
+          "end": "2016-02",
+          "qualifier": "by",
+          "sources": [
+            "sap-6k-2012-10-q3"
+          ]
+        },
+        {
+          "name": "SAP Ariba",
+          "start": "2016-02",
+          "qualifier": "by",
+          "transition": "assimilation",
+          "lastConfirmed": "2026-03-06",
+          "sources": [
+            "sap-6k-2016-02-board"
+          ]
+        }
+      ]
+    },
+    {
       "id": "sap-concur",
       "emoji": "✈️",
       "currentName": "SAP Concur",
@@ -915,6 +972,66 @@
           "sources": [
             "sap-6k-2018-07-halfyear",
             "sap-20f-2018"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sap-signavio",
+      "emoji": "🔀",
+      "currentName": "SAP Signavio",
+      "family": "platform-dev",
+      "origin": "acquired",
+      "acquiredFrom": "Signavio GmbH",
+      "acquisitionDate": "2021-03-05",
+      "periods": [
+        {
+          "name": "Signavio",
+          "start": "2021-03",
+          "end": "2022-03",
+          "qualifier": "by",
+          "sources": [
+            "sap-20f-2021"
+          ]
+        },
+        {
+          "name": "SAP Signavio",
+          "start": "2022-03",
+          "qualifier": "by",
+          "transition": "assimilation",
+          "lastConfirmed": "2026-03-06",
+          "sources": [
+            "sap-20f-2021"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sap-leanix",
+      "emoji": "🗺️",
+      "currentName": "SAP LeanIX",
+      "family": "platform-dev",
+      "origin": "acquired",
+      "acquiredFrom": "LeanIX GmbH",
+      "acquisitionDate": "2023-11-08",
+      "periods": [
+        {
+          "name": "LeanIX",
+          "start": "2023-11",
+          "end": "2024-01",
+          "qualifier": "by",
+          "sources": [
+            "sap-6k-2024-01-q4"
+          ]
+        },
+        {
+          "name": "SAP LeanIX",
+          "start": "2024-01",
+          "qualifier": "by",
+          "transition": "assimilation",
+          "lastConfirmed": "2026-03-06",
+          "sources": [
+            "sap-6k-2024-01-q4"
           ]
         }
       ]
