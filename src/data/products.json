@@ -279,6 +279,33 @@
       "type": "first-party",
       "published": "2021-03-11",
       "retrieved": "2026-09-04"
+    },
+    {
+      "id": "sap-6k-1998-10-sapphire",
+      "title": "SAP AG, SAPPHIRE product announcements (Form 6-K; states \"The SAP Business Information Warehouse (SAP BW) was released for general sale on September 1\")",
+      "publisher": "SAP AG (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/0000893220-98-001641.txt",
+      "type": "first-party",
+      "published": "1998-10-26",
+      "retrieved": "2026-09-05"
+    },
+    {
+      "id": "sap-6k-1999-04-annual",
+      "title": "SAP AG, 1998 results (Form 6-K; states \"The SAP R/3 System was the biggest contributor to product sales\")",
+      "publisher": "SAP AG (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/0000950123-99-002945.txt",
+      "type": "first-party",
+      "published": "1999-04-01",
+      "retrieved": "2026-09-05"
+    },
+    {
+      "id": "sap-20f-2000",
+      "title": "SAP AG, Annual Report on Form 20-F for 2000 (defines \"mySAP Customer Relationship Management, referred to as mySAP CRM\", and likewise mySAP SCM and mySAP PLM)",
+      "publisher": "SAP AG (via SEC EDGAR)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000184/000095012301002748/y99519e20-f.txt",
+      "type": "first-party",
+      "published": "2001-03-28",
+      "retrieved": "2026-09-05"
     }
   ],
   "products": [
@@ -291,10 +318,11 @@
       "periods": [
         {
           "name": "SAP R/3",
-          "start": "2002",
+          "start": "1999-04",
           "end": "2004-04",
           "qualifier": "by",
           "sources": [
+            "sap-6k-1999-04-annual",
             "sap-20f-2001"
           ]
         },
@@ -351,11 +379,11 @@
       "periods": [
         {
           "name": "mySAP CRM",
-          "start": "2002",
+          "start": "2001-03",
           "end": "2007",
           "qualifier": "by",
           "sources": [
-            "sap-20f-2001"
+            "sap-20f-2000"
           ]
         },
         {
@@ -380,11 +408,11 @@
       "periods": [
         {
           "name": "mySAP SCM",
-          "start": "2002",
+          "start": "2001-03",
           "end": "2007",
           "qualifier": "by",
           "sources": [
-            "sap-20f-2001"
+            "sap-20f-2000"
           ]
         },
         {
@@ -438,11 +466,11 @@
       "periods": [
         {
           "name": "mySAP PLM",
-          "start": "2002",
+          "start": "2001-03",
           "end": "2007",
           "qualifier": "by",
           "sources": [
-            "sap-20f-2001"
+            "sap-20f-2000"
           ]
         },
         {
@@ -614,10 +642,11 @@
       "periods": [
         {
           "name": "SAP Business Information Warehouse",
-          "start": "2000-01",
+          "start": "1998-09-01",
           "end": "2006-03",
-          "qualifier": "by",
+          "qualifier": "launch",
           "sources": [
+            "sap-6k-1998-10-sapphire",
             "sap-6k-2000-01-q4"
           ]
         },
