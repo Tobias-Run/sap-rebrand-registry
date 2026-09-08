@@ -17,3 +17,6 @@ jobs:
         run: npm run validate
       - name: Unit tests
         run: npm test
+
+      - name: README figures match the dataset
+        run: npm run figures
