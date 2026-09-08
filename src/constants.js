@@ -57,12 +57,6 @@ export const ORIGINS = ['organic', 'acquired'];
 export const SOURCE_TYPES = ['first-party', 'archive', 'analyst', 'blog'];
 export const WEAK_SOURCE_TYPES = ['analyst', 'blog'];
 
-export const SOURCE_TYPE_LABELS = {
-  'first-party': 'first-party',
-  'archive': 'archive',
-  'analyst': 'analyst',
-  'blog': 'blog'
-};
 
 // A family with fewer completed renames than this counts as thin evidence.
 // It gets flagged, not merged into another family.

@@ -179,7 +179,7 @@ The distinction it protects is between two different things:
   it continuing. The period still runs, because this register does not read
   silence as an ending - but the reader gets to see where the evidence stops.
 
-The second case is common and was invisible. Eight of eighteen running names in
+The second case is common and was invisible. Eight of twenty-one running names in
 the current dataset have not appeared in a filing for three years or more; SAP
 PLM's newest sighting is from 2016 while the entry reads "current name for 19.6
 years". Both statements are true, and only one of them was on the page.

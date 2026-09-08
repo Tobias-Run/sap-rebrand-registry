@@ -24,7 +24,8 @@ Three static pages, no server logic. Every number is worked out in the browser f
 | Renames counted | 18 |
 | Sources | 37, every one of them first-party |
 | Median life of a name | 3.6 years |
-| Median time to SAP-ification | 1 year |
+| Median time to SAP-ification | 11.5 months |
+| Running names not seen in three years | 8 of 21 |
 | Validator warnings | 0 |
 
 The shortest name a product carried before being renamed lasted six months: SAP BusinessObjects Cloud, which held out just about long enough to reach a slide deck. At the other end, five products have worn the same name since 2007, and all five got there the same way — SAP dropped the `mySAP` prefix from the entire Business Suite in one move.
@@ -71,7 +72,7 @@ It is described on the site as semi-serious. The serious half is the arithmetic.
 
 The analysis page is also explicit about the five things the figures cannot see: names that have not ended yet and so cannot be measured, start dates that are systematically later than the truth, whether a name recorded as current still is, products that are not in the register at all, and families whose median rests on one or two renames.
 
-That third one has its own section. Every running name records when it was last seen in a source, and eight of the eighteen have not appeared in a filing for three years or more. Nothing says those names changed — this register does not read silence as an ending — but the page shows where the evidence stops rather than letting each entry imply today.
+That third one has its own section. Every running name records when it was last seen in a source, and eight of the twenty-one have not appeared in a filing for three years or more. Nothing says those names changed — this register does not read silence as an ending — but the page shows where the evidence stops rather than letting each entry imply today.
 
 ## Out of scope
 
@@ -96,6 +97,7 @@ No imagery either: no SAP logos, no trademarks as graphics. Each product gets on
 | `src/styles.css` | shared styles, one token set for all three pages |
 | `scripts/research/` | tooling for the source corpora — SEC filings and Common Crawl |
 | `tests/` | unit tests, run by `npm test` and in CI |
+| `scripts/figures.js` | recomputes the figures table above; CI fails if it drifts |
 
 ## Published site
 
@@ -113,7 +115,11 @@ It needs a server, though, and right now there is none. Three static pages read 
 
 ## Contributing
 
-An entry is welcome when it comes with a source that resolves and states what the entry claims. `npm run validate` has to pass; CI runs it anyway. [SCHEMA.md](SCHEMA.md) lists the eighteen rules the validator enforces and, more usefully, the reasoning behind the ones that look arbitrary.
+An entry is welcome when it comes with a source that resolves and states what the entry claims. `npm run validate` has to pass; CI runs it anyway, along with `npm run figures`, which recomputes the figures table above and fails if a hand-typed number has drifted. [SCHEMA.md](SCHEMA.md) lists the eighteen rules the validator enforces and, more usefully, the reasoning behind the ones that look arbitrary.
+
+## Releases
+
+[CHANGELOG.md](CHANGELOG.md) records what each version added. The current one is 1.0.0.
 
 ## Licence
 

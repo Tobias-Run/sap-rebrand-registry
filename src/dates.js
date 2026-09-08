@@ -2,7 +2,7 @@
 // 'YYYY-MM-DD'. A day is never invented. For comparison and arithmetic a date
 // is normalised to the first day of its precision; for display it is not.
 
-export const DATE_PATTERN = /^\d{4}(-\d{2}(-\d{2})?)?$/;
+const DATE_PATTERN = /^\d{4}(-\d{2}(-\d{2})?)?$/;
 
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
