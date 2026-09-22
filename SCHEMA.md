@@ -132,7 +132,7 @@ When the field was added, it carried two periods and the honest note was that th
 
 The alternative that was rejected — periods allowed to overlap — would have touched rule 2 and rule 3 above, and everything downstream that assumes a product's `currentPeriod` is unambiguous (both pages do). `succeeds` costs one field and one validation pass; overlapping periods would have cost a rewrite.
 
-SAP S/4HANA is now in the dataset and carries `succeeds: "sap-erp"` — the first and so far only use of the field. It is a product with one name period and no rename at all, which is worth having for exactly that reason: SAP ERP's entry can say "later joined by SAP S/4HANA" without either product's chain of periods being bent to accommodate the other. SAP BW/4HANA is still missing.
+SAP S/4HANA carries `succeeds: "sap-erp"`, and SAP BW/4HANA carries `succeeds: "sap-bw"` — the two uses of the field so far. Both are products with one name period and no rename at all, which is worth having for exactly that reason: SAP ERP's entry can say "later joined by SAP S/4HANA" without either product's chain of periods being bent to accommodate the other.
 
 ## A family that was retired
 
