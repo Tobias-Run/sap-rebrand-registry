@@ -695,3 +695,76 @@ median time to SAP-ification at 11.5 months, down from 24. Last time two entries
 doubled it; this time two halved it back. The figure is not measuring SAP, it is
 measuring how few acquisitions the register holds, and it will keep swinging
 until there are enough of them for the middle to sit still.
+
+## BEx and Analysis for Office: a succession, and a rename we cannot date
+
+A reader asked whether BEx, "which is now called AfO", belongs in the register.
+It turned out to be two questions wearing one coat, and neither ends in an
+entry.
+
+**BEx to Analysis for Office is not a rename.** SAP Business Explorer is the
+BW-native front end from the late 1990s - Analyzer, Query Designer, Web
+Analyzer. Analysis for Microsoft Office comes out of the BusinessObjects stack
+as an Excel add-in. They ran alongside each other for years before BEx was
+deprecated, which is the shape the schema already has a field for: a successor
+is its own product carrying `succeeds`, the way SAP S/4HANA sits beside SAP ERP.
+Modelled that way it would not touch the median, and that is the right answer -
+SAP replaced a tool here, it did not change a name.
+
+**The name that did change cannot be dated from either corpus.** The candidate
+was SAP BusinessObjects Analysis, edition for Microsoft Office becoming SAP
+Analysis for Microsoft Office - the same wave that took SAP BusinessObjects Data
+Services down to SAP Data Services. What the corpora actually say:
+
+| Term | Occurrences across 386 SEC filings, 1998-2026 |
+| --- | --- |
+| `SAP Business Explorer` | 3 filings (one 20-F, two 6-K, 2010 and 2012) |
+| `BEx` as a standalone word | **0** |
+| `Analysis for Microsoft Office` | **0** |
+| `BusinessObjects Analysis` | **0** |
+| `Analysis, edition for` | **0** |
+
+So the filings name SAP Business Explorer, always in full, never abbreviated:
+
+> "the successful introduction of the SAP Business Explorer software"
+> — Supervisory Board report, 6-K exhibit, 1 April 2010
+
+> "mobile apps for SAP BusinessObjects and SAP Business Explorer software"
+> — Form 20-F for 2011, 23 March 2012
+
+That is one name with no second name beside it. BEx has no rename to record, and
+its ending is not datable here either - the filings simply stop mentioning it,
+which this register does not read as an ending.
+
+Analysis for Office is absent from the corpus entirely, in every spelling. This
+is the expected outcome rather than a surprise: SAP's filings describe suites
+and segments, not front-end tools, and a product that never reaches a financial
+report cannot be dated from one.
+
+help.sap.com was the obvious second corpus and gave one genuinely useful signal
+against the hypothesis. The product guides at
+`help.sap.com/businessobject/product_guides/AMS14/…` and `…/AMS23/…` are now
+redirects, and they point at:
+
+```
+help.sap.com/viewer/product/SAP_BUSINESSOBJECTS_ANALYSIS_OFFICE
+```
+
+SAP's own current canonical identifier for the product still carries
+BusinessObjects. A URL slug is not a name claim - the same reason
+`products/e-procurement.html` was rejected - but it is evidence pointing the
+other way, and it raises the real possibility that there was never a clean
+boundary to find. Three targeted index queries that would have settled it
+returned 504s and connection resets; the Common Crawl index refuses this kind
+of work about as often as it serves it.
+
+**Verdict: neither product is added.** BEx because a single name is not a
+rename, Analysis for Office because the rename it plausibly underwent has no
+sourceable date in either corpus. It joins the mySAP E-Procurement predecessor
+in the same category: the thing very likely happened, and this register still
+cannot say when.
+
+What would settle it is a dated first-party document naming both forms - a
+release note, a guide title page, or a help-portal page captured either side of
+the boundary. The archived PDFs almost certainly contain it; reaching them needs
+an index that will answer a prefix query.
